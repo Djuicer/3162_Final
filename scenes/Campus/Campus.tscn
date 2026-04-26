@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://b31rrymw53tf1"]
+
+[ext_resource type="Texture2D" uid="uid://c8xlx54vhx8po" path="res://assets/pictures/Campus.PNG" id="1_8s682"]
+[ext_resource type="Texture2D" uid="uid://bepagctwgifqu" path="res://assets/ui/PNG/Blue/Double/arrow_basic_w.png" id="2_56jnd"]
+[ext_resource type="Texture2D" uid="uid://bwno1x7s46rcp" path="res://assets/ui/PNG/Grey/Double/arrow_basic_w.png" id="3_uebuc"]
+[ext_resource type="Script" uid="uid://bwsyaabq7gehl" path="res://scripts/SceneChanger.cs" id="4_uebuc"]
+[ext_resource type="PackedScene" uid="uid://bhvfqdy73kbcm" path="res://scenes/Domitory/Dormitory.tscn" id="5_wvmec"]
+
+[node name="Campus" type="Node2D" unique_id=488145710]
+
+[node name="Background" type="TextureRect" parent="." unique_id=1452063252]
+offset_right = 1151.0
+offset_bottom = 647.0
+texture = ExtResource("1_8s682")
+
+[node name="ToDormitoryButton" type="TextureButton" parent="." unique_id=77867358]
+offset_left = 73.0
+offset_top = 553.0
+offset_right = 146.0
+offset_bottom = 614.0
+texture_normal = ExtResource("2_56jnd")
+texture_pressed = ExtResource("3_uebuc")
+texture_hover = ExtResource("2_56jnd")
+script = ExtResource("4_uebuc")
+targetScene = ExtResource("5_wvmec")
+
+[node name="TextEdit" type="TextEdit" parent="ToDormitoryButton" unique_id=29178340]
+layout_mode = 0
+offset_left = -9.0
+offset_top = -34.0
+offset_right = 80.0
+offset_bottom = 7.0
+text = "Dormitory"

@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://dek3uk2n82inn"]
+
+[ext_resource type="Script" uid="uid://dwr5nfqip5a2d" path="res://scenes/Control/MainMenu.cs" id="1_6xto1"]
+[ext_resource type="Texture2D" uid="uid://djj6uqemjj706" path="res://assets/pictures/CharactorBackgroud.jpg" id="1_7hm8r"]
+[ext_resource type="FontFile" uid="uid://cr4it8yiffx47" path="res://assets/fonts/RoubaixIndustrielle-Regular60-96pt.ttf" id="2_6xto1"]
+[ext_resource type="Texture2D" uid="uid://bmou2w0rk7hfk" path="res://assets/ui/PNG/Blue/Double/icon_square.png" id="3_xtut6"]
+[ext_resource type="Texture2D" uid="uid://daieuwyi5rxv0" path="res://assets/pictures/paper.jpg" id="4_wc0a7"]
+[ext_resource type="FontFile" uid="uid://ix8rdmsw5p0v" path="res://assets/fonts/Burgela DEMO VERSION.ttf" id="6_6xto1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xtut6"]
+bg_color = Color(0.4812075, 0.6172683, 0.74090743, 1)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wc0a7"]
+bg_color = Color(0.6102283, 0.72262025, 0.94112283, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="Control" type="Control" unique_id=1672638989]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_6xto1")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=901057499]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 640.0
+texture = ExtResource("1_7hm8r")
+expand_mode = 1
+
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1520241450]
+layout_mode = 0
+offset_left = 311.0
+offset_top = 2.0
+offset_right = 826.0
+offset_bottom = 207.0
+theme_override_colors/selection_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_fonts/font = ExtResource("2_6xto1")
+theme_override_font_sizes/font_size = 64
+text = "Job Quest"
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="LineEdit" unique_id=86848618]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -158.5
+offset_top = -1.0
+offset_right = 162.5
+offset_bottom = 401.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_xtut6")
+
+[node name="TextureRect" type="TextureRect" parent="LineEdit/TextureRect" unique_id=1907224439]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 9.0
+offset_right = 312.0
+offset_bottom = 392.0
+texture = ExtResource("4_wc0a7")
+expand_mode = 1
+
+[node name="StartButton" type="Button" parent="." unique_id=164188039]
+layout_mode = 0
+offset_left = 437.0
+offset_top = 249.0
+offset_right = 705.0
+offset_bottom = 319.0
+theme_override_fonts/font = ExtResource("6_6xto1")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_xtut6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wc0a7")
+text = "S T A R T"
+
+[node name="ContinueButton" type="Button" parent="." unique_id=448465581]
+layout_mode = 0
+offset_left = 437.0
+offset_top = 327.0
+offset_right = 705.0
+offset_bottom = 397.0
+theme_override_fonts/font = ExtResource("6_6xto1")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_xtut6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wc0a7")
+text = "C O N T I N U E"
+
+[node name="OptionButton" type="Button" parent="." unique_id=1106402360]
+layout_mode = 0
+offset_left = 438.0
+offset_top = 406.0
+offset_right = 706.0
+offset_bottom = 476.0
+theme_override_fonts/font = ExtResource("6_6xto1")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_xtut6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wc0a7")
+text = "O P T I O N"
+
+[node name="ExitButton" type="Button" parent="." unique_id=2041729597]
+layout_mode = 0
+offset_left = 438.0
+offset_top = 485.0
+offset_right = 706.0
+offset_bottom = 555.0
+theme_override_fonts/font = ExtResource("6_6xto1")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_xtut6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wc0a7")
+text = "E X I T"
+
+[connection signal="pressed" from="StartButton" to="." method="OnStartPressed"]
+[connection signal="pressed" from="ContinueButton" to="." method="OnLoadPressed"]
+[connection signal="pressed" from="OptionButton" to="." method="OnSettingsPressed"]
+[connection signal="pressed" from="ExitButton" to="." method="OnExitPressed"]

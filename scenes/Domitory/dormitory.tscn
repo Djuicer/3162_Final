@@ -1,0 +1,154 @@
+[gd_scene format=3 uid="uid://bhvfqdy73kbcm"]
+
+[ext_resource type="Script" uid="uid://blrlswyfwq8ye" path="res://scenes/Domitory/Dormitory.cs" id="1_gpvd8"]
+[ext_resource type="Texture2D" uid="uid://cv7djbxlb7gf1" path="res://assets/pictures/1773801375903.png" id="1_oniru"]
+[ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="2_4nve3"]
+[ext_resource type="PackedScene" uid="uid://c5kbsovvaswlc" path="res://scenes/Screen/screen.tscn" id="3_1bqsu"]
+
+[node name="Dormitory" type="Node2D" unique_id=615578868]
+script = ExtResource("1_gpvd8")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=468152953]
+offset_left = 99.0
+offset_right = 1049.0
+offset_bottom = 647.0
+texture = ExtResource("1_oniru")
+expand_mode = 1
+
+[node name="Button" type="Node" parent="." unique_id=1975054436]
+
+[node name="OutsideButton" type="TextureButton" parent="Button" unique_id=648823701 node_paths=PackedStringArray("TooltipLabel")]
+offset_left = 183.0
+offset_top = 593.0
+offset_right = 343.0
+offset_bottom = 633.0
+script = ExtResource("2_4nve3")
+TooltipLabel = NodePath("../ComputerButton/ComputerLabel")
+TargetScene = ExtResource("3_1bqsu")
+
+[node name="OutsideLabel" type="Label" parent="Button/OutsideButton" unique_id=735845535]
+visible = false
+layout_mode = 0
+offset_left = 57.0
+offset_top = -7.0
+offset_right = 97.0
+offset_bottom = 16.0
+text = "Outside"
+
+[node name="ComputerButton" type="TextureButton" parent="Button" unique_id=1268980897 node_paths=PackedStringArray("TooltipLabel")]
+offset_left = 170.0
+offset_top = 161.0
+offset_right = 230.0
+offset_bottom = 262.0
+script = ExtResource("2_4nve3")
+TooltipLabel = NodePath("ComputerLabel")
+TargetScene = ExtResource("3_1bqsu")
+
+[node name="ComputerLabel" type="Label" parent="Button/ComputerButton" unique_id=927498907]
+visible = false
+layout_mode = 0
+offset_left = 57.0
+offset_top = -7.0
+offset_right = 97.0
+offset_bottom = 16.0
+text = "Computer
+"
+
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=493943287]
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="OpeningUI" type="CanvasLayer" parent="." unique_id=323501678]
+
+[node name="DialoguePanel" type="Panel" parent="OpeningUI" unique_id=338693994]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -135.0
+offset_right = 400.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="SpeakerLabel" type="Label" parent="OpeningUI/DialoguePanel" unique_id=1822019240]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -164.0
+offset_top = -133.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_vertical = 0
+
+[node name="ContinueButton" type="Button" parent="OpeningUI/DialoguePanel" unique_id=2093488712]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -135.0
+offset_right = 400.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+
+[node name="DialogueLabel" type="Label" parent="OpeningUI/DialoguePanel" unique_id=1045748784]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -392.5
+offset_top = -135.0
+offset_right = 392.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AttributePanel" type="Panel" parent="OpeningUI" unique_id=2122726882]
+offset_left = 1027.0
+offset_top = 2.0
+offset_right = 1150.0
+offset_bottom = 169.0
+
+[node name="MarginContainer" type="MarginContainer" parent="OpeningUI/AttributePanel" unique_id=2005432647]
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 158.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OpeningUI/AttributePanel/MarginContainer" unique_id=433887460]
+layout_mode = 2
+
+[node name="DayLabel" type="Label" parent="OpeningUI/AttributePanel/MarginContainer/VBoxContainer" unique_id=1878189728]
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="KnowledgeLabel" type="Label" parent="OpeningUI/AttributePanel/MarginContainer/VBoxContainer" unique_id=670434928]
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="CodingSkillLabel" type="Label" parent="OpeningUI/AttributePanel/MarginContainer/VBoxContainer" unique_id=214083039]
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="EnergyLabel" type="Label" parent="OpeningUI/AttributePanel/MarginContainer/VBoxContainer" unique_id=617049971]
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="ConfidenceLabel" type="Label" parent="OpeningUI/AttributePanel/MarginContainer/VBoxContainer" unique_id=1746779411]
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="PortfolioLabel" type="Label" parent="OpeningUI/AttributePanel/MarginContainer/VBoxContainer" unique_id=2064771856]
+layout_mode = 2
+horizontal_alignment = 2

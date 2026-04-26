@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://du4l5n26pr08v"]
+
+[ext_resource type="Script" uid="uid://irlutex5syvf" path="res://scenes/Control/SaveSelect.cs" id="1_2gkkp"]
+[ext_resource type="Texture2D" uid="uid://djj6uqemjj706" path="res://assets/pictures/CharactorBackgroud.jpg" id="2_fsxe2"]
+[ext_resource type="Texture2D" uid="uid://bmou2w0rk7hfk" path="res://assets/ui/PNG/Blue/Double/icon_square.png" id="3_3vqho"]
+[ext_resource type="Texture2D" uid="uid://daieuwyi5rxv0" path="res://assets/pictures/paper.jpg" id="4_1ru8o"]
+
+[node name="Control" type="Control" unique_id=1107834506 node_paths=PackedStringArray("slotButtons")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_2gkkp")
+slotButtons = [NodePath("SavingButtons/Slot1Button"), NodePath("SavingButtons/Slot2Button"), NodePath("SavingButtons/Slot3Button")]
+
+[node name="Backgound" type="TextureRect" parent="." unique_id=1404713783]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 640.0
+texture = ExtResource("2_fsxe2")
+expand_mode = 1
+
+[node name="SavingBlockBackground" type="TextureRect" parent="." unique_id=613860936]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 93.0
+offset_top = 154.0
+offset_right = 1058.0
+offset_bottom = 556.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_3vqho")
+
+[node name="SavingBlock" type="TextureRect" parent="SavingBlockBackground" unique_id=2055684523]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 7.0
+offset_right = 317.0
+offset_bottom = 390.0
+texture = ExtResource("4_1ru8o")
+expand_mode = 1
+
+[node name="SavingBlock2" type="TextureRect" parent="SavingBlockBackground" unique_id=821068360]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 8.0
+offset_right = 633.0
+offset_bottom = 391.0
+texture = ExtResource("4_1ru8o")
+expand_mode = 1
+
+[node name="SavingBlock3" type="TextureRect" parent="SavingBlockBackground" unique_id=1419974937]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 8.0
+offset_right = 950.0
+offset_bottom = 391.0
+texture = ExtResource("4_1ru8o")
+expand_mode = 1
+
+[node name="SavingButtons" type="Node" parent="." unique_id=948313168]
+
+[node name="Slot1Button" type="Button" parent="SavingButtons" unique_id=490328064]
+offset_left = 118.0
+offset_top = 172.0
+offset_right = 399.0
+offset_bottom = 533.0
+
+[node name="Slot2Button" type="Button" parent="SavingButtons" unique_id=1233057155]
+offset_left = 434.0
+offset_top = 174.0
+offset_right = 715.0
+offset_bottom = 533.0
+
+[node name="Slot3Button" type="Button" parent="SavingButtons" unique_id=1626192005]
+offset_left = 752.0
+offset_top = 174.0
+offset_right = 1033.0
+offset_bottom = 532.0
+
+[node name="BackButton" type="Button" parent="." unique_id=718760797]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 23.0
+offset_right = 89.0
+offset_bottom = 89.0
+text = "BACK"
