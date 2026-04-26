@@ -108,9 +108,14 @@ public partial class Dormitory : Node2D
 			}
 		}
 
-		GetNodeOrNull<Button>("OpeningUI/DestinationPanel/MarginContainer/VBoxContainer/TAOfficeButton")?.Pressed += () => OnDestinationSelected("ta_office");
-		GetNodeOrNull<Button>("OpeningUI/DestinationPanel/MarginContainer/VBoxContainer/CareerCenterButton")?.Pressed += () => OnDestinationSelected("career_center");
-		GetNodeOrNull<Button>("OpeningUI/DestinationPanel/MarginContainer/VBoxContainer/CancelButton")?.Pressed += HideDestinationPanel;
+		var taOfficeButton = GetNodeOrNull<Button>("OpeningUI/DestinationPanel/MarginContainer/VBoxContainer/TAOfficeButton");
+		if (taOfficeButton != null) taOfficeButton.Pressed += () => OnDestinationSelected("ta_office");
+
+		var careerCenterButton = GetNodeOrNull<Button>("OpeningUI/DestinationPanel/MarginContainer/VBoxContainer/CareerCenterButton");
+		if (careerCenterButton != null) careerCenterButton.Pressed += () => OnDestinationSelected("career_center");
+
+		var cancelButton = GetNodeOrNull<Button>("OpeningUI/DestinationPanel/MarginContainer/VBoxContainer/CancelButton");
+		if (cancelButton != null) cancelButton.Pressed += HideDestinationPanel;
 	}
 
 	private void SetupInitialState()
