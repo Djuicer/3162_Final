@@ -57,7 +57,7 @@ public partial class ScreenController : Node2D
 	private readonly List<QuestionData> questions = new List<QuestionData>
 	{
 		new QuestionData(
-			"Ticket #113: Why does this print 6?\\nint x = 1;\\nfor (int i = 0; i < 3; i++) x += i;",
+			"Ticket #113: Why does this print 6?\nint x = 1;\nfor (int i = 0; i < 3; i++) x += i;",
 			new [] { "Loop adds 0 + 1 + 2", "i starts from 1", "x resets every loop" },
 			0),
 		new QuestionData(
@@ -109,7 +109,8 @@ public partial class ScreenController : Node2D
 		var statsPanel = new Panel
 		{
 			Position = new Vector2(850, 34),
-			Size = new Vector2(290, 250)
+			Size = new Vector2(290, 250),
+			MouseFilter = Control.MouseFilterEnum.Ignore
 		};
 		uiLayer.AddChild(statsPanel);
 
@@ -149,7 +150,8 @@ public partial class ScreenController : Node2D
 		var logPanel = new Panel
 		{
 			Position = new Vector2(120, 420),
-			Size = new Vector2(920, 200)
+			Size = new Vector2(760, 200),
+			MouseFilter = Control.MouseFilterEnum.Ignore
 		};
 		uiLayer.AddChild(logPanel);
 
@@ -157,16 +159,18 @@ public partial class ScreenController : Node2D
 		{
 			Text = "Daily Feed",
 			Position = new Vector2(12, 8),
-			Size = new Vector2(120, 20)
+			Size = new Vector2(120, 20),
+			MouseFilter = Control.MouseFilterEnum.Ignore
 		};
 		logPanel.AddChild(logTitle);
 
 		logLabel = new Label
 		{
 			Position = new Vector2(12, 32),
-			Size = new Vector2(895, 155),
+			Size = new Vector2(735, 155),
 			AutowrapMode = TextServer.AutowrapMode.WordSmart,
-			VerticalAlignment = VerticalAlignment.Top
+			VerticalAlignment = VerticalAlignment.Top,
+			MouseFilter = Control.MouseFilterEnum.Ignore
 		};
 		logPanel.AddChild(logLabel);
 	}
@@ -577,7 +581,7 @@ public partial class ScreenController : Node2D
 			return;
 		}
 
-		logLabel.Text = $"• {message}\\n{logLabel.Text}";
+		logLabel.Text = $"• {message}\n{logLabel.Text}";
 	}
 
 	private readonly struct DialogueLine
