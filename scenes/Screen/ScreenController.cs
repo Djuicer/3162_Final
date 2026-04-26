@@ -6,6 +6,9 @@ public partial class ScreenController : Node2D
 {
 	private const int GraduationDay = 7;
 	private const int FocusBlocksPerDay = 3;
+	private const int GoodEndingPortfolio = 80;
+	private const int GoodEndingCoding = 12;
+	private const int GoodEndingConfidence = 9;
 
 	private TextureButton thisPcButton;
 	private TextureButton fileButton;
@@ -19,10 +22,19 @@ public partial class ScreenController : Node2D
 	private Label confidenceLabel;
 	private Label portfolioLabel;
 	private Label logLabel;
-	private Label minigameQuestionLabel;
+
+	private Panel dialoguePanel;
+	private Label dialogueSpeakerLabel;
+	private Label dialogueTextLabel;
+	private Button dialogueContinueButton;
 
 	private Panel minigamePanel;
+	private Label minigameQuestionLabel;
 	private Button[] answerButtons;
+
+	private Panel endingPanel;
+	private Label endingTitleLabel;
+	private Label endingBodyLabel;
 
 	private int currentSlot = -1;
 	private string playerName = "User";
@@ -33,23 +45,27 @@ public partial class ScreenController : Node2D
 	private int energy = 5;
 	private int confidence = 2;
 	private int portfolioProgress = 0;
+	private bool hasStartedLaptopStory = false;
 
 	private bool isGameOver = false;
+	private bool minigameUsedToday = false;
+
 	private QuestionData currentQuestion;
 	private readonly Random random = new Random();
+	private Queue<DialogueLine> dialogueQueue = new Queue<DialogueLine>();
 
 	private readonly List<QuestionData> questions = new List<QuestionData>
 	{
 		new QuestionData(
-			"Bug Ticket #113: Why does this print 6?\\nint x = 1;\\nfor (int i = 0; i < 3; i++) x += i;",
-			new [] { "Because loop adds 0 + 1 + 2", "Because i starts from 1", "Because x is reset each loop" },
+			"Ticket #113: Why does this print 6?\\nint x = 1;\\nfor (int i = 0; i < 3; i++) x += i;",
+			new [] { "Loop adds 0 + 1 + 2", "i starts from 1", "x resets every loop" },
 			0),
 		new QuestionData(
-			"Bug Ticket #207: Which fix prevents null crash when reading saveData[\"email\"]?",
-			new [] { "Use ContainsKey check first", "Cast to string directly", "Wrap all logic in while(true)" },
+			"Ticket #207: Which fix avoids null crash for saveData[\"email\"]?",
+			new [] { "Check ContainsKey first", "Cast straight to string", "Use a busy loop" },
 			0),
 		new QuestionData(
-			"Bug Ticket #341: Which data structure is best for quick key lookup by student id?",
+			"Ticket #341: Best structure for fast studentId lookup?",
 			new [] { "Dictionary", "List", "Queue" },
 			0)
 	};
@@ -57,10 +73,10 @@ public partial class ScreenController : Node2D
 	public override void _Ready()
 	{
 		GetNodes();
-		BuildComputerUi();
+		BuildGameUi();
 		LoadData();
 		RefreshUi();
-		AddLog("Laptop booted. You have limited days before graduation—make every session count.");
+		StartOpeningDialogue();
 	}
 
 	private void GetNodes()
@@ -76,20 +92,41 @@ public partial class ScreenController : Node2D
 		emailButton.Pressed += OnMinigamePressed;
 	}
 
-	private void BuildComputerUi()
+	private void BuildGameUi()
 	{
-		var uiLayer = new CanvasLayer();
-		uiLayer.Name = "ComputerGameplayUI";
+		var uiLayer = new CanvasLayer { Name = "ComputerGameplayUI" };
 		AddChild(uiLayer);
 
-		var statsPanel = new Panel();
-		statsPanel.Position = new Vector2(860, 40);
-		statsPanel.Size = new Vector2(270, 240);
+		BuildStatsPanel(uiLayer);
+		BuildLogPanel(uiLayer);
+		BuildDialoguePanel(uiLayer);
+		BuildMinigamePanel(uiLayer);
+		BuildEndingPanel(uiLayer);
+	}
+
+	private void BuildStatsPanel(CanvasLayer uiLayer)
+	{
+		var statsPanel = new Panel
+		{
+			Position = new Vector2(850, 34),
+			Size = new Vector2(290, 250)
+		};
 		uiLayer.AddChild(statsPanel);
 
-		var statsBox = new VBoxContainer();
-		statsBox.Position = new Vector2(10, 10);
-		statsBox.Size = new Vector2(250, 220);
+		var title = new Label
+		{
+			Text = "COMEBACK DASHBOARD",
+			Position = new Vector2(10, 8),
+			Size = new Vector2(270, 20),
+			HorizontalAlignment = HorizontalAlignment.Center
+		};
+		statsPanel.AddChild(title);
+
+		var statsBox = new VBoxContainer
+		{
+			Position = new Vector2(12, 34),
+			Size = new Vector2(260, 200)
+		};
 		statsPanel.AddChild(statsBox);
 
 		dayLabel = new Label();
@@ -105,43 +142,106 @@ public partial class ScreenController : Node2D
 		statsBox.AddChild(energyLabel);
 		statsBox.AddChild(confidenceLabel);
 		statsBox.AddChild(portfolioLabel);
+	}
 
-		var logPanel = new Panel();
-		logPanel.Position = new Vector2(130, 430);
-		logPanel.Size = new Vector2(900, 190);
+	private void BuildLogPanel(CanvasLayer uiLayer)
+	{
+		var logPanel = new Panel
+		{
+			Position = new Vector2(120, 420),
+			Size = new Vector2(920, 200)
+		};
 		uiLayer.AddChild(logPanel);
 
-		logLabel = new Label();
-		logLabel.Position = new Vector2(12, 12);
-		logLabel.Size = new Vector2(875, 166);
-		logLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
-		logLabel.VerticalAlignment = VerticalAlignment.Top;
-		logPanel.AddChild(logLabel);
+		var logTitle = new Label
+		{
+			Text = "Daily Feed",
+			Position = new Vector2(12, 8),
+			Size = new Vector2(120, 20)
+		};
+		logPanel.AddChild(logTitle);
 
-		minigamePanel = new Panel();
-		minigamePanel.Position = new Vector2(270, 120);
-		minigamePanel.Size = new Vector2(620, 260);
-		minigamePanel.Visible = false;
+		logLabel = new Label
+		{
+			Position = new Vector2(12, 32),
+			Size = new Vector2(895, 155),
+			AutowrapMode = TextServer.AutowrapMode.WordSmart,
+			VerticalAlignment = VerticalAlignment.Top
+		};
+		logPanel.AddChild(logLabel);
+	}
+
+	private void BuildDialoguePanel(CanvasLayer uiLayer)
+	{
+		dialoguePanel = new Panel
+		{
+			Position = new Vector2(180, 60),
+			Size = new Vector2(760, 180),
+			Visible = false
+		};
+		uiLayer.AddChild(dialoguePanel);
+
+		dialogueSpeakerLabel = new Label
+		{
+			Position = new Vector2(15, 10),
+			Size = new Vector2(180, 22),
+			Text = playerName
+		};
+		dialoguePanel.AddChild(dialogueSpeakerLabel);
+
+		dialogueTextLabel = new Label
+		{
+			Position = new Vector2(15, 40),
+			Size = new Vector2(730, 95),
+			AutowrapMode = TextServer.AutowrapMode.WordSmart
+		};
+		dialoguePanel.AddChild(dialogueTextLabel);
+
+		dialogueContinueButton = new Button
+		{
+			Text = "Continue",
+			Position = new Vector2(620, 142),
+			Size = new Vector2(120, 28)
+		};
+		dialogueContinueButton.Pressed += OnDialogueContinuePressed;
+		dialoguePanel.AddChild(dialogueContinueButton);
+	}
+
+	private void BuildMinigamePanel(CanvasLayer uiLayer)
+	{
+		minigamePanel = new Panel
+		{
+			Position = new Vector2(240, 80),
+			Size = new Vector2(700, 290),
+			Visible = false
+		};
 		uiLayer.AddChild(minigamePanel);
 
-		var questionTitle = new Label();
-		questionTitle.Text = "Interview Prep Minigame: Bug Fix Sprint";
-		questionTitle.Position = new Vector2(15, 10);
-		questionTitle.Size = new Vector2(590, 24);
+		var questionTitle = new Label
+		{
+			Text = "Minigame: Bug Fix Sprint",
+			Position = new Vector2(15, 10),
+			Size = new Vector2(670, 24),
+			HorizontalAlignment = HorizontalAlignment.Center
+		};
 		minigamePanel.AddChild(questionTitle);
 
-		minigameQuestionLabel = new Label();
-		minigameQuestionLabel.Position = new Vector2(15, 42);
-		minigameQuestionLabel.Size = new Vector2(590, 80);
-		minigameQuestionLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+		minigameQuestionLabel = new Label
+		{
+			Position = new Vector2(15, 42),
+			Size = new Vector2(670, 90),
+			AutowrapMode = TextServer.AutowrapMode.WordSmart
+		};
 		minigamePanel.AddChild(minigameQuestionLabel);
 
 		answerButtons = new Button[3];
 		for (int i = 0; i < answerButtons.Length; i++)
 		{
-			var button = new Button();
-			button.Position = new Vector2(15, 130 + i * 40);
-			button.Size = new Vector2(590, 34);
+			var button = new Button
+			{
+				Position = new Vector2(15, 145 + i * 42),
+				Size = new Vector2(670, 35)
+			};
 			int answerIndex = i;
 			button.Pressed += () => OnAnswerSelected(answerIndex);
 			answerButtons[i] = button;
@@ -149,8 +249,87 @@ public partial class ScreenController : Node2D
 		}
 	}
 
+	private void BuildEndingPanel(CanvasLayer uiLayer)
+	{
+		endingPanel = new Panel
+		{
+			Position = new Vector2(250, 90),
+			Size = new Vector2(650, 260),
+			Visible = false
+		};
+		uiLayer.AddChild(endingPanel);
+
+		endingTitleLabel = new Label
+		{
+			Position = new Vector2(20, 16),
+			Size = new Vector2(610, 34),
+			HorizontalAlignment = HorizontalAlignment.Center
+		};
+		endingPanel.AddChild(endingTitleLabel);
+
+		endingBodyLabel = new Label
+		{
+			Position = new Vector2(20, 58),
+			Size = new Vector2(610, 180),
+			AutowrapMode = TextServer.AutowrapMode.WordSmart
+		};
+		endingPanel.AddChild(endingBodyLabel);
+	}
+
+	private void StartOpeningDialogue()
+	{
+		if (hasStartedLaptopStory)
+		{
+			AddLog("Back on your laptop. Keep pushing toward graduation.");
+			return;
+		}
+
+		hasStartedLaptopStory = true;
+		QueueDialogue(
+			new DialogueLine(playerName, "This is my final chance before graduation."),
+			new DialogueLine(playerName, "If I stay disciplined on this laptop every day, I can still make a comeback."),
+			new DialogueLine("System", "Use desktop apps to train skills, build portfolio, and clear coding tickets.")
+		);
+		ShowNextDialogueLine();
+	}
+
+	private void OnDialogueContinuePressed()
+	{
+		ShowNextDialogueLine();
+	}
+
+	private void QueueDialogue(params DialogueLine[] lines)
+	{
+		foreach (var line in lines)
+		{
+			dialogueQueue.Enqueue(line);
+		}
+	}
+
+	private void ShowNextDialogueLine()
+	{
+		if (dialogueQueue.Count == 0)
+		{
+			dialoguePanel.Visible = false;
+			SetMainButtonsDisabled(false);
+			return;
+		}
+
+		var line = dialogueQueue.Dequeue();
+		dialogueSpeakerLabel.Text = line.Speaker;
+		dialogueTextLabel.Text = line.Text;
+		dialoguePanel.Visible = true;
+		SetMainButtonsDisabled(true);
+	}
+
 	private void LoadData()
 	{
+		if (GlobalVars.Instance == null || SaveManager.Instance == null)
+		{
+			GD.PrintErr("GlobalVars or SaveManager singleton missing.");
+			return;
+		}
+
 		currentSlot = GlobalVars.Instance.CurrentSlot;
 		if (currentSlot < 0)
 		{
@@ -171,11 +350,12 @@ public partial class ScreenController : Node2D
 		if (saveData.ContainsKey("energy")) energy = saveData["energy"].AsInt32();
 		if (saveData.ContainsKey("confidence")) confidence = saveData["confidence"].AsInt32();
 		if (saveData.ContainsKey("portfolio_progress")) portfolioProgress = saveData["portfolio_progress"].AsInt32();
+		if (saveData.ContainsKey("laptop_intro_seen")) hasStartedLaptopStory = saveData["laptop_intro_seen"].AsBool();
 	}
 
 	private void SaveData()
 	{
-		if (currentSlot < 0)
+		if (currentSlot < 0 || SaveManager.Instance == null)
 		{
 			return;
 		}
@@ -189,31 +369,39 @@ public partial class ScreenController : Node2D
 		saveData["energy"] = energy;
 		saveData["confidence"] = confidence;
 		saveData["portfolio_progress"] = portfolioProgress;
+		saveData["laptop_intro_seen"] = hasStartedLaptopStory;
 		saveData["scene_path"] = "res://scenes/Screen/screen.tscn";
 		SaveManager.Instance.SaveGame(currentSlot, saveData);
 	}
 
 	private void OnStudyPressed()
 	{
-		if (!TrySpendEnergy(1, "No energy left for coding drills.")) return;
+		if (!TrySpendEnergy(1, "Too tired for coding drills.")) return;
 
-		knowledge += 1;
+		knowledge += 2;
 		codingSkill += 2;
 		confidence += 1;
 		AdvanceTime();
-		AddLog("You solved algorithm drills. Coding skill and confidence improved.");
+		AddLog("You finished focused algorithm practice.");
+
+		if (codingSkill >= 8 && confidence >= 6)
+		{
+			QueueDialogue(new DialogueLine("System", "Momentum unlocked: you are now solving medium-level questions consistently."));
+			ShowNextDialogueLine();
+		}
+
 		RefreshUi();
 	}
 
 	private void OnPortfolioPressed()
 	{
-		if (!TrySpendEnergy(2, "You are too exhausted to build portfolio projects.")) return;
+		if (!TrySpendEnergy(2, "You need more energy to ship portfolio features.")) return;
 
-		int gain = 8 + codingSkill / 2;
+		int gain = 7 + codingSkill / 2 + knowledge / 4;
 		portfolioProgress = Mathf.Clamp(portfolioProgress + gain, 0, 100);
 		confidence += 1;
 		AdvanceTime();
-		AddLog($"You shipped a portfolio feature (+{gain}% portfolio progress).");
+		AddLog($"You pushed a project update (+{gain}% portfolio). Recruiters can now see clear progress.");
 		RefreshUi();
 	}
 
@@ -222,20 +410,20 @@ public partial class ScreenController : Node2D
 		int roll = random.Next(0, 3);
 		if (roll == 0)
 		{
-			confidence += 2;
 			knowledge += 1;
-			AddLog("You found a senior's internship roadmap. Motivation boosted.");
+			confidence += 2;
+			AddLog("You found a detailed internship prep roadmap from seniors.");
 		}
 		else if (roll == 1)
 		{
-			confidence = Mathf.Max(confidence - 1, 0);
-			AddLog("You doomscrolled classmates' offers. Confidence dropped slightly.");
+			confidence = Mathf.Max(0, confidence - 1);
+			AddLog("You compared yourself to others on social media. Slight confidence dip.");
 		}
 		else
 		{
 			codingSkill += 1;
 			knowledge += 1;
-			AddLog("You watched a system design walkthrough and took notes.");
+			AddLog("You learned practical backend tips from a short technical blog.");
 		}
 
 		AdvanceTime();
@@ -244,18 +432,24 @@ public partial class ScreenController : Node2D
 
 	private void OnMinigamePressed()
 	{
-		if (!TrySpendEnergy(1, "You need at least 1 energy to attempt the coding ticket.")) return;
+		if (minigameUsedToday)
+		{
+			AddLog("Bug Fix Sprint is available once per day. Try again next day.");
+			return;
+		}
+
+		if (!TrySpendEnergy(1, "Need at least 1 energy for coding ticket simulation.")) return;
 
 		currentQuestion = questions[random.Next(questions.Count)];
 		minigameQuestionLabel.Text = currentQuestion.Question;
-
 		for (int i = 0; i < answerButtons.Length; i++)
 		{
 			answerButtons[i].Text = currentQuestion.Options[i];
 		}
 
-		SetMainButtonsDisabled(true);
+		minigameUsedToday = true;
 		minigamePanel.Visible = true;
+		SetMainButtonsDisabled(true);
 	}
 
 	private void OnAnswerSelected(int answerIndex)
@@ -263,22 +457,28 @@ public partial class ScreenController : Node2D
 		bool correct = answerIndex == currentQuestion.CorrectIndex;
 		if (correct)
 		{
-			codingSkill += 2;
+			codingSkill += 3;
 			confidence += 2;
-			portfolioProgress = Mathf.Clamp(portfolioProgress + 6, 0, 100);
-			AddLog("Correct fix! Recruiter challenge cleared. Your portfolio reputation improved.");
+			portfolioProgress = Mathf.Clamp(portfolioProgress + 8, 0, 100);
+			AddLog("Great patch! Your solution passed review and boosted portfolio reputation.");
+			QueueDialogue(new DialogueLine("Recruiter Email", "Thanks for the clean fix. We'd like to keep an eye on your work."));
 		}
 		else
 		{
-			confidence = Mathf.Max(confidence - 1, 0);
 			knowledge += 1;
-			AddLog("Not the best fix, but you learned from the failed patch review.");
+			confidence = Mathf.Max(0, confidence - 1);
+			AddLog("Patch rejected, but you reviewed the postmortem and improved your understanding.");
 		}
 
 		AdvanceTime();
 		minigamePanel.Visible = false;
 		SetMainButtonsDisabled(false);
 		RefreshUi();
+
+		if (dialogueQueue.Count > 0)
+		{
+			ShowNextDialogueLine();
+		}
 	}
 
 	private bool TrySpendEnergy(int cost, string failText)
@@ -302,13 +502,16 @@ public partial class ScreenController : Node2D
 	private void AdvanceTime()
 	{
 		focusBlocks++;
-		if (focusBlocks >= FocusBlocksPerDay)
+		if (focusBlocks < FocusBlocksPerDay)
 		{
-			focusBlocks = 0;
-			currentDay++;
-			energy = Mathf.Min(energy + 3, 8);
-			AddLog("A new day starts. You rested a little and recovered energy.");
+			return;
 		}
+
+		focusBlocks = 0;
+		currentDay++;
+		energy = Mathf.Min(8, energy + 3);
+		minigameUsedToday = false;
+		AddLog("Day ended. You recovered some energy overnight.");
 
 		if (currentDay > GraduationDay)
 		{
@@ -320,34 +523,48 @@ public partial class ScreenController : Node2D
 	{
 		isGameOver = true;
 		SetMainButtonsDisabled(true);
+		endingPanel.Visible = true;
 
-		string ending;
-		if (portfolioProgress >= 80 && codingSkill >= 10 && confidence >= 8)
+		bool goodEnding = portfolioProgress >= GoodEndingPortfolio
+			&& codingSkill >= GoodEndingCoding
+			&& confidence >= GoodEndingConfidence;
+
+		if (goodEnding)
 		{
-			ending = "COMEBACK COMPLETE: You graduate with a strong portfolio and land interviews.";
+			endingTitleLabel.Text = "Ending A: Comeback Complete";
+			endingBodyLabel.Text =
+				$"You graduate with a strong story: portfolio {portfolioProgress}%, coding {codingSkill}, confidence {confidence}. " +
+				"You secure interviews and finally feel ready for a good software job.";
+			AddLog("Ending reached: Comeback Complete.");
 		}
 		else
 		{
-			ending = "Semester over: You improved, but need one more grind cycle for your target job.";
+			endingTitleLabel.Text = "Ending B: Not Yet";
+			endingBodyLabel.Text =
+				$"You made progress (portfolio {portfolioProgress}%, coding {codingSkill}, confidence {confidence}), " +
+				"but the comeback wasn't enough before graduation. The next cycle starts now.";
+			AddLog("Ending reached: Not Yet.");
 		}
 
-		AddLog(ending);
+		QueueDialogue(new DialogueLine("System", "Run finished. Press Exit to return and start again from a save slot."));
+		ShowNextDialogueLine();
 	}
 
 	private void SetMainButtonsDisabled(bool disabled)
 	{
-		thisPcButton.Disabled = disabled || isGameOver;
-		fileButton.Disabled = disabled || isGameOver;
-		browserButton.Disabled = disabled || isGameOver;
-		emailButton.Disabled = disabled || isGameOver;
+		bool shouldDisable = disabled || isGameOver;
+		thisPcButton.Disabled = shouldDisable;
+		fileButton.Disabled = shouldDisable;
+		browserButton.Disabled = shouldDisable;
+		emailButton.Disabled = shouldDisable;
 	}
 
 	private void RefreshUi()
 	{
-		dayLabel.Text = $"{playerName}  Day {Mathf.Min(currentDay, GraduationDay)} / {GraduationDay}";
+		dayLabel.Text = $"{playerName} - Day {Mathf.Min(currentDay, GraduationDay)}/{GraduationDay}";
 		knowledgeLabel.Text = $"Knowledge: {knowledge}";
 		codingSkillLabel.Text = $"Coding Skill: {codingSkill}";
-		energyLabel.Text = $"Energy: {energy} (sessions used: {focusBlocks}/{FocusBlocksPerDay})";
+		energyLabel.Text = $"Energy: {energy}   Sessions: {focusBlocks}/{FocusBlocksPerDay}";
 		confidenceLabel.Text = $"Confidence: {confidence}";
 		portfolioLabel.Text = $"Portfolio: {portfolioProgress}%";
 		SaveData();
@@ -355,7 +572,24 @@ public partial class ScreenController : Node2D
 
 	private void AddLog(string message)
 	{
-		logLabel.Text = $"{message}\\n\\n{logLabel.Text}";
+		if (logLabel == null)
+		{
+			return;
+		}
+
+		logLabel.Text = $"• {message}\\n{logLabel.Text}";
+	}
+
+	private readonly struct DialogueLine
+	{
+		public DialogueLine(string speaker, string text)
+		{
+			Speaker = speaker;
+			Text = text;
+		}
+
+		public string Speaker { get; }
+		public string Text { get; }
 	}
 
 	private readonly struct QuestionData
