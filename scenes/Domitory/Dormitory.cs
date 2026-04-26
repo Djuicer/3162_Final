@@ -54,6 +54,7 @@ public partial class Dormitory : Node2D
 	private string minigameSuccessNode = "";
 	private string minigameFailNode = "";
 	private int minigameCorrectAnswer = 0;
+	private readonly PackedScene taOfficeScene = GD.Load<PackedScene>("res://scenes/TAOffice/TAOffice.tscn");
 
 	public override void _Ready()
 	{
@@ -389,7 +390,34 @@ public partial class Dormitory : Node2D
 		}
 
 		HideDestinationPanel();
+		if (destination == "ta_office")
+		{
+			ShowTAOfficeScene();
+			return;
+		}
+
 		ExecuteChoice(pendingChoice);
+	}
+
+	private void ShowTAOfficeScene()
+	{
+		if (taOfficeScene == null)
+		{
+			ExecuteChoice(pendingChoice);
+			return;
+		}
+
+		var sceneInstance = taOfficeScene.Instantiate();
+		AddChild(sceneInstance);
+
+		if (sceneInstance is TAOfficeView officeView)
+			officeView.SceneClosed += OnTAOfficeClosed;
+	}
+
+	private void OnTAOfficeClosed()
+	{
+		if (pendingChoice != null)
+			ExecuteChoice(pendingChoice);
 	}
 
 	private void ExecuteChoice(StoryChoice choice)
