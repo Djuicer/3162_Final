@@ -27,6 +27,7 @@ public partial class SaveManager : Node
 		{
 			{ "player_name", playerName },
 			{ "current_day", 1 },
+			{ "focus_blocks", 0 },
 			{ "knowledge", 1 },
 			{ "coding_skill", 1 },
 			{ "energy", 5 },

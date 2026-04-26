@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://c5kbsovvaswlc"]
 
 [ext_resource type="Texture2D" uid="uid://cevey6xo2q6ua" path="res://assets/pictures/Screen.jpg" id="1_ixcsg"]
-[ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="3_0kd71"]
+[ext_resource type="Script" path="res://scenes/Screen/DesktopIconButton.cs" id="2_u4s6w"]
 [ext_resource type="Script" uid="uid://c58r1xitn8v8c" path="res://scenes/Screen/ReturnButton.cs" id="3_ep306"]
+[ext_resource type="Script" path="res://scenes/Screen/ScreenController.cs" id="4_6qceu"]
 
 [node name="Screen" type="Node2D" unique_id=438260087]
+script = ExtResource("4_6qceu")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1554281799]
 offset_left = 96.0
@@ -20,7 +22,7 @@ offset_left = 149.0
 offset_top = 51.0
 offset_right = 213.0
 offset_bottom = 105.0
-script = ExtResource("3_0kd71")
+script = ExtResource("2_u4s6w")
 TooltipLabel = NodePath("ThisPCLabel")
 
 [node name="ThisPCLabel" type="Label" parent="Button/ThisPCButton" unique_id=1476105772]
@@ -30,14 +32,14 @@ offset_left = 57.0
 offset_top = -7.0
 offset_right = 97.0
 offset_bottom = 16.0
-text = "This PC"
+text = "LeetCode"
 
 [node name="FileButton" type="TextureButton" parent="Button" unique_id=1212953962 node_paths=PackedStringArray("TooltipLabel")]
 offset_left = 151.0
 offset_top = 145.0
 offset_right = 215.0
 offset_bottom = 199.0
-script = ExtResource("3_0kd71")
+script = ExtResource("2_u4s6w")
 TooltipLabel = NodePath("FileLabel")
 
 [node name="FileLabel" type="Label" parent="Button/FileButton" unique_id=1003183644]
@@ -45,16 +47,16 @@ visible = false
 layout_mode = 0
 offset_left = 57.0
 offset_top = -7.0
-offset_right = 97.0
+offset_right = 152.0
 offset_bottom = 16.0
-text = "File"
+text = "Portfolio"
 
 [node name="BrowserButton" type="TextureButton" parent="Button" unique_id=52084960 node_paths=PackedStringArray("TooltipLabel")]
 offset_left = 150.0
 offset_top = 242.0
 offset_right = 214.0
 offset_bottom = 296.0
-script = ExtResource("3_0kd71")
+script = ExtResource("2_u4s6w")
 TooltipLabel = NodePath("BrowserLabel")
 
 [node name="BrowserLabel" type="Label" parent="Button/BrowserButton" unique_id=1025078588]
@@ -62,16 +64,16 @@ visible = false
 layout_mode = 0
 offset_left = 57.0
 offset_top = -7.0
-offset_right = 97.0
+offset_right = 124.0
 offset_bottom = 16.0
-text = "Browser"
+text = "Network"
 
 [node name="EmailButton" type="TextureButton" parent="Button" unique_id=582404792 node_paths=PackedStringArray("TooltipLabel")]
 offset_left = 150.0
 offset_top = 336.0
 offset_right = 214.0
 offset_bottom = 390.0
-script = ExtResource("3_0kd71")
+script = ExtResource("2_u4s6w")
 TooltipLabel = NodePath("EmailLabel")
 
 [node name="EmailLabel" type="Label" parent="Button/EmailButton" unique_id=848287422]
@@ -79,9 +81,9 @@ visible = false
 layout_mode = 0
 offset_left = 57.0
 offset_top = -7.0
-offset_right = 97.0
+offset_right = 114.0
 offset_bottom = 16.0
-text = "Email"
+text = "Bug Fix"
 
 [node name="ReturnButton" type="TextureButton" parent="Button" unique_id=1832527451 node_paths=PackedStringArray("TooltipLabel")]
 offset_left = 933.0
