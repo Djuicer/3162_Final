@@ -152,6 +152,53 @@ visible = false
 layout_mode = 2
 autowrap_mode = 3
 
+[node name="MiniGamePanel" type="Panel" parent="OpeningUI" unique_id=197551335]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -140.0
+offset_right = 260.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OpeningUI/MiniGamePanel" unique_id=659002781]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OpeningUI/MiniGamePanel/MarginContainer" unique_id=936605461]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PromptLabel" type="Label" parent="OpeningUI/MiniGamePanel/MarginContainer/VBoxContainer" unique_id=898005700]
+layout_mode = 2
+autowrap_mode = 3
+text = "Debug Sprint"
+
+[node name="AnswerButton1" type="Button" parent="OpeningUI/MiniGamePanel/MarginContainer/VBoxContainer" unique_id=806576601]
+layout_mode = 2
+text = "Answer 1"
+
+[node name="AnswerButton2" type="Button" parent="OpeningUI/MiniGamePanel/MarginContainer/VBoxContainer" unique_id=13278158]
+layout_mode = 2
+text = "Answer 2"
+
+[node name="AnswerButton3" type="Button" parent="OpeningUI/MiniGamePanel/MarginContainer/VBoxContainer" unique_id=989142856]
+layout_mode = 2
+text = "Answer 3"
+
 [node name="AttributePanel" type="Panel" parent="OpeningUI" unique_id=2122726882]
 offset_left = 1027.0
 offset_top = 2.0
