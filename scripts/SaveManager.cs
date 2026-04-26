@@ -33,7 +33,9 @@ public partial class SaveManager : Node
 			{ "confidence", 2 },
 			{ "portfolio_progress", 0 },
 			{ "has_seen_opening", false },
-			{ "scene_path", "res://scenes/Domitory/dormitory.tscn" }
+			{ "scene_path", "res://scenes/Domitory/dormitory.tscn" },
+			{ "story_node", "start" },
+			{ "ending_reached", false }
 		};
 	}
 
