@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://blrlswyfwq8ye" path="res://scenes/Domitory/Dormitory.cs" id="1_gpvd8"]
 [ext_resource type="Texture2D" uid="uid://cv7djbxlb7gf1" path="res://assets/pictures/1773801375903.png" id="1_oniru"]
 [ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="2_4nve3"]
-[ext_resource type="PackedScene" uid="uid://c5kbsovvaswlc" path="res://scenes/Screen/screen.tscn" id="3_1bqsu"]
+[ext_resource type="Script" path="res://scenes/Domitory/ComputerButton.cs" id="3_j1w3r"]
+[ext_resource type="PackedScene" uid="uid://c5kbsovvaswlc" path="res://scenes/Screen/screen.tscn" id="4_1bqsu"]
 
 [node name="Dormitory" type="Node2D" unique_id=615578868]
 script = ExtResource("1_gpvd8")
@@ -24,7 +25,7 @@ offset_right = 343.0
 offset_bottom = 633.0
 script = ExtResource("2_4nve3")
 TooltipLabel = NodePath("../ComputerButton/ComputerLabel")
-TargetScene = ExtResource("3_1bqsu")
+TargetScene = ExtResource("4_1bqsu")
 
 [node name="OutsideLabel" type="Label" parent="Button/OutsideButton" unique_id=735845535]
 visible = false
@@ -40,9 +41,11 @@ offset_left = 170.0
 offset_top = 161.0
 offset_right = 230.0
 offset_bottom = 262.0
-script = ExtResource("2_4nve3")
+script = ExtResource("3_j1w3r")
 TooltipLabel = NodePath("ComputerLabel")
-TargetScene = ExtResource("3_1bqsu")
+TargetScene = ExtResource("4_1bqsu")
+InteractionLabel = NodePath("../../OpeningUI/DialoguePanel/DialogueLabel")
+InteractionPanel = NodePath("../../OpeningUI/DialoguePanel")
 
 [node name="ComputerLabel" type="Label" parent="Button/ComputerButton" unique_id=927498907]
 visible = false
@@ -51,8 +54,7 @@ offset_left = 57.0
 offset_top = -7.0
 offset_right = 97.0
 offset_bottom = 16.0
-text = "Computer
-"
+text = "Check Computer"
 
 [node name="FadeOverlay" type="ColorRect" parent="." unique_id=493943287]
 offset_right = 1152.0
