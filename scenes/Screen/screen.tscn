@@ -15,6 +15,14 @@ offset_bottom = 645.0
 texture = ExtResource("1_ixcsg")
 expand_mode = 1
 
+[node name="TopNotification" type="Label" parent="."]
+offset_left = 270.0
+offset_top = 52.0
+offset_right = 875.0
+offset_bottom = 84.0
+text = "New Email • BrightPath Tech Careers"
+horizontal_alignment = 1
+
 [node name="Button" type="Node" parent="." unique_id=3714317]
 
 [node name="ThisPCButton" type="TextureButton" parent="Button" unique_id=635497432 node_paths=PackedStringArray("TooltipLabel")]
@@ -102,29 +110,43 @@ offset_right = 97.0
 offset_bottom = 16.0
 text = "Exit"
 
+[node name="OpenEmailButton" type="Button" parent="."]
+offset_left = 770.0
+offset_top = 88.0
+offset_right = 940.0
+offset_bottom = 126.0
+text = "Assessment Invitation"
+
 [node name="AssessmentPanel" type="Panel" parent="."]
-offset_left = 250.0
-offset_top = 90.0
-offset_right = 900.0
-offset_bottom = 520.0
+offset_left = 230.0
+offset_top = 100.0
+offset_right = 920.0
+offset_bottom = 530.0
 
 [node name="MarginContainer" type="MarginContainer" parent="AssessmentPanel"]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 634.0
+offset_right = 674.0
 offset_bottom = 414.0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
 [node name="VBox" type="VBoxContainer" parent="AssessmentPanel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 10
+
+[node name="HeaderLabel" type="Label" parent="AssessmentPanel/MarginContainer/VBox"]
+layout_mode = 2
+text = "Inbox - 1 New Message"
+
+[node name="Divider" type="HSeparator" parent="AssessmentPanel/MarginContainer/VBox"]
+layout_mode = 2
 
 [node name="FromLabel" type="Label" parent="AssessmentPanel/MarginContainer/VBox"]
 layout_mode = 2
-text = "From: BrightPath Tech Recruitment"
+text = "From: BrightPath Tech Careers"
 
 [node name="SubjectLabel" type="Label" parent="AssessmentPanel/MarginContainer/VBox"]
 layout_mode = 2
@@ -133,9 +155,18 @@ text = "Subject: Online Coding Assessment Invitation"
 [node name="BodyLabel" type="Label" parent="AssessmentPanel/MarginContainer/VBox"]
 custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
-text = "Hello Candidate,\n\nCongratulations! You have been shortlisted for our Junior Developer Internship pathway.\n\nAs the next step, please complete our online debugging assessment. Your results will help us decide who advances to interview rounds.\n\nBest regards,\nBrightPath Tech"
+text = "Hi,\n\nThank you for applying for the Junior Developer Internship.\n\nWe would like to invite you to complete a short online assessment. This is your chance to show your problem-solving skills and take the next step toward your comeback.\n\nPlease complete the assessment when you are ready."
 autowrap_mode = 3
 
-[node name="StartAssessmentButton" type="Button" parent="AssessmentPanel/MarginContainer/VBox"]
+[node name="ButtonRow" type="HBoxContainer" parent="AssessmentPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="NotNowButton" type="Button" parent="AssessmentPanel/MarginContainer/VBox/ButtonRow"]
+layout_mode = 2
+text = "Not Now"
+
+[node name="StartAssessmentButton" type="Button" parent="AssessmentPanel/MarginContainer/VBox/ButtonRow"]
 layout_mode = 2
 text = "Start Assessment"
