@@ -6,7 +6,7 @@ public partial class ScreenEvent : Node2D
 
     public override void _Ready()
     {
-        var startButton = GetNode<Button>("AssessmentPanel/StartAssessmentButton");
+        var startButton = GetNode<Button>("AssessmentPanel/MarginContainer/VBox/StartAssessmentButton");
         startButton.Pressed += OnStartAssessmentPressed;
     }
 
