@@ -94,9 +94,9 @@ public partial class DebugQuiz : Control
 
         if (_currentQuestionIndex >= _questions.Count)
         {
-            AssessmentSession.LastScore = _score;
             AssessmentSession.TotalQuestions = _questions.Count;
-            GetTree().ChangeSceneToFile("res://scenes/Ending/AssessmentEnding.tscn");
+            AssessmentSession.ApplyAssessmentRewards(_score);
+            GetTree().ChangeSceneToFile("res://scenes/Ending/AssessmentResult.tscn");
             return;
         }
 
