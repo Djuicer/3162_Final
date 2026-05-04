@@ -33,8 +33,12 @@ public partial class Dormitory : Node2D
 	private Label confidenceLabel;
 	private Label portfolioLabel;
 
-	private TextureButton computerButton;
+	private Area2D computerInteractionArea;
+	private Label computerPromptLabel;
 	private TextureButton outsideButton;
+
+	private bool canUseComputer = false;
+	private bool playerInComputerZone = false;
 
 	private int dialogueIndex = 0;
 	private List<(string speaker, string text)> openingDialogue;
@@ -49,48 +53,48 @@ public partial class Dormitory : Node2D
 		StartFadeIn();
 	}
 
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (!canUseComputer || !playerInComputerZone)
+		{
+			return;
+		}
+
+		if (@event.IsActionPressed("interact"))
+		{
+			GetTree().ChangeSceneToFile("res://scenes/Screen/screen.tscn");
+		}
+	}
+
 	private void GetNodes()
 	{
 		fadeOverlay = GetNodeOrNull<ColorRect>("FadeOverlay");
-
 		openingUI = GetNodeOrNull<CanvasLayer>("OpeningUI");
 		dialoguePanel = GetNodeOrNull<Panel>("OpeningUI/DialoguePanel");
 		attributePanel = GetNodeOrNull<Panel>("OpeningUI/AttributePanel");
-
 		speakerLabel = GetNodeOrNull<Label>("OpeningUI/DialoguePanel/SpeakerLabel");
 		dialogueLabel = GetNodeOrNull<Label>("OpeningUI/DialoguePanel/DialogueLabel");
 		continueButton = GetNodeOrNull<Button>("OpeningUI/DialoguePanel/ContinueButton");
-
 		dayLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/DayLabel");
 		knowledgeLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/KnowledgeLabel");
 		codingSkillLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/CodingSkillLabel");
 		energyLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/EnergyLabel");
 		confidenceLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/ConfidenceLabel");
 		portfolioLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/PortfolioLabel");
-
-		computerButton = GetNodeOrNull<TextureButton>("Button/ComputerButton");
+		computerInteractionArea = GetNodeOrNull<Area2D>("ComputerInteractionArea");
+		computerPromptLabel = GetNodeOrNull<Label>("ComputerInteractionArea/PromptLabel");
 		outsideButton = GetNodeOrNull<TextureButton>("Button/OutsideButton");
 
-		if (fadeOverlay == null) GD.PrintErr("Missing node: FadeOverlay");
-		if (openingUI == null) GD.PrintErr("Missing node: OpeningUI");
-		if (dialoguePanel == null) GD.PrintErr("Missing node: OpeningUI/DialoguePanel");
-		if (attributePanel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel");
-		if (speakerLabel == null) GD.PrintErr("Missing node: OpeningUI/DialoguePanel/SpeakerLabel");
-		if (dialogueLabel == null) GD.PrintErr("Missing node: OpeningUI/DialoguePanel/DialogueLabel");
-		if (continueButton == null) GD.PrintErr("Missing node: OpeningUI/DialoguePanel/ContinueButton");
-
-		if (dayLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/DayLabel");
-		if (knowledgeLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/KnowledgeLabel");
-		if (codingSkillLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/CodingSkillLabel");
-		if (energyLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/EnergyLabel");
-		if (confidenceLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/ConfidenceLabel");
-		if (portfolioLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/PortfolioLabel");
-
-		if (computerButton == null) GD.PrintErr("Missing node: Button/ComputerButton");
-		if (outsideButton == null) GD.PrintErr("Missing node: Button/OutsideButton");
-
 		if (continueButton != null)
+		{
 			continueButton.Pressed += OnContinuePressed;
+		}
+
+		if (computerInteractionArea != null)
+		{
+			computerInteractionArea.BodyEntered += OnComputerAreaBodyEntered;
+			computerInteractionArea.BodyExited += OnComputerAreaBodyExited;
+		}
 	}
 
 	private void SetupInitialState()
@@ -98,9 +102,12 @@ public partial class Dormitory : Node2D
 		openingUI.Visible = false;
 		dialoguePanel.Visible = false;
 		attributePanel.Visible = false;
-
-		computerButton.Disabled = true;
 		outsideButton.Disabled = true;
+
+		if (computerPromptLabel != null)
+		{
+			computerPromptLabel.Visible = false;
+		}
 
 		fadeOverlay.Visible = true;
 		fadeOverlay.Modulate = new Color(1, 1, 1, 1);
@@ -109,44 +116,19 @@ public partial class Dormitory : Node2D
 	private void LoadGameData()
 	{
 		currentSlot = GlobalVars.Instance.CurrentSlot;
-
-		if (currentSlot < 0)
-		{
-			GD.PrintErr("No save slot selected.");
-			return;
-		}
+		if (currentSlot < 0) return;
 
 		var saveData = SaveManager.Instance.LoadGame(currentSlot);
+		if (saveData.Count == 0) return;
 
-		if (saveData.Count == 0)
-		{
-			GD.PrintErr($"Slot {currentSlot} has no save data.");
-			return;
-		}
-
-		if (saveData.ContainsKey("player_name"))
-			playerName = saveData["player_name"].AsString();
-
-		if (saveData.ContainsKey("current_day"))
-			currentDay = saveData["current_day"].AsInt32();
-
-		if (saveData.ContainsKey("knowledge"))
-			knowledge = saveData["knowledge"].AsInt32();
-
-		if (saveData.ContainsKey("coding_skill"))
-			codingSkill = saveData["coding_skill"].AsInt32();
-
-		if (saveData.ContainsKey("energy"))
-			energy = saveData["energy"].AsInt32();
-
-		if (saveData.ContainsKey("confidence"))
-			confidence = saveData["confidence"].AsInt32();
-
-		if (saveData.ContainsKey("portfolio_progress"))
-			portfolioProgress = saveData["portfolio_progress"].AsInt32();
-
-		if (saveData.ContainsKey("has_seen_opening"))
-			hasSeenOpening = saveData["has_seen_opening"].AsBool();
+		if (saveData.ContainsKey("player_name")) playerName = saveData["player_name"].AsString();
+		if (saveData.ContainsKey("current_day")) currentDay = saveData["current_day"].AsInt32();
+		if (saveData.ContainsKey("knowledge")) knowledge = saveData["knowledge"].AsInt32();
+		if (saveData.ContainsKey("coding_skill")) codingSkill = saveData["coding_skill"].AsInt32();
+		if (saveData.ContainsKey("energy")) energy = saveData["energy"].AsInt32();
+		if (saveData.ContainsKey("confidence")) confidence = saveData["confidence"].AsInt32();
+		if (saveData.ContainsKey("portfolio_progress")) portfolioProgress = saveData["portfolio_progress"].AsInt32();
+		if (saveData.ContainsKey("has_seen_opening")) hasSeenOpening = saveData["has_seen_opening"].AsBool();
 	}
 
 	private void BuildOpeningDialogue()
@@ -168,11 +150,8 @@ public partial class Dormitory : Node2D
 		tween.TweenCallback(Callable.From(() =>
 		{
 			fadeOverlay.Visible = false;
-
-			if (hasSeenOpening)
-				FinishOpeningScene();
-			else
-				StartOpeningDialogue();
+			if (hasSeenOpening) FinishOpeningScene();
+			else StartOpeningDialogue();
 		}));
 	}
 
@@ -181,7 +160,6 @@ public partial class Dormitory : Node2D
 		openingUI.Visible = true;
 		dialoguePanel.Visible = true;
 		attributePanel.Visible = false;
-
 		dialogueIndex = 0;
 		ShowDialogueLine();
 	}
@@ -196,7 +174,6 @@ public partial class Dormitory : Node2D
 		}
 
 		var line = openingDialogue[dialogueIndex];
-
 		speakerLabel.Text = line.speaker;
 		dialogueLabel.Text = line.text;
 	}
@@ -212,11 +189,27 @@ public partial class Dormitory : Node2D
 		openingUI.Visible = true;
 		dialoguePanel.Visible = false;
 		attributePanel.Visible = true;
-
 		UpdateAttributePanel();
-
-		computerButton.Disabled = false;
+		canUseComputer = true;
 		outsideButton.Disabled = true;
+	}
+
+	private void OnComputerAreaBodyEntered(Node2D body)
+	{
+		if (body is CharacterBody2D)
+		{
+			playerInComputerZone = true;
+			if (canUseComputer && computerPromptLabel != null) computerPromptLabel.Visible = true;
+		}
+	}
+
+	private void OnComputerAreaBodyExited(Node2D body)
+	{
+		if (body is CharacterBody2D)
+		{
+			playerInComputerZone = false;
+			if (computerPromptLabel != null) computerPromptLabel.Visible = false;
+		}
 	}
 
 	private void UpdateAttributePanel()
@@ -232,7 +225,6 @@ public partial class Dormitory : Node2D
 	private void MarkOpeningAsSeen()
 	{
 		hasSeenOpening = true;
-
 		var saveData = SaveManager.Instance.LoadGame(currentSlot);
 		saveData["has_seen_opening"] = true;
 		SaveManager.Instance.SaveGame(currentSlot, saveData);
