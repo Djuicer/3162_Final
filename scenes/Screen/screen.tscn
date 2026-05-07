@@ -3,8 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://cevey6xo2q6ua" path="res://assets/pictures/Screen.jpg" id="1_ixcsg"]
 [ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="3_0kd71"]
 [ext_resource type="Script" uid="uid://c58r1xitn8v8c" path="res://scenes/Screen/ReturnButton.cs" id="3_ep306"]
+[ext_resource type="Script" path="res://scenes/Screen/ScreenProfileUI.cs" id="4_profile"]
 
 [node name="Screen" type="Node2D" unique_id=438260087]
+script = ExtResource("4_profile")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1554281799]
 offset_left = 96.0
@@ -99,3 +101,77 @@ offset_top = -7.0
 offset_right = 97.0
 offset_bottom = 16.0
 text = "Exit"
+
+[node name="ProfilePanel" type="Panel" parent="."]
+offset_left = 290.0
+offset_top = 42.0
+offset_right = 864.0
+offset_bottom = 598.0
+
+[node name="Margin" type="MarginContainer" parent="ProfilePanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 566.0
+offset_bottom = 548.0
+
+[node name="VBox" type="VBoxContainer" parent="ProfilePanel/Margin"]
+layout_mode = 2
+
+[node name="PlayerNameLabel" type="Label" parent="ProfilePanel/Margin/VBox"]
+layout_mode = 2
+text = "Name:"
+
+[node name="DayLabel" type="Label" parent="ProfilePanel/Margin/VBox"]
+layout_mode = 2
+text = "Day:"
+
+[node name="GoalLabel" type="Label" parent="ProfilePanel/Margin/VBox"]
+layout_mode = 2
+text = "Goal:"
+
+[node name="CareerReadinessLabel" type="Label" parent="ProfilePanel/Margin/VBox"]
+layout_mode = 2
+text = "Career Readiness:"
+
+[node name="FocusLabel" type="Label" parent="ProfilePanel/Margin/VBox"]
+layout_mode = 2
+text = "Focus:"
+
+[node name="EnergyLabel" type="Label" parent="ProfilePanel/Margin/VBox"]
+layout_mode = 2
+text = "Energy:"
+
+[node name="KnowledgeLabel" type="Label" parent="ProfilePanel/Margin/VBox"]
+layout_mode = 2
+text = "Knowledge:"
+
+[node name="ConfidenceLabel" type="Label" parent="ProfilePanel/Margin/VBox"]
+layout_mode = 2
+text = "Confidence:"
+
+[node name="Actions" type="VBoxContainer" parent="ProfilePanel"]
+offset_left = 318.0
+offset_top = 229.0
+offset_right = 560.0
+offset_bottom = 541.0
+
+[node name="StudyButton" type="Button" parent="ProfilePanel/Actions"]
+layout_mode = 2
+text = "Study CS"
+
+[node name="CodingButton" type="Button" parent="ProfilePanel/Actions"]
+layout_mode = 2
+text = "Coding Practice"
+
+[node name="SleepButton" type="Button" parent="ProfilePanel/Actions"]
+layout_mode = 2
+text = "Sleep"
+
+[node name="ProcrastinateButton" type="Button" parent="ProfilePanel/Actions"]
+layout_mode = 2
+text = "Procrastinate"
+
+[node name="InternshipButton" type="Button" parent="ProfilePanel/Actions"]
+layout_mode = 2
+text = "Apply For Internship"
