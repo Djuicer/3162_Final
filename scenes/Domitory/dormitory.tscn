@@ -12,6 +12,9 @@ size = Vector2(100, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_interact"]
 size = Vector2(190, 130)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lab_door"]
+size = Vector2(180, 150)
+
 [node name="Dormitory" type="Node2D" unique_id=615578868]
 script = ExtResource("1_gpvd8")
 
@@ -37,6 +40,12 @@ position = Vector2(812, 215)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BedInteractArea"]
 shape = SubResource("RectangleShape2D_bed_interact")
+
+[node name="LabDoorInteractArea" type="Area2D" parent="."]
+position = Vector2(255, 565)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LabDoorInteractArea"]
+shape = SubResource("RectangleShape2D_lab_door")
 
 [node name="Button" type="Node" parent="." unique_id=1975054436]
 
@@ -211,7 +220,8 @@ E: Interact"
 [node name="LocationsLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 autowrap_mode = 3
-text = "Computer: Study, code, apply for internships
+text = "Computer: Check profile, coding practice, internship actions
+Door: Go to Computer Lab for Study CS
 Bed: Sleep and start the next day"
 
 [node name="StatsLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
@@ -248,9 +258,9 @@ layout_mode = 2
 autowrap_mode = 3
 text = "Final semester has started.
 You have 7 days to make a comeback.
-Use your computer to study, practice coding, and apply for internships.
-Each activity costs actions and Energy.
-Sleep at your bed to start the next day."
+Go to the Computer Lab to Study CS.
+Use your dorm computer to check your profile, coding practice, and internships.
+Sleep at your bed when you are out of actions."
 
 [node name="OkButton" type="Button" parent="OpeningUI/TutorialPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
