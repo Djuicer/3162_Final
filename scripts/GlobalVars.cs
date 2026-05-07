@@ -12,12 +12,32 @@ public partial class GlobalVars : Node
 	public PlayerAttributes Attributes { get; private set; } = new PlayerAttributes();
 
 	public string IntroScenePath { get; set; } = DefaultDormitoryScenePath;
+	public string ReturnScenePath { get; set; } = "res://scenes/Domitory/dormitory.tscn";
 
 	public bool HasSeenDormitoryTutorial { get; set; }
+	public bool HasReadDancePartyEmail { get; set; }
+	public bool DancePartyUnlocked { get; set; }
+	public bool PartyAttended { get; set; }
+	public bool PartyNetworkingUnlocked { get; set; }
+	public int PartyGoodChoices { get; set; }
+	public bool PartyEventCompleted { get; set; }
+	public bool Day5NpcMet { get; set; }
+	public bool ITBallInvited { get; set; }
 
 
 	public string GetCurrentHintMessage()
 	{
+		if (Profile.CurrentDay >= 3 && !DancePartyUnlocked)
+			return "You have a new email. Check your inbox.";
+		if (Profile.CurrentDay >= 3 && DancePartyUnlocked && !PartyAttended)
+			return "You have a party invitation in your email. It may help your networking.";
+		if (PartyNetworkingUnlocked)
+			return "Your party connection may help your job prospects.";
+		if (ITBallInvited)
+			return "You have an IT Ball invitation in your email.";
+		if (Profile.CurrentDay >= 5 && !Day5NpcMet)
+			return "Someone in the Innovation Hub might have an opportunity for you.";
+
 		if (Profile.ActionsLeft <= 0)
 			return "You have no actions left. Go to bed and sleep.";
 
@@ -28,9 +48,9 @@ public partial class GlobalVars : Node
 			return "Graduation is close. Focus on Career Readiness.";
 
 		if (Attributes.Knowledge < 40)
-			return "Your Knowledge is low. Study CS or practice coding.";
+			return "Your Knowledge is low. Study CS is now done in the Computer Lab.";
 
-		return "Choose an activity to improve your comeback.";
+		return "Check your email for opportunities and events.";
 	}
 
 	public string GetDormitoryHintMessage()
@@ -39,13 +59,21 @@ public partial class GlobalVars : Node
 			return "No actions left: sleep at bed.";
 		if (Attributes.Energy <= 20)
 			return "Low Energy: sleep soon.";
-		return "Use computer to train stats.";
+		return "Computer Lab: Study CS. Innovation Hub: Practice Coding. Career Centre: Practice Interviews.";
 	}
 
 	public void ResetGame()
 	{
 		Profile.ResetToDefaults();
 		Attributes.ResetToDefaults();
+		HasReadDancePartyEmail = false;
+		DancePartyUnlocked = false;
+			PartyAttended = false;
+			PartyNetworkingUnlocked = false;
+			PartyGoodChoices = 0;
+			PartyEventCompleted = false;
+			Day5NpcMet = false;
+			ITBallInvited = false;
 	}
 
 	public override void _EnterTree()
