@@ -1,9 +1,19 @@
-[gd_scene format=3 uid="uid://bhvfqdy73kbcm"]
+[gd_scene load_steps=8 format=3 uid="uid://bhvfqdy73kbcm"]
 
 [ext_resource type="Script" uid="uid://blrlswyfwq8ye" path="res://scenes/Domitory/Dormitory.cs" id="1_gpvd8"]
 [ext_resource type="Texture2D" uid="uid://cv7djbxlb7gf1" path="res://assets/pictures/1773801375903.png" id="1_oniru"]
 [ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="2_4nve3"]
 [ext_resource type="PackedScene" uid="uid://c5kbsovvaswlc" path="res://scenes/Screen/screen.tscn" id="3_1bqsu"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="4_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_room"]
+size = Vector2(948, 644)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_computer"]
+size = Vector2(80, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_prompt"]
+size = Vector2(60, 90)
 
 [node name="Dormitory" type="Node2D" unique_id=615578868]
 script = ExtResource("1_gpvd8")
@@ -40,9 +50,8 @@ offset_left = 170.0
 offset_top = 161.0
 offset_right = 230.0
 offset_bottom = 262.0
-script = ExtResource("2_4nve3")
-TooltipLabel = NodePath("ComputerLabel")
-TargetScene = ExtResource("3_1bqsu")
+mouse_filter = 2
+disabled = true
 
 [node name="ComputerLabel" type="Label" parent="Button/ComputerButton" unique_id=927498907]
 visible = false
@@ -53,6 +62,35 @@ offset_right = 97.0
 offset_bottom = 16.0
 text = "Computer
 "
+
+[node name="RoomBounds" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomBounds"]
+position = Vector2(573, 324)
+shape = SubResource("RectangleShape2D_room")
+
+[node name="ComputerBlocker" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComputerBlocker"]
+position = Vector2(205, 210)
+shape = SubResource("RectangleShape2D_computer")
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+position = Vector2(540, 470)
+
+[node name="ComputerInteractionArea" type="Area2D" parent="."]
+position = Vector2(205, 235)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComputerInteractionArea"]
+shape = SubResource("RectangleShape2D_prompt")
+
+[node name="PromptLabel" type="Label" parent="ComputerInteractionArea"]
+visible = false
+offset_left = -32.0
+offset_top = -74.0
+offset_right = 48.0
+offset_bottom = -51.0
+text = "Press E"
 
 [node name="FadeOverlay" type="ColorRect" parent="." unique_id=493943287]
 offset_right = 1152.0
