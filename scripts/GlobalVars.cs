@@ -13,6 +13,35 @@ public partial class GlobalVars : Node
 
 	public string IntroScenePath { get; set; } = DefaultDormitoryScenePath;
 
+	public bool HasSeenDormitoryTutorial { get; set; }
+
+
+	public string GetCurrentHintMessage()
+	{
+		if (Profile.ActionsLeft <= 0)
+			return "You have no actions left. Go to bed and sleep.";
+
+		if (Attributes.Energy <= 20)
+			return "Your Energy is low. Consider sleeping soon.";
+
+		if (Profile.CareerReadiness < 40 && Profile.CurrentDay >= 5)
+			return "Graduation is close. Focus on Career Readiness.";
+
+		if (Attributes.Knowledge < 40)
+			return "Your Knowledge is low. Study CS or practice coding.";
+
+		return "Choose an activity to improve your comeback.";
+	}
+
+	public string GetDormitoryHintMessage()
+	{
+		if (Profile.ActionsLeft <= 0)
+			return "No actions left: sleep at bed.";
+		if (Attributes.Energy <= 20)
+			return "Low Energy: sleep soon.";
+		return "Use computer to train stats.";
+	}
+
 	public void ResetGame()
 	{
 		Profile.ResetToDefaults();

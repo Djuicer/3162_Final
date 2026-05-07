@@ -176,6 +176,86 @@ horizontal_alignment = 2
 layout_mode = 2
 horizontal_alignment = 2
 
+
+[node name="GuidancePanel" type="Panel" parent="OpeningUI"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 430.0
+offset_bottom = 280.0
+
+[node name="MarginContainer" type="MarginContainer" parent="OpeningUI/GuidancePanel"]
+offset_right = 414.0
+offset_bottom = 264.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OpeningUI/GuidancePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Today's Objective"
+
+[node name="ObjectiveLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Use your computer to improve your skills before the final semester ends."
+
+[node name="ControlsLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "WASD / Arrow Keys: Move
+E: Interact"
+
+[node name="LocationsLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Computer: Study, code, apply for internships
+Bed: Sleep and start the next day"
+
+[node name="StatsLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Day 1 / 7
+Actions Left 3 / 3
+Energy 70 / 100"
+
+[node name="HintLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Hint: Use computer to train stats."
+
+[node name="TutorialPanel" type="Panel" parent="OpeningUI"]
+visible = false
+offset_left = 275.0
+offset_top = 170.0
+offset_right = 875.0
+offset_bottom = 470.0
+
+[node name="MarginContainer" type="MarginContainer" parent="OpeningUI/TutorialPanel"]
+offset_right = 600.0
+offset_bottom = 300.0
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OpeningUI/TutorialPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="TutorialText" type="Label" parent="OpeningUI/TutorialPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Final semester has started.
+You have 7 days to make a comeback.
+Use your computer to study, practice coding, and apply for internships.
+Each activity costs actions and Energy.
+Sleep at your bed to start the next day."
+
+[node name="OkButton" type="Button" parent="OpeningUI/TutorialPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "OK"
+
 [node name="InteractPromptLabel" type="Label" parent="OpeningUI"]
 visible = false
 anchors_preset = 7
