@@ -1,0 +1,48 @@
+using Godot;
+
+public partial class PlayerAttributes : RefCounted
+{
+    public const int MinValue = 0;
+    public const int MaxValue = 100;
+
+    private int _focus = 50;
+    private int _energy = 70;
+    private int _knowledge = 20;
+    private int _confidence = 30;
+
+    public int Focus
+    {
+        get => _focus;
+        set => _focus = Mathf.Clamp(value, MinValue, MaxValue);
+    }
+
+    public int Energy
+    {
+        get => _energy;
+        set => _energy = Mathf.Clamp(value, MinValue, MaxValue);
+    }
+
+    public int Knowledge
+    {
+        get => _knowledge;
+        set => _knowledge = Mathf.Clamp(value, MinValue, MaxValue);
+    }
+
+    public int Confidence
+    {
+        get => _confidence;
+        set => _confidence = Mathf.Clamp(value, MinValue, MaxValue);
+    }
+
+    public void IncreaseFocus(int amount) => Focus += amount;
+    public void DecreaseFocus(int amount) => Focus -= amount;
+
+    public void IncreaseEnergy(int amount) => Energy += amount;
+    public void DecreaseEnergy(int amount) => Energy -= amount;
+
+    public void IncreaseKnowledge(int amount) => Knowledge += amount;
+    public void DecreaseKnowledge(int amount) => Knowledge -= amount;
+
+    public void IncreaseConfidence(int amount) => Confidence += amount;
+    public void DecreaseConfidence(int amount) => Confidence -= amount;
+}

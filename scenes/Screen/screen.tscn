@@ -3,8 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://cevey6xo2q6ua" path="res://assets/pictures/Screen.jpg" id="1_ixcsg"]
 [ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="3_0kd71"]
 [ext_resource type="Script" uid="uid://c58r1xitn8v8c" path="res://scenes/Screen/ReturnButton.cs" id="3_ep306"]
+[ext_resource type="Script" path="res://scenes/Screen/ComputerScreen.cs" id="4_profiles"]
 
 [node name="Screen" type="Node2D" unique_id=438260087]
+script = ExtResource("4_profiles")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1554281799]
 offset_left = 96.0
