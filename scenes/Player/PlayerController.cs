@@ -2,7 +2,7 @@ using Godot;
 
 public partial class PlayerController : CharacterBody2D
 {
-	[Export] public float MoveSpeed = 180.0f;
+	[Export] public float MoveSpeed = 140.0f;
 
 	private AnimatedSprite2D animatedSprite;
 	private Vector2 lastDirection = Vector2.Down;
