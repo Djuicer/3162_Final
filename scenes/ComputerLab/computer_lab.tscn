@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://dw176tpyvkoew"]
 
-[ext_resource type="Script" path="res://scenes/ComputerLab/ComputerLab.cs" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/Player/player.tscn" id="2"]
+[ext_resource type="Script" uid="uid://c3f5tk2bfxbnf" path="res://scenes/ComputerLab/ComputerLab.cs" id="1"]
+[ext_resource type="PackedScene" uid="uid://drnt3q66eln2b" path="res://scenes/Player/player.tscn" id="2"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(180, 120)
@@ -9,88 +9,91 @@ size = Vector2(180, 120)
 [sub_resource type="RectangleShape2D" id="2"]
 size = Vector2(220, 120)
 
-[node name="ComputerLab" type="Node2D"]
+[node name="ComputerLab" type="Node2D" unique_id=17648016]
 script = ExtResource("1")
 
-[node name="Floor" type="ColorRect" parent="."]
+[node name="Floor" type="ColorRect" parent="." unique_id=248206760]
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.12, 0.16, 0.22, 1)
 
-[node name="Desk" type="ColorRect" parent="."]
+[node name="Desk" type="ColorRect" parent="." unique_id=480394737]
 offset_left = 650.0
 offset_top = 210.0
 offset_right = 980.0
 offset_bottom = 310.0
 color = Color(0.28, 0.24, 0.2, 1)
 
-[node name="PcMonitor" type="ColorRect" parent="."]
+[node name="PcMonitor" type="ColorRect" parent="." unique_id=436136585]
 offset_left = 740.0
 offset_top = 150.0
 offset_right = 900.0
 offset_bottom = 225.0
 color = Color(0.28, 0.45, 0.6, 1)
 
-[node name="Player" parent="." instance=ExtResource("2")]
+[node name="Player" parent="." unique_id=2080562961 instance=ExtResource("2")]
 position = Vector2(210, 520)
 
-[node name="PcInteractArea" type="Area2D" parent="."]
+[node name="PcInteractArea" type="Area2D" parent="." unique_id=1813455279]
 position = Vector2(818, 249)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PcInteractArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PcInteractArea" unique_id=1971881614]
 shape = SubResource("1")
 
-[node name="ExitInteractArea" type="Area2D" parent="."]
+[node name="ExitInteractArea" type="Area2D" parent="." unique_id=195592013]
 position = Vector2(173, 545)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitInteractArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitInteractArea" unique_id=1084472598]
 shape = SubResource("2")
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="." unique_id=4353824]
 
-[node name="TopWall" type="CollisionShape2D" parent="Walls"]
+[node name="TopWall" type="CollisionShape2D" parent="Walls" unique_id=92731732]
 position = Vector2(576, -8)
 shape = SubResource("2")
 
-[node name="BottomWall" type="CollisionShape2D" parent="Walls"]
+[node name="BottomWall" type="CollisionShape2D" parent="Walls" unique_id=216277518]
 position = Vector2(576, 656)
 shape = SubResource("2")
 
-[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+[node name="LeftWall" type="CollisionShape2D" parent="Walls" unique_id=215034214]
 position = Vector2(-8, 324)
 rotation = 1.5708
 shape = SubResource("2")
 
-[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+[node name="RightWall" type="CollisionShape2D" parent="Walls" unique_id=1597996957]
 position = Vector2(1160, 324)
 rotation = 1.5708
 shape = SubResource("2")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=156516643]
 
-[node name="GuidancePanel" type="Panel" parent="UI"]
+[node name="GuidancePanel" type="Panel" parent="UI" unique_id=855659256]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 460.0
-offset_bottom = 170.0
+offset_right = 322.0
+offset_bottom = 90.0
 
-[node name="GuidanceLabel" type="Label" parent="UI/GuidancePanel"]
+[node name="GuidanceLabel" type="Label" parent="UI/GuidancePanel" unique_id=2075474690]
+layout_mode = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = 426.0
 offset_bottom = 70.0
+text = "Computer Lab
+"
 autowrap_mode = 3
-text = "Computer Lab\nInteract with a PC to Study CS."
 
-[node name="FeedbackLabel" type="Label" parent="UI/GuidancePanel"]
-offset_left = 12.0
-offset_top = 82.0
-offset_right = 426.0
-offset_bottom = 142.0
-autowrap_mode = 3
+[node name="FeedbackLabel" type="Label" parent="UI/GuidancePanel" unique_id=1159963063]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 40.0
+offset_right = 427.0
+offset_bottom = 100.0
 text = "Hint: Interact with a PC to Study CS."
+autowrap_mode = 3
 
-[node name="InteractPromptLabel" type="Label" parent="UI"]
+[node name="InteractPromptLabel" type="Label" parent="UI" unique_id=572824340]
 offset_left = 16.0
 offset_top = 600.0
 offset_right = 450.0

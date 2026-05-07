@@ -40,6 +40,9 @@ public partial class Dormitory : Node2D
 	private Area2D doorInteractArea;
 	private CharacterBody2D player;
 	private Label interactPromptLabel;
+	private Node2D computerPromptAnchor;
+	private Node2D bedPromptAnchor;
+	private Node2D doorPromptAnchor;
 	private Label guidanceStatsLabel;
 	private Label dormitoryHintLabel;
 	private Panel tutorialPanel;
@@ -50,6 +53,7 @@ public partial class Dormitory : Node2D
 	private bool canUseBed = false;
 	private bool canUseDoor = false;
 	private bool travelMenuOpen = false;
+	private enum InteractablePromptTarget { None, Computer, Bed, Door }
 	private Panel travelMenuPanel;
 	private Button travelComputerLabButton;
 	private Button travelInnovationHubButton;
@@ -102,6 +106,9 @@ public partial class Dormitory : Node2D
 		doorInteractArea = GetNodeOrNull<Area2D>("DoorInteractArea");
 		player = GetNodeOrNull<CharacterBody2D>("Player");
 		interactPromptLabel = GetNodeOrNull<Label>("OpeningUI/InteractPromptLabel");
+		computerPromptAnchor = GetNodeOrNull<Node2D>("ComputerInteractArea/PromptAnchor");
+		bedPromptAnchor = GetNodeOrNull<Node2D>("BedInteractArea/PromptAnchor");
+		doorPromptAnchor = GetNodeOrNull<Node2D>("DoorInteractArea/PromptAnchor");
 		travelMenuPanel = GetNodeOrNull<Panel>("OpeningUI/TravelMenuPanel");
 		travelComputerLabButton = GetNodeOrNull<Button>("OpeningUI/TravelMenuPanel/MarginContainer/VBoxContainer/ComputerLabButton");
 		travelInnovationHubButton = GetNodeOrNull<Button>("OpeningUI/TravelMenuPanel/MarginContainer/VBoxContainer/InnovationHubButton");
@@ -183,28 +190,47 @@ public partial class Dormitory : Node2D
 			return;
 		}
 
+		var promptTarget = InteractablePromptTarget.None;
 		if (canUseDoor)
 		{
 			interactPromptLabel.Text = "Press E to travel";
-			interactPromptLabel.Visible = true;
-			return;
+			promptTarget = InteractablePromptTarget.Door;
 		}
-
-		if (canUseBed)
+		else if (canUseBed)
 		{
 			interactPromptLabel.Text = "Press E to sleep";
-			interactPromptLabel.Visible = true;
-			return;
+			promptTarget = InteractablePromptTarget.Bed;
 		}
-
-		if (showPrompt)
+		else if (showPrompt)
 		{
 			interactPromptLabel.Text = "Press E to use computer";
-			interactPromptLabel.Visible = true;
+			promptTarget = InteractablePromptTarget.Computer;
+		}
+
+		if (promptTarget == InteractablePromptTarget.None)
+		{
+			interactPromptLabel.Visible = false;
 			return;
 		}
 
-		interactPromptLabel.Visible = false;
+		PositionPromptNearTarget(promptTarget);
+		interactPromptLabel.Visible = true;
+	}
+
+	private void PositionPromptNearTarget(InteractablePromptTarget target)
+	{
+		Node2D anchor = target switch
+		{
+			InteractablePromptTarget.Computer => computerPromptAnchor,
+			InteractablePromptTarget.Bed => bedPromptAnchor,
+			InteractablePromptTarget.Door => doorPromptAnchor,
+			_ => null
+		};
+		if (anchor == null)
+			return;
+
+		Vector2 screenPosition = GetViewport().GetCanvasTransform() * anchor.GlobalPosition;
+		interactPromptLabel.Position = screenPosition;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

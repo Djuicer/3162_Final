@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cevey6xo2q6ua" path="res://assets/pictures/Screen.jpg" id="1_ixcsg"]
 [ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="3_0kd71"]
 [ext_resource type="Script" uid="uid://c58r1xitn8v8c" path="res://scenes/Screen/ReturnButton.cs" id="3_ep306"]
-[ext_resource type="Script" path="res://scenes/Screen/ComputerScreen.cs" id="4_profiles"]
+[ext_resource type="Script" uid="uid://bsysk44c4oh0u" path="res://scenes/Screen/ComputerScreen.cs" id="4_profiles"]
 
 [node name="Screen" type="Node2D" unique_id=438260087]
 script = ExtResource("4_profiles")
@@ -16,35 +16,6 @@ texture = ExtResource("1_ixcsg")
 expand_mode = 1
 
 [node name="Button" type="Node" parent="." unique_id=3714317]
-
-[node name="InfoPanel" type="Panel" parent="."]
-offset_left = 310.0
-offset_top = 72.0
-offset_right = 913.0
-offset_bottom = 563.0
-
-[node name="Margin" type="MarginContainer" parent="InfoPanel"]
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 591.0
-offset_bottom = 479.0
-
-[node name="VBox" type="VBoxContainer" parent="InfoPanel/Margin"]
-layout_mode = 2
-
-[node name="ProfileLabel" type="Label" parent="InfoPanel/Margin/VBox"]
-layout_mode = 2
-autowrap_mode = 3
-
-[node name="NotesLabel" type="Label" parent="InfoPanel/Margin/VBox"]
-layout_mode = 2
-autowrap_mode = 3
-theme_override_colors/font_color = Color(0.85, 0.95, 1, 1)
-
-[node name="FeedbackLabel" type="Label" parent="InfoPanel/Margin/VBox"]
-layout_mode = 2
-autowrap_mode = 3
-theme_override_colors/font_color = Color(0.95, 0.95, 0.4, 1)
 
 [node name="ThisPCButton" type="TextureButton" parent="Button" unique_id=635497432 node_paths=PackedStringArray("TooltipLabel")]
 offset_left = 149.0
@@ -130,3 +101,33 @@ offset_top = -7.0
 offset_right = 97.0
 offset_bottom = 16.0
 text = "Exit"
+
+[node name="InfoPanel" type="Panel" parent="." unique_id=2091432817]
+offset_left = 280.0
+offset_top = 49.0
+offset_right = 880.54376
+offset_bottom = 538.0
+
+[node name="Margin" type="MarginContainer" parent="InfoPanel" unique_id=483975381]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 591.0
+offset_bottom = 479.0
+
+[node name="VBox" type="VBoxContainer" parent="InfoPanel/Margin" unique_id=1599808808]
+layout_mode = 2
+
+[node name="ProfileLabel" type="Label" parent="InfoPanel/Margin/VBox" unique_id=1623813501]
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="NotesLabel" type="Label" parent="InfoPanel/Margin/VBox" unique_id=694272166]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.95, 1, 1)
+autowrap_mode = 3
+
+[node name="FeedbackLabel" type="Label" parent="InfoPanel/Margin/VBox" unique_id=599465122]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.4, 1)
+autowrap_mode = 3

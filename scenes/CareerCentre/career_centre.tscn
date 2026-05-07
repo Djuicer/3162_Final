@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://drx50blo0dqgs"]
 
-[ext_resource type="Script" path="res://scenes/CareerCentre/CareerCentre.cs" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/Player/player.tscn" id="2"]
+[ext_resource type="Script" uid="uid://bsa17pyfe416p" path="res://scenes/CareerCentre/CareerCentre.cs" id="1"]
+[ext_resource type="PackedScene" uid="uid://drnt3q66eln2b" path="res://scenes/Player/player.tscn" id="2"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(220, 120)
@@ -12,95 +12,98 @@ size = Vector2(220, 120)
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(460, 80)
 
-[node name="CareerCentre" type="Node2D"]
+[node name="CareerCentre" type="Node2D" unique_id=1254892854]
 script = ExtResource("1")
 
-[node name="Floor" type="ColorRect" parent="."]
+[node name="Floor" type="ColorRect" parent="." unique_id=1803597108]
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.17, 0.17, 0.2, 1)
 
-[node name="InterviewDesk" type="ColorRect" parent="."]
+[node name="InterviewDesk" type="ColorRect" parent="." unique_id=1251847623]
 offset_left = 640.0
 offset_top = 220.0
 offset_right = 1020.0
 offset_bottom = 340.0
 color = Color(0.28, 0.23, 0.2, 1)
 
-[node name="InterviewBooth" type="ColorRect" parent="."]
+[node name="InterviewBooth" type="ColorRect" parent="." unique_id=1787841991]
 offset_left = 750.0
 offset_top = 155.0
 offset_right = 910.0
 offset_bottom = 225.0
 color = Color(0.33, 0.55, 0.72, 1)
 
-[node name="JobBoard" type="ColorRect" parent="."]
+[node name="JobBoard" type="ColorRect" parent="." unique_id=1267079774]
 offset_left = 150.0
 offset_top = 120.0
 offset_right = 450.0
 offset_bottom = 260.0
 color = Color(0.85, 0.85, 0.8, 1)
 
-[node name="Player" parent="." instance=ExtResource("2")]
+[node name="Player" parent="." unique_id=915556689 instance=ExtResource("2")]
 position = Vector2(210, 520)
 
-[node name="InterviewInteractArea" type="Area2D" parent="."]
+[node name="InterviewInteractArea" type="Area2D" parent="." unique_id=2064621241]
 position = Vector2(818, 265)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InterviewInteractArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InterviewInteractArea" unique_id=838949460]
 shape = SubResource("1")
 
-[node name="ExitInteractArea" type="Area2D" parent="."]
+[node name="ExitInteractArea" type="Area2D" parent="." unique_id=640550449]
 position = Vector2(173, 545)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitInteractArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitInteractArea" unique_id=1659284289]
 shape = SubResource("2")
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="." unique_id=96254421]
 
-[node name="TopWall" type="CollisionShape2D" parent="Walls"]
+[node name="TopWall" type="CollisionShape2D" parent="Walls" unique_id=889995358]
 position = Vector2(576, -10)
 shape = SubResource("3")
 
-[node name="BottomWall" type="CollisionShape2D" parent="Walls"]
+[node name="BottomWall" type="CollisionShape2D" parent="Walls" unique_id=164810067]
 position = Vector2(576, 658)
 shape = SubResource("3")
 
-[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+[node name="LeftWall" type="CollisionShape2D" parent="Walls" unique_id=1664236705]
 position = Vector2(-8, 324)
 rotation = 1.5708
 shape = SubResource("3")
 
-[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+[node name="RightWall" type="CollisionShape2D" parent="Walls" unique_id=2055073312]
 position = Vector2(1160, 324)
 rotation = 1.5708
 shape = SubResource("3")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1879241321]
 
-[node name="GuidancePanel" type="Panel" parent="UI"]
+[node name="GuidancePanel" type="Panel" parent="UI" unique_id=521703989]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 520.0
-offset_bottom = 170.0
+offset_right = 506.0
+offset_bottom = 91.0
 
-[node name="GuidanceLabel" type="Label" parent="UI/GuidancePanel"]
+[node name="GuidanceLabel" type="Label" parent="UI/GuidancePanel" unique_id=2073945803]
+layout_mode = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = 484.0
 offset_bottom = 70.0
+text = "Career Centre
+"
 autowrap_mode = 3
-text = "Career Centre\nInteract with the interview booth to Practice Interview."
 
-[node name="FeedbackLabel" type="Label" parent="UI/GuidancePanel"]
+[node name="FeedbackLabel" type="Label" parent="UI/GuidancePanel" unique_id=2145779808]
+layout_mode = 0
 offset_left = 12.0
-offset_top = 82.0
+offset_top = 37.0
 offset_right = 484.0
-offset_bottom = 142.0
-autowrap_mode = 3
+offset_bottom = 97.0
 text = "Hint: Interact with the interview booth to Practice Interview."
+autowrap_mode = 3
 
-[node name="InteractPromptLabel" type="Label" parent="UI"]
+[node name="InteractPromptLabel" type="Label" parent="UI" unique_id=1765623056]
 offset_left = 16.0
 offset_top = 600.0
 offset_right = 500.0
