@@ -45,6 +45,7 @@ public partial class ComputerScreen : Node2D
 
         layout.AddChild(CreateActionButton("Study CS", OnStudyCsPressed));
         layout.AddChild(CreateActionButton("Coding Practice", OnCodingPracticePressed));
+        layout.AddChild(CreateActionButton("Apply for Internship", OnApplyForInternshipPressed));
         layout.AddChild(CreateActionButton("Procrastinate", OnProcrastinatePressed));
 
         _feedbackLabel = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart, Modulate = new Color(0.95f, 0.95f, 0.4f) };
@@ -82,6 +83,20 @@ public partial class ComputerScreen : Node2D
         }
 
         GetTree().ChangeSceneToFile("res://scenes/Minigames/BugSquash/bug_squash.tscn");
+    }
+
+
+    private void OnApplyForInternshipPressed()
+    {
+        var state = GlobalVars.Instance;
+        if (state.Profile.ActionsLeft <= 0)
+        {
+            ShowFeedback("You are too tired to do more today. Go to sleep.");
+            RefreshUi();
+            return;
+        }
+
+        GetTree().ChangeSceneToFile("res://scenes/Minigames/InterviewRhythm/interview_rhythm.tscn");
     }
 
     private void OnProcrastinatePressed()
