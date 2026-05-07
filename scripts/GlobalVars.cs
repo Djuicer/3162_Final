@@ -8,6 +8,8 @@ public partial class GlobalVars : Node
 	public string SaveSelectMode { get; set; } = "start";
 	public int CurrentSlot { get; set; } = -1;
 
+	public CharacterAttributes PlayerAttributes { get; } = new();
+
 	public override void _EnterTree()
 	{
 		if (Instance == null)
