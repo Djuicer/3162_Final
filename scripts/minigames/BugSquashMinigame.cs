@@ -133,6 +133,10 @@ public partial class BugSquashMinigame : Control
     private void OnContinuePressed()
     {
         _continueButton.Disabled = true;
-        GetTree().ChangeSceneToFile("res://scenes/Screen/screen.tscn");
+        string returnScene = GlobalVars.Instance.ReturnScenePath;
+        if (string.IsNullOrEmpty(returnScene))
+            returnScene = "res://scenes/Screen/screen.tscn";
+
+        GetTree().ChangeSceneToFile(returnScene);
     }
 }

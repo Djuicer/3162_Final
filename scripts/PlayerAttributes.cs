@@ -9,6 +9,8 @@ public partial class PlayerAttributes : RefCounted
     private int _energy = 70;
     private int _knowledge = 20;
     private int _confidence = 30;
+    private int _networking = 0;
+    private int _portfolio = 0;
 
     public int Focus
     {
@@ -34,6 +36,18 @@ public partial class PlayerAttributes : RefCounted
         set => _confidence = Mathf.Clamp(value, MinValue, MaxValue);
     }
 
+    public int Networking
+    {
+        get => _networking;
+        set => _networking = Mathf.Clamp(value, MinValue, MaxValue);
+    }
+
+    public int Portfolio
+    {
+        get => _portfolio;
+        set => _portfolio = Mathf.Clamp(value, MinValue, MaxValue);
+    }
+
     public void IncreaseFocus(int amount) => Focus += amount;
     public void DecreaseFocus(int amount) => Focus -= amount;
 
@@ -45,6 +59,10 @@ public partial class PlayerAttributes : RefCounted
 
     public void IncreaseConfidence(int amount) => Confidence += amount;
     public void DecreaseConfidence(int amount) => Confidence -= amount;
+    public void IncreaseNetworking(int amount) => Networking += amount;
+    public void DecreaseNetworking(int amount) => Networking -= amount;
+    public void IncreasePortfolio(int amount) => Portfolio += amount;
+    public void DecreasePortfolio(int amount) => Portfolio -= amount;
 }
 
 
@@ -56,5 +74,7 @@ public partial class PlayerAttributes
         Energy = 70;
         Knowledge = 20;
         Confidence = 30;
+        Networking = 0;
+        Portfolio = 0;
     }
 }
