@@ -219,9 +219,12 @@ public partial class FocusCatchMinigame : Control
     private void OnContinuePressed()
     {
         _continueButton.Disabled = true;
-        string returnScene = GlobalVars.Instance.ReturnScenePath;
+        var state = GlobalVars.Instance;
+        string returnScene = state.ReturnScenePath;
         if (string.IsNullOrEmpty(returnScene))
             returnScene = "res://scenes/Screen/screen.tscn";
+        if (!string.IsNullOrEmpty(state.ReturnSpawnId))
+            state.QueuePendingSpawn(state.ReturnSpawnId);
 
         GetTree().ChangeSceneToFile(returnScene);
     }

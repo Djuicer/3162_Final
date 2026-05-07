@@ -28,6 +28,15 @@ expand_mode = 1
 [node name="Player" parent="." unique_id=1928499692 instance=ExtResource("4_8t6xq")]
 position = Vector2(504, 480)
 
+[node name="ComputerReturnSpawn" type="Marker2D" parent="." unique_id=100001]
+position = Vector2(260, 310)
+
+[node name="DoorReturnSpawn" type="Marker2D" parent="." unique_id=100002]
+position = Vector2(250, 510)
+
+[node name="BedReturnSpawn" type="Marker2D" parent="." unique_id=100003]
+position = Vector2(760, 320)
+
 [node name="ComputerInteractArea" type="Area2D" parent="." unique_id=344358425]
 position = Vector2(200, 220)
 

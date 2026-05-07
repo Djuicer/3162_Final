@@ -67,6 +67,7 @@ public partial class Dormitory : Node2D
 	{
 		StatusOverlay.AttachTo(this, true);
 		GetNodes();
+		ApplyPendingSpawnIfAny();
 		SetupInitialState();
 		LoadGameData();
 		BuildOpeningDialogue();
@@ -253,7 +254,10 @@ public partial class Dormitory : Node2D
 		if (canUseComputer && !computerButton.Disabled)
 		{
 			if (computerScene != null)
+			{
+				GlobalVars.Instance.SetReturnContext("res://scenes/Domitory/dormitory.tscn", "ComputerReturnSpawn");
 				GetTree().ChangeSceneToPacked(computerScene);
+			}
 			else
 				GD.PrintErr("Computer scene is missing.");
 		}
@@ -321,8 +325,28 @@ public partial class Dormitory : Node2D
 
 	private void TravelTo(string scenePath)
 	{
+		string targetSpawn = scenePath switch
+		{
+			"res://scenes/ComputerLab/computer_lab.tscn" => "ComputerLabEntranceSpawn",
+			"res://scenes/InnovationHub/innovation_hub.tscn" => "InnovationHubEntranceSpawn",
+			"res://scenes/CareerCentre/career_centre.tscn" => "CareerCentreEntranceSpawn",
+			_ => ""
+		};
+		GlobalVars.Instance.QueuePendingSpawn(targetSpawn);
 		CloseTravelMenu();
 		GetTree().ChangeSceneToFile(scenePath);
+	}
+
+	private void ApplyPendingSpawnIfAny()
+	{
+		var state = GlobalVars.Instance;
+		if (state == null || player == null || string.IsNullOrEmpty(state.PendingSpawnId))
+			return;
+
+		var marker = GetNodeOrNull<Marker2D>(state.PendingSpawnId);
+		if (marker != null)
+			player.GlobalPosition = marker.GlobalPosition;
+		state.PendingSpawnId = "";
 	}
 
 	private void SetPlayerMovementEnabled(bool enabled)

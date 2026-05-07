@@ -2,6 +2,7 @@ using Godot;
 
 public partial class CareerCentre : Node2D
 {
+	private CharacterBody2D _player;
 	private Area2D _interviewInteractArea;
 	private Area2D _exitInteractArea;
 	private Label _interactPromptLabel;
@@ -15,6 +16,7 @@ public partial class CareerCentre : Node2D
 		StatusOverlay.AttachTo(this, false);
 		_interviewInteractArea = GetNodeOrNull<Area2D>("InterviewInteractArea");
 		_exitInteractArea = GetNodeOrNull<Area2D>("ExitInteractArea");
+		_player = GetNodeOrNull<CharacterBody2D>("Player");
 		_interactPromptLabel = GetNodeOrNull<Label>("UI/InteractPromptLabel");
 		_feedbackLabel = GetNodeOrNull<Label>("UI/FeedbackLabel");
 
@@ -32,6 +34,7 @@ public partial class CareerCentre : Node2D
 
 		if (_interactPromptLabel != null)
 			_interactPromptLabel.Visible = false;
+		ApplyPendingSpawnIfAny();
 
 		SetFeedback("Interact with the interview booth to Practice Interview.");
 	}
@@ -72,6 +75,7 @@ public partial class CareerCentre : Node2D
 		if (_canUseExit)
 		{
 			_isTransitioning = true;
+			GlobalVars.Instance.QueuePendingSpawn("DoorReturnSpawn");
 			GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
 		}
 	}
@@ -86,8 +90,20 @@ public partial class CareerCentre : Node2D
 		}
 
 		_isTransitioning = true;
-		state.ReturnScenePath = "res://scenes/CareerCentre/career_centre.tscn";
+		state.SetReturnContext("res://scenes/CareerCentre/career_centre.tscn", "CareerCentreBoothReturnSpawn");
 		GetTree().ChangeSceneToFile("res://scenes/Minigames/InterviewRhythm/interview_rhythm.tscn");
+	}
+
+	private void ApplyPendingSpawnIfAny()
+	{
+		var state = GlobalVars.Instance;
+		if (state == null || _player == null || string.IsNullOrEmpty(state.PendingSpawnId))
+			return;
+
+		var marker = GetNodeOrNull<Marker2D>(state.PendingSpawnId);
+		if (marker != null)
+			_player.GlobalPosition = marker.GlobalPosition;
+		state.PendingSpawnId = "";
 	}
 
 	private void SetFeedback(string message)

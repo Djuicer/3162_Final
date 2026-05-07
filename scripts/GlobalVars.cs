@@ -13,6 +13,8 @@ public partial class GlobalVars : Node
 
 	public string IntroScenePath { get; set; } = DefaultDormitoryScenePath;
 	public string ReturnScenePath { get; set; } = "res://scenes/Domitory/dormitory.tscn";
+	public string ReturnSpawnId { get; set; } = "";
+	public string PendingSpawnId { get; set; } = "";
 
 	public bool HasSeenDormitoryTutorial { get; set; }
 	public bool HasReadDancePartyEmail { get; set; }
@@ -82,6 +84,20 @@ public partial class GlobalVars : Node
 				ITBallAttended = false;
 				ITBallGoodChoices = 0;
 				JoinedDeveloperGroup = false;
+		ReturnScenePath = DefaultDormitoryScenePath;
+		ReturnSpawnId = "";
+		PendingSpawnId = "";
+	}
+
+	public void SetReturnContext(string scenePath, string spawnId)
+	{
+		ReturnScenePath = scenePath;
+		ReturnSpawnId = spawnId;
+	}
+
+	public void QueuePendingSpawn(string spawnId)
+	{
+		PendingSpawnId = spawnId;
 	}
 
 	public override void _EnterTree()

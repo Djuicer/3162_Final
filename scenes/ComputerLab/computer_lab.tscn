@@ -34,6 +34,12 @@ color = Color(0.28, 0.45, 0.6, 1)
 [node name="Player" parent="." unique_id=2080562961 instance=ExtResource("2")]
 position = Vector2(210, 520)
 
+[node name="ComputerLabPCReturnSpawn" type="Marker2D" parent="." unique_id=200001]
+position = Vector2(760, 360)
+
+[node name="ComputerLabEntranceSpawn" type="Marker2D" parent="." unique_id=200002]
+position = Vector2(210, 520)
+
 [node name="PcInteractArea" type="Area2D" parent="." unique_id=1813455279]
 position = Vector2(818, 249)
 
