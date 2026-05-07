@@ -37,6 +37,8 @@ public partial class Dormitory : Node2D
 	private TextureButton outsideButton;
 	private Area2D computerInteractArea;
 	private Area2D bedInteractArea;
+	private Area2D doorInteractArea;
+	private CharacterBody2D player;
 	private Label interactPromptLabel;
 	private Label guidanceStatsLabel;
 	private Label dormitoryHintLabel;
@@ -46,12 +48,20 @@ public partial class Dormitory : Node2D
 	private PackedScene endingScene;
 	private bool canUseComputer = false;
 	private bool canUseBed = false;
+	private bool canUseDoor = false;
+	private bool travelMenuOpen = false;
+	private Panel travelMenuPanel;
+	private Button travelComputerLabButton;
+	private Button travelInnovationHubButton;
+	private Button travelCareerCentreButton;
+	private Button travelCancelButton;
 
 	private int dialogueIndex = 0;
 	private List<(string speaker, string text)> openingDialogue;
 
 	public override void _Ready()
 	{
+		StatusOverlay.AttachTo(this);
 		GetNodes();
 		SetupInitialState();
 		LoadGameData();
@@ -87,7 +97,14 @@ public partial class Dormitory : Node2D
 		outsideButton = GetNodeOrNull<TextureButton>("Button/OutsideButton");
 		computerInteractArea = GetNodeOrNull<Area2D>("ComputerInteractArea");
 		bedInteractArea = GetNodeOrNull<Area2D>("BedInteractArea");
+		doorInteractArea = GetNodeOrNull<Area2D>("DoorInteractArea");
+		player = GetNodeOrNull<CharacterBody2D>("Player");
 		interactPromptLabel = GetNodeOrNull<Label>("OpeningUI/InteractPromptLabel");
+		travelMenuPanel = GetNodeOrNull<Panel>("OpeningUI/TravelMenuPanel");
+		travelComputerLabButton = GetNodeOrNull<Button>("OpeningUI/TravelMenuPanel/MarginContainer/VBoxContainer/ComputerLabButton");
+		travelInnovationHubButton = GetNodeOrNull<Button>("OpeningUI/TravelMenuPanel/MarginContainer/VBoxContainer/InnovationHubButton");
+		travelCareerCentreButton = GetNodeOrNull<Button>("OpeningUI/TravelMenuPanel/MarginContainer/VBoxContainer/CareerCentreButton");
+		travelCancelButton = GetNodeOrNull<Button>("OpeningUI/TravelMenuPanel/MarginContainer/VBoxContainer/CancelButton");
 		guidanceStatsLabel = GetNodeOrNull<Label>("OpeningUI/GuidancePanel/MarginContainer/VBoxContainer/StatsLabel");
 		dormitoryHintLabel = GetNodeOrNull<Label>("OpeningUI/GuidancePanel/MarginContainer/VBoxContainer/HintLabel");
 		tutorialPanel = GetNodeOrNull<Panel>("OpeningUI/TutorialPanel");
@@ -123,15 +140,30 @@ public partial class Dormitory : Node2D
 			bedInteractArea.BodyEntered += OnBedAreaBodyEntered;
 			bedInteractArea.BodyExited += OnBedAreaBodyExited;
 		}
-
+		if (doorInteractArea != null)
+		{
+			doorInteractArea.BodyEntered += OnDoorAreaBodyEntered;
+			doorInteractArea.BodyExited += OnDoorAreaBodyExited;
+		}
 		if (interactPromptLabel != null)
 			interactPromptLabel.Visible = false;
+		if (travelMenuPanel != null)
+			travelMenuPanel.Visible = false;
 
 		if (continueButton != null)
 			continueButton.Pressed += OnContinuePressed;
 
 		if (tutorialOkButton != null)
 			tutorialOkButton.Pressed += OnTutorialOkPressed;
+
+		if (travelComputerLabButton != null)
+			travelComputerLabButton.Pressed += () => TravelTo("res://scenes/ComputerLab/computer_lab.tscn");
+		if (travelInnovationHubButton != null)
+			travelInnovationHubButton.Pressed += () => TravelTo("res://scenes/InnovationHub/innovation_hub.tscn");
+		if (travelCareerCentreButton != null)
+			travelCareerCentreButton.Pressed += () => TravelTo("res://scenes/CareerCentre/career_centre.tscn");
+		if (travelCancelButton != null)
+			travelCancelButton.Pressed += CloseTravelMenu;
 	}
 
 
@@ -143,6 +175,19 @@ public partial class Dormitory : Node2D
 			return;
 
 		bool showPrompt = canUseComputer && !computerButton.Disabled;
+		if (travelMenuOpen)
+		{
+			interactPromptLabel.Visible = false;
+			return;
+		}
+
+		if (canUseDoor)
+		{
+			interactPromptLabel.Text = "Press E to travel";
+			interactPromptLabel.Visible = true;
+			return;
+		}
+
 		if (canUseBed)
 		{
 			interactPromptLabel.Text = "Press E to sleep";
@@ -162,6 +207,12 @@ public partial class Dormitory : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
+		if (travelMenuOpen && @event.IsActionPressed("ui_cancel"))
+		{
+			CloseTravelMenu();
+			return;
+		}
+
 		if (!@event.IsActionPressed("interact"))
 			return;
 
@@ -177,6 +228,12 @@ public partial class Dormitory : Node2D
 				GetTree().ChangeSceneToPacked(computerScene);
 			else
 				GD.PrintErr("Computer scene is missing.");
+		}
+
+		if (canUseDoor)
+		{
+			OpenTravelMenu();
+			return;
 		}
 	}
 
@@ -202,6 +259,50 @@ public partial class Dormitory : Node2D
 	{
 		if (body is CharacterBody2D)
 			canUseBed = false;
+	}
+
+	private void OnDoorAreaBodyEntered(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseDoor = true;
+	}
+
+	private void OnDoorAreaBodyExited(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseDoor = false;
+	}
+
+	private void OpenTravelMenu()
+	{
+		travelMenuOpen = true;
+		if (travelMenuPanel != null)
+			travelMenuPanel.Visible = true;
+		if (interactPromptLabel != null)
+			interactPromptLabel.Visible = false;
+		SetPlayerMovementEnabled(false);
+	}
+
+	private void CloseTravelMenu()
+	{
+		travelMenuOpen = false;
+		if (travelMenuPanel != null)
+			travelMenuPanel.Visible = false;
+		SetPlayerMovementEnabled(true);
+	}
+
+	private void TravelTo(string scenePath)
+	{
+		CloseTravelMenu();
+		GetTree().ChangeSceneToFile(scenePath);
+	}
+
+	private void SetPlayerMovementEnabled(bool enabled)
+	{
+		if (player == null)
+			return;
+		player.SetPhysicsProcess(enabled);
+		player.SetProcess(enabled);
 	}
 
 	private void SleepAtBed()
