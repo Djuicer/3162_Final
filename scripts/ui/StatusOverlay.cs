@@ -17,15 +17,10 @@ public partial class StatusOverlay : CanvasLayer
 	private PanelContainer _statusPanel;
 	private NinePatchRect _panelBackground;
 	private Label _headerLabel;
-	private Label _dayLabel;
-	private Label _actionsLabel;
-	private Label _energyLabel;
-	private Label _focusLabel;
-	private Label _knowledgeLabel;
-	private Label _confidenceLabel;
-	private Label _careerReadinessLabel;
-	private Label _networkingLabel;
-	private Label _portfolioLabel;
+	private Label _dayActionsLabel;
+	private Label _wellbeingRow;
+	private Label _growthRow;
+	private Label _careerRow;
 	private Control _floatingTextLayer;
 	private int _floatingIndex;
 	private bool _showStatusPanel = true;
@@ -50,16 +45,11 @@ public partial class StatusOverlay : CanvasLayer
 			return;
 
 		var s = GlobalVars.Instance;
-		_headerLabel.Text = "Status";
-		_dayLabel.Text = $"Day {s.Profile.CurrentDay} / {s.Profile.FinalDay}";
-		_actionsLabel.Text = $"Actions {s.Profile.ActionsLeft} / {s.Profile.MaxActionsPerDay}";
-		_energyLabel.Text = $"Energy {s.Attributes.Energy}";
-		_focusLabel.Text = $"Focus {s.Attributes.Focus}";
-		_knowledgeLabel.Text = $"Knowledge {s.Attributes.Knowledge}";
-		_confidenceLabel.Text = $"Confidence {s.Attributes.Confidence}";
-		_careerReadinessLabel.Text = $"Career Readiness {s.Profile.CareerReadiness}";
-		_networkingLabel.Text = $"Networking {s.Attributes.Networking}";
-		_portfolioLabel.Text = $"Portfolio {s.Attributes.Portfolio}";
+		_headerLabel.Text = "Student Status";
+		_dayActionsLabel.Text = $"Day {s.Profile.CurrentDay} / {s.Profile.FinalDay} | Actions {s.Profile.ActionsLeft} / {s.Profile.MaxActionsPerDay}";
+		_wellbeingRow.Text = $"Wellbeing: Energy {s.Attributes.Energy} | Focus {s.Attributes.Focus}";
+		_growthRow.Text = $"Growth: Knowledge {s.Attributes.Knowledge} | Confidence {s.Attributes.Confidence}";
+		_careerRow.Text = $"Career: Readiness {s.Profile.CareerReadiness} | Network {s.Attributes.Networking} | Portfolio {s.Attributes.Portfolio}";
 	}
 
 	public static void AttachTo(Node parent, bool showStatusPanel = false)
@@ -107,16 +97,11 @@ public partial class StatusOverlay : CanvasLayer
 		_statusPanel = GetNode<PanelContainer>("StatusPanel");
 		_statusPanel.Visible = _showStatusPanel;
 		_panelBackground = GetNode<NinePatchRect>("StatusPanel/PanelBackground");
-		_headerLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/HeaderLabel");
-		_dayLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/DayLabel");
-		_actionsLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/ActionsLabel");
-		_energyLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/EnergyLabel");
-		_focusLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/FocusLabel");
-		_knowledgeLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/KnowledgeLabel");
-		_confidenceLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/ConfidenceLabel");
-		_careerReadinessLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/CareerReadinessLabel");
-		_networkingLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/NetworkingLabel");
-		_portfolioLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/PortfolioLabel");
+		_headerLabel = GetNode<Label>("StatusPanel/Margin/StatusContent/HeaderLabel");
+		_dayActionsLabel = GetNode<Label>("StatusPanel/Margin/StatusContent/DayActionsLabel");
+		_wellbeingRow = GetNode<Label>("StatusPanel/Margin/StatusContent/WellbeingRow");
+		_growthRow = GetNode<Label>("StatusPanel/Margin/StatusContent/GrowthRow");
+		_careerRow = GetNode<Label>("StatusPanel/Margin/StatusContent/CareerRow");
 		_floatingTextLayer = GetNode<Control>("FloatingTextLayer");
 	}
 

@@ -34,17 +34,26 @@ position = Vector2(200, 220)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ComputerInteractArea" unique_id=276273152]
 shape = SubResource("RectangleShape2D_interact")
 
+[node name="PromptAnchor" type="Marker2D" parent="ComputerInteractArea" unique_id=51189076]
+position = Vector2(-80, -90)
+
 [node name="BedInteractArea" type="Area2D" parent="." unique_id=1087958657]
 position = Vector2(812, 215)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BedInteractArea" unique_id=84452472]
 shape = SubResource("RectangleShape2D_bed_interact")
 
+[node name="PromptAnchor" type="Marker2D" parent="BedInteractArea" unique_id=90869588]
+position = Vector2(-70, -90)
+
 [node name="DoorInteractArea" type="Area2D" parent="." unique_id=545115542]
 position = Vector2(186, 589)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorInteractArea" unique_id=1405375482]
 shape = SubResource("RectangleShape2D_door_interact")
+
+[node name="PromptAnchor" type="Marker2D" parent="DoorInteractArea" unique_id=871460712]
+position = Vector2(-68, -102)
 
 [node name="Button" type="Node" parent="." unique_id=1975054436]
 
@@ -245,6 +254,9 @@ text = "OK"
 
 [node name="InteractPromptLabel" type="Label" parent="OpeningUI" unique_id=1506433738]
 visible = false
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Press E to interact"
 
 [node name="TravelMenuPanel" type="Panel" parent="OpeningUI" unique_id=872154793]
 visible = false
