@@ -61,20 +61,14 @@ public partial class ComputerScreen : Node2D
     private void OnStudyCsPressed()
     {
         var state = GlobalVars.Instance;
-        if (!state.Profile.TrySpendAction(1))
+        if (state.Profile.ActionsLeft <= 0)
         {
             ShowFeedback("You are too tired to do more today. Go to sleep.");
             RefreshUi();
             return;
         }
 
-        state.Attributes.IncreaseKnowledge(10);
-        state.Attributes.DecreaseEnergy(15);
-        state.Attributes.DecreaseFocus(5);
-
-        RefreshUi();
-        PrintState("Study CS");
-        ShowFeedback("You studied CS. Knowledge is up, but it used up energy and focus.");
+        GetTree().ChangeSceneToFile("res://scenes/Minigames/FocusCatch/focus_catch.tscn");
     }
 
     private void OnCodingPracticePressed()
