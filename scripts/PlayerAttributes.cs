@@ -46,3 +46,15 @@ public partial class PlayerAttributes : RefCounted
     public void IncreaseConfidence(int amount) => Confidence += amount;
     public void DecreaseConfidence(int amount) => Confidence -= amount;
 }
+
+
+public partial class PlayerAttributes
+{
+    public void ResetToDefaults()
+    {
+        Focus = 50;
+        Energy = 70;
+        Knowledge = 20;
+        Confidence = 30;
+    }
+}
