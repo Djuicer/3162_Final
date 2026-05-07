@@ -9,6 +9,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
 size = Vector2(100, 120)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_interact"]
+size = Vector2(190, 130)
+
 [node name="Dormitory" type="Node2D" unique_id=615578868]
 script = ExtResource("1_gpvd8")
 
@@ -28,6 +31,12 @@ position = Vector2(200, 220)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ComputerInteractArea"]
 shape = SubResource("RectangleShape2D_interact")
+
+[node name="BedInteractArea" type="Area2D" parent="."]
+position = Vector2(812, 215)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedInteractArea"]
+shape = SubResource("RectangleShape2D_bed_interact")
 
 [node name="Button" type="Node" parent="." unique_id=1975054436]
 
