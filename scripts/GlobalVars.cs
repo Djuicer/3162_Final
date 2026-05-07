@@ -12,6 +12,7 @@ public partial class GlobalVars : Node
 	public PlayerAttributes Attributes { get; private set; } = new PlayerAttributes();
 
 	public string IntroScenePath { get; set; } = DefaultDormitoryScenePath;
+	public string ReturnScenePath { get; set; } = "res://scenes/Domitory/dormitory.tscn";
 
 	public bool HasSeenDormitoryTutorial { get; set; }
 
@@ -28,9 +29,9 @@ public partial class GlobalVars : Node
 			return "Graduation is close. Focus on Career Readiness.";
 
 		if (Attributes.Knowledge < 40)
-			return "Your Knowledge is low. Study CS or practice coding.";
+			return "Your Knowledge is low. Study CS is now done in the Computer Lab.";
 
-		return "Choose an activity to improve your comeback.";
+		return "Computer Lab: Study CS. Innovation Hub: Practice Coding. Career Centre: Practice Interviews.";
 	}
 
 	public string GetDormitoryHintMessage()
@@ -39,7 +40,7 @@ public partial class GlobalVars : Node
 			return "No actions left: sleep at bed.";
 		if (Attributes.Energy <= 20)
 			return "Low Energy: sleep soon.";
-		return "Use computer to train stats.";
+		return "Computer Lab: Study CS. Innovation Hub: Practice Coding. Career Centre: Practice Interviews.";
 	}
 
 	public void ResetGame()
