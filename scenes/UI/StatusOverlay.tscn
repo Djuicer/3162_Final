@@ -6,17 +6,17 @@
 script = ExtResource("1")
 
 [node name="StatusPanel" type="PanelContainer" parent="." unique_id=1138631854]
-anchors_preset = 8
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -300.0
-offset_top = -200.0
-offset_right = -16.0
-offset_bottom = -16.0
+anchors_preset = -1
+anchor_left = 1.005
+anchor_top = 0.358
+anchor_right = 1.005
+anchor_bottom = 0.358
+offset_left = -338.76
+offset_top = 0.015991211
+offset_right = -11.76001
+offset_bottom = 184.01599
 grow_horizontal = 0
-grow_vertical = 0
+grow_vertical = 2
 
 [node name="PanelBackground" type="NinePatchRect" parent="StatusPanel" unique_id=586302465]
 modulate = Color(1, 1, 1, 0.08)
@@ -58,6 +58,7 @@ theme_override_font_sizes/font_size = 14
 text = "Career: Readiness 0 | Network 0 | Portfolio 0"
 
 [node name="FloatingTextLayer" type="Control" parent="." unique_id=710086587]
+visible = false
 layout_mode = 3
 anchors_preset = 3
 anchor_left = 1.0

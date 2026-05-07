@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://bcv5s48iq4283"]
 
-[ext_resource type="Script" path="res://scenes/InnovationHub/InnovationHub.cs" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/Player/player.tscn" id="2"]
+[ext_resource type="Script" uid="uid://de4fv8vpb2sqn" path="res://scenes/InnovationHub/InnovationHub.cs" id="1"]
+[ext_resource type="PackedScene" uid="uid://drnt3q66eln2b" path="res://scenes/Player/player.tscn" id="2"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(220, 120)
+
+[sub_resource type="RectangleShape2D" id="4"]
+size = Vector2(150, 160)
 
 [sub_resource type="RectangleShape2D" id="2"]
 size = Vector2(220, 120)
@@ -12,130 +15,132 @@ size = Vector2(220, 120)
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(460, 80)
 
-[sub_resource type="RectangleShape2D" id="4"]
-size = Vector2(150, 160)
-
-[node name="InnovationHub" type="Node2D"]
+[node name="InnovationHub" type="Node2D" unique_id=418755066]
 script = ExtResource("1")
 
-[node name="Floor" type="ColorRect" parent="."]
+[node name="Floor" type="ColorRect" parent="." unique_id=195180326]
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.13, 0.14, 0.18, 1)
 
-[node name="ProjectTable" type="ColorRect" parent="."]
+[node name="ProjectTable" type="ColorRect" parent="." unique_id=1730300965]
 offset_left = 620.0
 offset_top = 220.0
 offset_right = 1020.0
 offset_bottom = 340.0
 color = Color(0.26, 0.2, 0.18, 1)
 
-[node name="Laptop" type="ColorRect" parent="."]
+[node name="Laptop" type="ColorRect" parent="." unique_id=1172909836]
 offset_left = 760.0
 offset_top = 170.0
 offset_right = 900.0
 offset_bottom = 230.0
 color = Color(0.24, 0.45, 0.72, 1)
 
-[node name="Whiteboard" type="ColorRect" parent="."]
+[node name="Whiteboard" type="ColorRect" parent="." unique_id=1303749012]
 offset_left = 140.0
 offset_top = 120.0
 offset_right = 430.0
 offset_bottom = 260.0
 color = Color(0.9, 0.9, 0.9, 1)
 
-[node name="DeveloperStudentVisual" type="ColorRect" parent="."]
+[node name="DeveloperStudentVisual" type="ColorRect" parent="." unique_id=966170897]
 offset_left = 260.0
 offset_top = 280.0
 offset_right = 330.0
 offset_bottom = 390.0
 color = Color(0.95, 0.7, 0.3, 1)
 
-[node name="Player" parent="." instance=ExtResource("2")]
+[node name="Player" parent="." unique_id=260238233 instance=ExtResource("2")]
 position = Vector2(210, 520)
 
-[node name="WorkstationInteractArea" type="Area2D" parent="."]
+[node name="WorkstationInteractArea" type="Area2D" parent="." unique_id=1793654611]
 position = Vector2(818, 265)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorkstationInteractArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorkstationInteractArea" unique_id=2004289248]
 shape = SubResource("1")
 
-[node name="DeveloperStudentInteractArea" type="Area2D" parent="."]
+[node name="DeveloperStudentInteractArea" type="Area2D" parent="." unique_id=1390813036]
 position = Vector2(293, 337)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeveloperStudentInteractArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeveloperStudentInteractArea" unique_id=2038053139]
 shape = SubResource("4")
 
-[node name="ExitInteractArea" type="Area2D" parent="."]
+[node name="ExitInteractArea" type="Area2D" parent="." unique_id=1648590189]
 position = Vector2(173, 545)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitInteractArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitInteractArea" unique_id=1183800787]
 shape = SubResource("2")
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="." unique_id=634261494]
 
-[node name="TopWall" type="CollisionShape2D" parent="Walls"]
+[node name="TopWall" type="CollisionShape2D" parent="Walls" unique_id=1379778866]
 position = Vector2(576, -10)
 shape = SubResource("3")
 
-[node name="BottomWall" type="CollisionShape2D" parent="Walls"]
+[node name="BottomWall" type="CollisionShape2D" parent="Walls" unique_id=893099733]
 position = Vector2(576, 658)
 shape = SubResource("3")
 
-[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+[node name="LeftWall" type="CollisionShape2D" parent="Walls" unique_id=283547079]
 position = Vector2(-8, 324)
 rotation = 1.5708
 shape = SubResource("3")
 
-[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+[node name="RightWall" type="CollisionShape2D" parent="Walls" unique_id=535270660]
 position = Vector2(1160, 324)
 rotation = 1.5708
 shape = SubResource("3")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1063097391]
 
-[node name="GuidancePanel" type="Panel" parent="UI"]
+[node name="GuidancePanel" type="Panel" parent="UI" unique_id=50402600]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 520.0
-offset_bottom = 290.0
+offset_right = 457.0
+offset_bottom = 100.0
 
-[node name="GuidanceLabel" type="Label" parent="UI/GuidancePanel"]
+[node name="GuidanceLabel" type="Label" parent="UI/GuidancePanel" unique_id=1223473782]
+layout_mode = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = 484.0
 offset_bottom = 70.0
+text = "Innovation Hub"
 autowrap_mode = 3
-text = "Innovation Hub\nInteract with the workstation to Practice Coding."
 
-[node name="NpcNameLabel" type="Label" parent="UI/GuidancePanel"]
+[node name="NpcNameLabel" type="Label" parent="UI/GuidancePanel" unique_id=1217737093]
+layout_mode = 0
 offset_left = 12.0
 offset_top = 52.0
 offset_right = 484.0
 offset_bottom = 72.0
 
-[node name="DialogueLabel" type="Label" parent="UI/GuidancePanel"]
+[node name="DialogueLabel" type="Label" parent="UI/GuidancePanel" unique_id=1211772327]
+layout_mode = 0
 offset_left = 12.0
 offset_top = 74.0
 offset_right = 484.0
 offset_bottom = 104.0
 autowrap_mode = 3
 
-[node name="DialogueChoices" type="VBoxContainer" parent="UI/GuidancePanel"]
+[node name="DialogueChoices" type="VBoxContainer" parent="UI/GuidancePanel" unique_id=919201976]
+layout_mode = 0
 offset_left = 12.0
 offset_top = 106.0
 offset_right = 484.0
 offset_bottom = 206.0
 
-[node name="FeedbackLabel" type="Label" parent="UI/GuidancePanel"]
-offset_left = 12.0
-offset_top = 208.0
-offset_right = 484.0
-offset_bottom = 258.0
-autowrap_mode = 3
+[node name="FeedbackLabel" type="Label" parent="UI/GuidancePanel" unique_id=1619166438]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 43.0
+offset_right = 483.0
+offset_bottom = 93.0
 text = "Hint: Interact with the workstation to Practice Coding."
+autowrap_mode = 3
 
-[node name="InteractPromptLabel" type="Label" parent="UI"]
+[node name="InteractPromptLabel" type="Label" parent="UI" unique_id=855800725]
 offset_left = 16.0
 offset_top = 600.0
 offset_right = 500.0
