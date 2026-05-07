@@ -3,8 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://cevey6xo2q6ua" path="res://assets/pictures/Screen.jpg" id="1_ixcsg"]
 [ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="3_0kd71"]
 [ext_resource type="Script" uid="uid://c58r1xitn8v8c" path="res://scenes/Screen/ReturnButton.cs" id="3_ep306"]
+[ext_resource type="Script" path="res://scenes/Screen/ScreenEvent.cs" id="4_h3v9v"]
 
 [node name="Screen" type="Node2D" unique_id=438260087]
+script = ExtResource("4_h3v9v")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1554281799]
 offset_left = 96.0
@@ -99,3 +101,41 @@ offset_top = -7.0
 offset_right = 97.0
 offset_bottom = 16.0
 text = "Exit"
+
+[node name="AssessmentPanel" type="Panel" parent="."]
+offset_left = 250.0
+offset_top = 90.0
+offset_right = 900.0
+offset_bottom = 520.0
+
+[node name="MarginContainer" type="MarginContainer" parent="AssessmentPanel"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 634.0
+offset_bottom = 414.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="AssessmentPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="FromLabel" type="Label" parent="AssessmentPanel/MarginContainer/VBox"]
+layout_mode = 2
+text = "From: BrightPath Tech Recruitment"
+
+[node name="SubjectLabel" type="Label" parent="AssessmentPanel/MarginContainer/VBox"]
+layout_mode = 2
+text = "Subject: Online Coding Assessment Invitation"
+
+[node name="BodyLabel" type="Label" parent="AssessmentPanel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+text = "Hello Candidate,\n\nCongratulations! You have been shortlisted for our Junior Developer Internship pathway.\n\nAs the next step, please complete our online debugging assessment. Your results will help us decide who advances to interview rounds.\n\nBest regards,\nBrightPath Tech"
+autowrap_mode = 3
+
+[node name="StartAssessmentButton" type="Button" parent="AssessmentPanel/MarginContainer/VBox"]
+layout_mode = 2
+text = "Start Assessment"
