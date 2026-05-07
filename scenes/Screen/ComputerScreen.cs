@@ -61,6 +61,13 @@ public partial class ComputerScreen : Node2D
     private void OnStudyCsPressed()
     {
         var state = GlobalVars.Instance;
+        if (!state.Profile.TrySpendAction(1))
+        {
+            ShowFeedback("You are too tired to do more today. Go to sleep.");
+            RefreshUi();
+            return;
+        }
+
         state.Attributes.IncreaseKnowledge(10);
         state.Attributes.DecreaseEnergy(15);
         state.Attributes.DecreaseFocus(5);
@@ -73,6 +80,13 @@ public partial class ComputerScreen : Node2D
     private void OnCodingPracticePressed()
     {
         var state = GlobalVars.Instance;
+        if (!state.Profile.TrySpendAction(1))
+        {
+            ShowFeedback("You are too tired to do more today. Go to sleep.");
+            RefreshUi();
+            return;
+        }
+
         state.Attributes.IncreaseKnowledge(8);
         state.Attributes.IncreaseConfidence(5);
         state.Attributes.DecreaseEnergy(10);
@@ -86,6 +100,13 @@ public partial class ComputerScreen : Node2D
     private void OnProcrastinatePressed()
     {
         var state = GlobalVars.Instance;
+        if (!state.Profile.TrySpendAction(1))
+        {
+            ShowFeedback("You are too tired to do more today. Go to sleep.");
+            RefreshUi();
+            return;
+        }
+
         state.Attributes.IncreaseEnergy(10);
         state.Attributes.DecreaseConfidence(5);
         state.Attributes.DecreaseFocus(5);
@@ -105,7 +126,8 @@ public partial class ComputerScreen : Node2D
             $"Name: {profile.PlayerName}\n" +
             $"Year Level: {profile.YearLevel}\n" +
             $"Semester: {profile.Semester}\n" +
-            $"Current Day: {profile.CurrentDay}\n" +
+            $"Day: {profile.CurrentDay} / {profile.FinalDay}\n" +
+            $"Actions Left: {profile.ActionsLeft} / {profile.MaxActionsPerDay}\n" +
             $"Goal: {profile.Goal}\n" +
             $"Career Readiness: {profile.CareerReadiness}/100";
 

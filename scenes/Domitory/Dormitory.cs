@@ -36,9 +36,11 @@ public partial class Dormitory : Node2D
 	private TextureButton computerButton;
 	private TextureButton outsideButton;
 	private Area2D computerInteractArea;
+	private Area2D bedInteractArea;
 	private Label interactPromptLabel;
 	private PackedScene computerScene;
 	private bool canUseComputer = false;
+	private bool canUseBed = false;
 
 	private int dialogueIndex = 0;
 	private List<(string speaker, string text)> openingDialogue;
@@ -78,6 +80,7 @@ public partial class Dormitory : Node2D
 		computerButton = GetNodeOrNull<TextureButton>("Button/ComputerButton");
 		outsideButton = GetNodeOrNull<TextureButton>("Button/OutsideButton");
 		computerInteractArea = GetNodeOrNull<Area2D>("ComputerInteractArea");
+		bedInteractArea = GetNodeOrNull<Area2D>("BedInteractArea");
 		interactPromptLabel = GetNodeOrNull<Label>("OpeningUI/InteractPromptLabel");
 		computerScene = ResourceLoader.Load<PackedScene>("res://scenes/Screen/screen.tscn");
 
@@ -104,6 +107,11 @@ public partial class Dormitory : Node2D
 			computerInteractArea.BodyEntered += OnComputerAreaBodyEntered;
 			computerInteractArea.BodyExited += OnComputerAreaBodyExited;
 		}
+		if (bedInteractArea != null)
+		{
+			bedInteractArea.BodyEntered += OnBedAreaBodyEntered;
+			bedInteractArea.BodyExited += OnBedAreaBodyExited;
+		}
 
 		if (interactPromptLabel != null)
 			interactPromptLabel.Visible = false;
@@ -119,12 +127,35 @@ public partial class Dormitory : Node2D
 			return;
 
 		bool showPrompt = canUseComputer && !computerButton.Disabled;
-		interactPromptLabel.Visible = showPrompt;
+		if (canUseBed)
+		{
+			interactPromptLabel.Text = "Press E to sleep";
+			interactPromptLabel.Visible = true;
+			return;
+		}
+
+		if (showPrompt)
+		{
+			interactPromptLabel.Text = "Press E to use computer";
+			interactPromptLabel.Visible = true;
+			return;
+		}
+
+		interactPromptLabel.Visible = false;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event.IsActionPressed("interact") && canUseComputer && !computerButton.Disabled)
+		if (!@event.IsActionPressed("interact"))
+			return;
+
+		if (canUseBed)
+		{
+			SleepAtBed();
+			return;
+		}
+
+		if (canUseComputer && !computerButton.Disabled)
 		{
 			if (computerScene != null)
 				GetTree().ChangeSceneToPacked(computerScene);
@@ -143,6 +174,35 @@ public partial class Dormitory : Node2D
 	{
 		if (body is CharacterBody2D)
 			canUseComputer = false;
+	}
+
+	private void OnBedAreaBodyEntered(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseBed = true;
+	}
+
+	private void OnBedAreaBodyExited(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseBed = false;
+	}
+
+	private void SleepAtBed()
+	{
+		var state = GlobalVars.Instance;
+		state.Attributes.IncreaseEnergy(30);
+		state.Attributes.IncreaseFocus(10);
+		state.Profile.CurrentDay += 1;
+		state.Profile.ResetActionsForNewDay();
+
+		GD.Print($"[Sleep] Day={state.Profile.CurrentDay}/{state.Profile.FinalDay}, Actions={state.Profile.ActionsLeft}/{state.Profile.MaxActionsPerDay}, Focus={state.Attributes.Focus}/100, Energy={state.Attributes.Energy}/100, Knowledge={state.Attributes.Knowledge}/100, Confidence={state.Attributes.Confidence}/100, CareerReadiness={state.Profile.CareerReadiness}/100");
+
+		if (state.Profile.CurrentDay > state.Profile.FinalDay)
+		{
+			GD.Print("Final results coming soon.");
+			// TODO: Replace this with the real ending/results scene.
+		}
 	}
 
 	private void SetupInitialState()
