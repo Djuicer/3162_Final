@@ -107,24 +107,27 @@ public partial class BugSquashMinigame : Control
         if (_score >= 15)
         {
             attributes.IncreaseKnowledge(10);
+            attributes.IncreasePortfolio(8);
             profile.IncreaseCareerReadiness(15);
             attributes.DecreaseEnergy(10);
-            _resultLabel.Text = "Great run! Score 15+\nKnowledge +10, Career Readiness +15, Energy -10";
+            _resultLabel.Text = "Great run! Score 15+\nKnowledge +10, Portfolio +8, Career Readiness +15, Energy -10";
         }
         else if (_score >= 8)
         {
             attributes.IncreaseKnowledge(6);
+            attributes.IncreasePortfolio(5);
             profile.IncreaseCareerReadiness(8);
             attributes.DecreaseEnergy(10);
-            _resultLabel.Text = "Solid run! Score 8-14\nKnowledge +6, Career Readiness +8, Energy -10";
+            _resultLabel.Text = "Solid run! Score 8-14\nKnowledge +6, Portfolio +5, Career Readiness +8, Energy -10";
         }
         else
         {
             attributes.IncreaseKnowledge(2);
+            attributes.IncreasePortfolio(2);
             profile.IncreaseCareerReadiness(3);
             attributes.DecreaseEnergy(15);
             attributes.DecreaseFocus(5);
-            _resultLabel.Text = "Keep practicing! Score below 8\nKnowledge +2, Career Readiness +3, Energy -15, Focus -5";
+            _resultLabel.Text = "Keep practicing! Score below 8\nKnowledge +2, Portfolio +2, Career Readiness +3, Energy -15, Focus -5";
         }
 
         _continueButton.Visible = true;
@@ -133,6 +136,10 @@ public partial class BugSquashMinigame : Control
     private void OnContinuePressed()
     {
         _continueButton.Disabled = true;
-        GetTree().ChangeSceneToFile("res://scenes/Screen/screen.tscn");
+        string returnScene = GlobalVars.Instance.ReturnScenePath;
+        if (string.IsNullOrEmpty(returnScene))
+            returnScene = "res://scenes/Screen/screen.tscn";
+
+        GetTree().ChangeSceneToFile(returnScene);
     }
 }
