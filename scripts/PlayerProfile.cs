@@ -59,4 +59,18 @@ public partial class PlayerProfile : RefCounted
 
     public void IncreaseCareerReadiness(int amount) => CareerReadiness += amount;
     public void DecreaseCareerReadiness(int amount) => CareerReadiness -= amount;
+
+    public void ResetToDefaults()
+    {
+        CurrentDay = 1;
+        FinalDay = 7;
+        MaxActionsPerDay = 3;
+        ActionsLeft = 3;
+        CareerReadiness = 0;
+
+        PlayerName = "Player";
+        YearLevel = "3rd Year";
+        Semester = "Final Semester";
+        Goal = "Make a comeback before graduation";
+    }
 }

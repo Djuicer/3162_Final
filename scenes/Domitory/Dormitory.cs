@@ -39,6 +39,7 @@ public partial class Dormitory : Node2D
 	private Area2D bedInteractArea;
 	private Label interactPromptLabel;
 	private PackedScene computerScene;
+	private PackedScene endingScene;
 	private bool canUseComputer = false;
 	private bool canUseBed = false;
 
@@ -83,6 +84,7 @@ public partial class Dormitory : Node2D
 		bedInteractArea = GetNodeOrNull<Area2D>("BedInteractArea");
 		interactPromptLabel = GetNodeOrNull<Label>("OpeningUI/InteractPromptLabel");
 		computerScene = ResourceLoader.Load<PackedScene>("res://scenes/Screen/screen.tscn");
+		endingScene = ResourceLoader.Load<PackedScene>("res://scenes/Ending/ending.tscn");
 
 		if (fadeOverlay == null) GD.PrintErr("Missing node: FadeOverlay");
 		if (openingUI == null) GD.PrintErr("Missing node: OpeningUI");
@@ -201,7 +203,14 @@ public partial class Dormitory : Node2D
 		if (state.Profile.CurrentDay > state.Profile.FinalDay)
 		{
 			GD.Print("Final results coming soon.");
-			// TODO: Replace this with the real ending/results scene.
+						if (endingScene != null)
+			{
+				GetTree().ChangeSceneToPacked(endingScene);
+			}
+			else
+			{
+				GD.PrintErr("Ending scene is missing.");
+			}
 		}
 	}
 
