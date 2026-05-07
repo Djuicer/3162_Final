@@ -1,0 +1,87 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/StatusOverlay.cs" id="1"]
+
+[node name="StatusOverlay" type="CanvasLayer"]
+script = ExtResource("1")
+
+[node name="StatusPanel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -290.0
+offset_top = -230.0
+offset_right = -16.0
+offset_bottom = -16.0
+
+[node name="PanelBackground" type="NinePatchRect" parent="StatusPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+modulate = Color(1, 1, 1, 0.08)
+
+[node name="Margin" type="MarginContainer" parent="StatusPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="StatsContainer" type="VBoxContainer" parent="StatusPanel/Margin"]
+layout_mode = 2
+
+[node name="HeaderLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Status"
+
+[node name="DayLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Day"
+
+[node name="ActionsLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Actions"
+
+[node name="EnergyLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Energy"
+
+[node name="FocusLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Focus"
+
+[node name="KnowledgeLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Knowledge"
+
+[node name="ConfidenceLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Confidence"
+
+[node name="CareerReadinessLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Career Readiness"
+
+[node name="NetworkingLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Networking"
+
+[node name="PortfolioLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+layout_mode = 2
+text = "Portfolio"
+
+[node name="FloatingTextLayer" type="Control" parent="."]
+anchors_preset = 8
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -260.0
+offset_right = -20.0
+offset_bottom = -20.0

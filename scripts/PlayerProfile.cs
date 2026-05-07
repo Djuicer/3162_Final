@@ -48,7 +48,9 @@ public partial class PlayerProfile : RefCounted
         if (cost <= 0 || ActionsLeft < cost)
             return false;
 
+        int before = ActionsLeft;
         ActionsLeft -= cost;
+        GlobalVars.Instance?.NotifyStatChange("Actions", ActionsLeft - before);
         return true;
     }
 
@@ -57,8 +59,17 @@ public partial class PlayerProfile : RefCounted
         ActionsLeft = MaxActionsPerDay;
     }
 
-    public void IncreaseCareerReadiness(int amount) => CareerReadiness += amount;
-    public void DecreaseCareerReadiness(int amount) => CareerReadiness -= amount;
+    public void IncreaseCareerReadiness(int amount) => ApplyCareerReadinessDelta(amount);
+    public void DecreaseCareerReadiness(int amount) => ApplyCareerReadinessDelta(-amount);
+
+    private void ApplyCareerReadinessDelta(int delta)
+    {
+        if (delta == 0)
+            return;
+        int before = CareerReadiness;
+        CareerReadiness += delta;
+        GlobalVars.Instance?.NotifyStatChange("Career Readiness", CareerReadiness - before);
+    }
 
     public void ResetToDefaults()
     {
