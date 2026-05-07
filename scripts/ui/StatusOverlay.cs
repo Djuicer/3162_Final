@@ -54,7 +54,7 @@ public partial class StatusOverlay : CanvasLayer
 			$"Focus {s.Attributes.Focus}\n" +
 			$"Knowledge {s.Attributes.Knowledge}\n" +
 			$"Confidence {s.Attributes.Confidence}\n" +
-			$"Career {s.Profile.CareerReadiness}\n" +
+				$"Career Readiness {s.Profile.CareerReadiness}\n" +
 			$"Networking {s.Attributes.Networking}\n" +
 			$"Portfolio {s.Attributes.Portfolio}";
 	}
