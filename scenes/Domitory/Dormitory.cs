@@ -38,6 +38,10 @@ public partial class Dormitory : Node2D
 	private Area2D computerInteractArea;
 	private Area2D bedInteractArea;
 	private Label interactPromptLabel;
+	private Label guidanceStatsLabel;
+	private Label dormitoryHintLabel;
+	private Panel tutorialPanel;
+	private Button tutorialOkButton;
 	private PackedScene computerScene;
 	private PackedScene endingScene;
 	private bool canUseComputer = false;
@@ -53,6 +57,7 @@ public partial class Dormitory : Node2D
 		LoadGameData();
 		BuildOpeningDialogue();
 		UpdateAttributePanel();
+		RefreshGuidanceUi();
 		StartFadeIn();
 
 		if (interactPromptLabel != null)
@@ -83,6 +88,10 @@ public partial class Dormitory : Node2D
 		computerInteractArea = GetNodeOrNull<Area2D>("ComputerInteractArea");
 		bedInteractArea = GetNodeOrNull<Area2D>("BedInteractArea");
 		interactPromptLabel = GetNodeOrNull<Label>("OpeningUI/InteractPromptLabel");
+		guidanceStatsLabel = GetNodeOrNull<Label>("OpeningUI/GuidancePanel/MarginContainer/VBoxContainer/StatsLabel");
+		dormitoryHintLabel = GetNodeOrNull<Label>("OpeningUI/GuidancePanel/MarginContainer/VBoxContainer/HintLabel");
+		tutorialPanel = GetNodeOrNull<Panel>("OpeningUI/TutorialPanel");
+		tutorialOkButton = GetNodeOrNull<Button>("OpeningUI/TutorialPanel/MarginContainer/VBoxContainer/OkButton");
 		computerScene = ResourceLoader.Load<PackedScene>("res://scenes/Screen/screen.tscn");
 		endingScene = ResourceLoader.Load<PackedScene>("res://scenes/Ending/ending.tscn");
 
@@ -120,11 +129,16 @@ public partial class Dormitory : Node2D
 
 		if (continueButton != null)
 			continueButton.Pressed += OnContinuePressed;
+
+		if (tutorialOkButton != null)
+			tutorialOkButton.Pressed += OnTutorialOkPressed;
 	}
 
 
 	public override void _Process(double delta)
 	{
+		RefreshGuidanceUi();
+
 		if (interactPromptLabel == null)
 			return;
 
@@ -200,6 +214,8 @@ public partial class Dormitory : Node2D
 
 		GD.Print($"[Sleep] Day={state.Profile.CurrentDay}/{state.Profile.FinalDay}, Actions={state.Profile.ActionsLeft}/{state.Profile.MaxActionsPerDay}, Focus={state.Attributes.Focus}/100, Energy={state.Attributes.Energy}/100, Knowledge={state.Attributes.Knowledge}/100, Confidence={state.Attributes.Confidence}/100, CareerReadiness={state.Profile.CareerReadiness}/100");
 
+		RefreshGuidanceUi();
+
 		if (state.Profile.CurrentDay > state.Profile.FinalDay)
 		{
 			GD.Print("Final results coming soon.");
@@ -214,10 +230,50 @@ public partial class Dormitory : Node2D
 		}
 	}
 
+
+	private void RefreshGuidanceUi()
+	{
+		var state = GlobalVars.Instance;
+		if (state == null)
+			return;
+
+		if (guidanceStatsLabel != null)
+		{
+			guidanceStatsLabel.Text = $"Day {state.Profile.CurrentDay} / {state.Profile.FinalDay}\nActions Left {state.Profile.ActionsLeft} / {state.Profile.MaxActionsPerDay}\nEnergy {state.Attributes.Energy} / 100";
+		}
+
+		if (dormitoryHintLabel != null)
+			dormitoryHintLabel.Text = $"Hint: {state.GetDormitoryHintMessage()}";
+	}
+
+	private void ShowTutorialIfNeeded()
+	{
+		var state = GlobalVars.Instance;
+		if (tutorialPanel == null || state == null)
+			return;
+
+		if (!state.HasSeenDormitoryTutorial)
+		{
+			tutorialPanel.Visible = true;
+			state.HasSeenDormitoryTutorial = true;
+		}
+		else
+		{
+			tutorialPanel.Visible = false;
+		}
+	}
+
+	private void OnTutorialOkPressed()
+	{
+		if (tutorialPanel != null)
+			tutorialPanel.Visible = false;
+	}
+
 	private void SetupInitialState()
 	{
-		openingUI.Visible = false;
+		openingUI.Visible = true;
 		dialoguePanel.Visible = false;
+		ShowTutorialIfNeeded();
 		attributePanel.Visible = false;
 
 		computerButton.Disabled = true;
@@ -332,6 +388,7 @@ public partial class Dormitory : Node2D
 	{
 		openingUI.Visible = true;
 		dialoguePanel.Visible = false;
+		ShowTutorialIfNeeded();
 		attributePanel.Visible = true;
 
 		UpdateAttributePanel();
