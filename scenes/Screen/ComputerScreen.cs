@@ -80,21 +80,14 @@ public partial class ComputerScreen : Node2D
     private void OnCodingPracticePressed()
     {
         var state = GlobalVars.Instance;
-        if (!state.Profile.TrySpendAction(1))
+        if (state.Profile.ActionsLeft <= 0)
         {
             ShowFeedback("You are too tired to do more today. Go to sleep.");
             RefreshUi();
             return;
         }
 
-        state.Attributes.IncreaseKnowledge(8);
-        state.Attributes.IncreaseConfidence(5);
-        state.Attributes.DecreaseEnergy(10);
-        state.Profile.IncreaseCareerReadiness(5);
-
-        RefreshUi();
-        PrintState("Coding Practice");
-        ShowFeedback("Coding practice helped your skills and readiness.");
+        GetTree().ChangeSceneToFile("res://scenes/Minigames/BugSquash/bug_squash.tscn");
     }
 
     private void OnProcrastinatePressed()
