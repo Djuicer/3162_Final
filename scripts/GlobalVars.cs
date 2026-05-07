@@ -7,6 +7,8 @@ public partial class GlobalVars : Node
 
 	public string SaveSelectMode { get; set; } = "start";
 	public int CurrentSlot { get; set; } = -1;
+	public PlayerProfile Profile { get; private set; } = new PlayerProfile();
+	public PlayerAttributes Attributes { get; private set; } = new PlayerAttributes();
 
 	public override void _EnterTree()
 	{

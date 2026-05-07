@@ -1,0 +1,131 @@
+using Godot;
+using System;
+
+public partial class ComputerScreen : Node2D
+{
+    private Label _profileLabel;
+    private Label _statsLabel;
+    private Label _feedbackLabel;
+
+    public override void _Ready()
+    {
+        BuildUi();
+        RefreshUi();
+        ShowFeedback("Welcome back. Choose an action.");
+    }
+
+    private void BuildUi()
+    {
+        var panel = new Panel
+        {
+            Name = "ProfilePanel",
+            Position = new Vector2(250, 45),
+            Size = new Vector2(710, 530)
+        };
+        AddChild(panel);
+
+        var layout = new VBoxContainer
+        {
+            Position = new Vector2(12, 12),
+            Size = new Vector2(686, 506)
+        };
+        panel.AddChild(layout);
+
+        var title = new Label { Text = "Student Profile", ThemeTypeVariation = "HeaderSmall" };
+        layout.AddChild(title);
+
+        _profileLabel = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
+        layout.AddChild(_profileLabel);
+
+        _statsLabel = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
+        layout.AddChild(_statsLabel);
+
+        var actionsTitle = new Label { Text = "Temporary Test Actions" };
+        layout.AddChild(actionsTitle);
+
+        layout.AddChild(CreateActionButton("Study CS", OnStudyCsPressed));
+        layout.AddChild(CreateActionButton("Coding Practice", OnCodingPracticePressed));
+        layout.AddChild(CreateActionButton("Procrastinate", OnProcrastinatePressed));
+
+        _feedbackLabel = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart, Modulate = new Color(0.95f, 0.95f, 0.4f) };
+        layout.AddChild(_feedbackLabel);
+    }
+
+    private Button CreateActionButton(string text, Action action)
+    {
+        var button = new Button { Text = text, CustomMinimumSize = new Vector2(0, 40) };
+        button.Pressed += action;
+        return button;
+    }
+
+    private void OnStudyCsPressed()
+    {
+        var state = GlobalVars.Instance;
+        state.Attributes.IncreaseKnowledge(10);
+        state.Attributes.DecreaseEnergy(15);
+        state.Attributes.DecreaseFocus(5);
+
+        RefreshUi();
+        PrintState("Study CS");
+        ShowFeedback("You studied CS. Knowledge is up, but it used up energy and focus.");
+    }
+
+    private void OnCodingPracticePressed()
+    {
+        var state = GlobalVars.Instance;
+        state.Attributes.IncreaseKnowledge(8);
+        state.Attributes.IncreaseConfidence(5);
+        state.Attributes.DecreaseEnergy(10);
+        state.Profile.IncreaseCareerReadiness(5);
+
+        RefreshUi();
+        PrintState("Coding Practice");
+        ShowFeedback("Coding practice helped your skills and readiness.");
+    }
+
+    private void OnProcrastinatePressed()
+    {
+        var state = GlobalVars.Instance;
+        state.Attributes.IncreaseEnergy(10);
+        state.Attributes.DecreaseConfidence(5);
+        state.Attributes.DecreaseFocus(5);
+
+        RefreshUi();
+        PrintState("Procrastinate");
+        ShowFeedback("You rested, but your motivation slipped.");
+    }
+
+    private void RefreshUi()
+    {
+        var state = GlobalVars.Instance;
+        var profile = state.Profile;
+        var attributes = state.Attributes;
+
+        _profileLabel.Text =
+            $"Name: {profile.PlayerName}\n" +
+            $"Year Level: {profile.YearLevel}\n" +
+            $"Semester: {profile.Semester}\n" +
+            $"Current Day: {profile.CurrentDay}\n" +
+            $"Goal: {profile.Goal}\n" +
+            $"Career Readiness: {profile.CareerReadiness}/100";
+
+        _statsLabel.Text =
+            $"Focus: {attributes.Focus}/100\n" +
+            $"Energy: {attributes.Energy}/100\n" +
+            $"Knowledge: {attributes.Knowledge}/100\n" +
+            $"Confidence: {attributes.Confidence}/100";
+    }
+
+    private void ShowFeedback(string message)
+    {
+        _feedbackLabel.Text = $"Feedback: {message}";
+    }
+
+    private void PrintState(string actionName)
+    {
+        var profile = GlobalVars.Instance.Profile;
+        var attributes = GlobalVars.Instance.Attributes;
+
+        GD.Print($"[{actionName}] Name={profile.PlayerName}, Day={profile.CurrentDay}, CareerReadiness={profile.CareerReadiness}/100, Focus={attributes.Focus}/100, Energy={attributes.Energy}/100, Knowledge={attributes.Knowledge}/100, Confidence={attributes.Confidence}/100");
+    }
+}
