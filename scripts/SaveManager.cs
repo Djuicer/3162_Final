@@ -27,12 +27,14 @@ public partial class SaveManager : Node
 		{
 			{ "player_name", playerName },
 			{ "current_day", 1 },
+			{ "focus_blocks", 0 },
 			{ "knowledge", 1 },
 			{ "coding_skill", 1 },
 			{ "energy", 5 },
 			{ "confidence", 2 },
 			{ "portfolio_progress", 0 },
 			{ "has_seen_opening", false },
+			{ "laptop_intro_seen", false },
 			{ "scene_path", "res://scenes/Domitory/dormitory.tscn" }
 		};
 	}
