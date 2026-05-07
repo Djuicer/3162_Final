@@ -33,7 +33,7 @@ public partial class ComputerScreen : Node2D
         layout.AddChild(_statsLabel);
 
         layout.AddChild(new Label { Text = "Available Actions", ThemeTypeVariation = "HeaderSmall" });
-        layout.AddChild(new Label { Text = "Study CS: Play Focus Catch to gain Knowledge. Costs 1 action and Energy.", AutowrapMode = TextServer.AutowrapMode.WordSmart });
+        layout.AddChild(new Label { Text = "Study CS is available in the Computer Lab.", AutowrapMode = TextServer.AutowrapMode.WordSmart, Modulate = new Color(0.85f, 0.95f, 1f) });
         layout.AddChild(new Label { Text = "Coding Practice: Play Bug Squash to gain Knowledge and Career Readiness. Costs 1 action and Energy.", AutowrapMode = TextServer.AutowrapMode.WordSmart });
         layout.AddChild(new Label { Text = "Apply for Internship: Play Interview Rhythm to gain Career Readiness and Confidence. Costs 1 action and Energy.", AutowrapMode = TextServer.AutowrapMode.WordSmart });
         layout.AddChild(new Label { Text = "Procrastinate: Recover a little Energy, but lose Focus or Confidence. Costs 1 action.", AutowrapMode = TextServer.AutowrapMode.WordSmart });
@@ -42,7 +42,6 @@ public partial class ComputerScreen : Node2D
         _hintLabel = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart, Modulate = new Color(0.85f, 0.95f, 1f) };
         layout.AddChild(_hintLabel);
 
-        layout.AddChild(CreateActionButton("Study CS", OnStudyCsPressed));
         layout.AddChild(CreateActionButton("Coding Practice", OnCodingPracticePressed));
         layout.AddChild(CreateActionButton("Apply for Internship", OnApplyForInternshipPressed));
         layout.AddChild(CreateActionButton("Procrastinate", OnProcrastinatePressed));
@@ -79,7 +78,6 @@ public partial class ComputerScreen : Node2D
         return true;
     }
 
-    private void OnStudyCsPressed() { if (!_isTransitioning && CanDoAction()) { _isTransitioning = true; GetTree().ChangeSceneToFile("res://scenes/Minigames/FocusCatch/focus_catch.tscn"); } }
     private void OnCodingPracticePressed() { if (!_isTransitioning && CanDoAction()) { _isTransitioning = true; GetTree().ChangeSceneToFile("res://scenes/Minigames/BugSquash/bug_squash.tscn"); } }
     private void OnApplyForInternshipPressed() { if (!_isTransitioning && CanDoAction()) { _isTransitioning = true; GetTree().ChangeSceneToFile("res://scenes/Minigames/InterviewRhythm/interview_rhythm.tscn"); } }
     private void OnBackPressed() { if (!_isTransitioning) { _isTransitioning = true; GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn"); } }
