@@ -4,6 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cv7djbxlb7gf1" path="res://assets/pictures/1773801375903.png" id="1_oniru"]
 [ext_resource type="Script" uid="uid://f72gai5rl2cf" path="res://scenes/Domitory/HoverButton.cs" id="2_4nve3"]
 [ext_resource type="PackedScene" uid="uid://c5kbsovvaswlc" path="res://scenes/Screen/screen.tscn" id="3_1bqsu"]
+[ext_resource type="PackedScene" uid="uid://drnt3q66eln2b" path="res://scenes/Player/player.tscn" id="4_8t6xq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(100, 120)
 
 [node name="Dormitory" type="Node2D" unique_id=615578868]
 script = ExtResource("1_gpvd8")
@@ -14,6 +18,16 @@ offset_right = 1049.0
 offset_bottom = 647.0
 texture = ExtResource("1_oniru")
 expand_mode = 1
+
+
+[node name="Player" parent="." instance=ExtResource("4_8t6xq")]
+position = Vector2(504, 480)
+
+[node name="ComputerInteractArea" type="Area2D" parent="."]
+position = Vector2(200, 220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComputerInteractArea"]
+shape = SubResource("RectangleShape2D_interact")
 
 [node name="Button" type="Node" parent="." unique_id=1975054436]
 
@@ -152,3 +166,18 @@ horizontal_alignment = 2
 [node name="PortfolioLabel" type="Label" parent="OpeningUI/AttributePanel/MarginContainer/VBoxContainer" unique_id=2064771856]
 layout_mode = 2
 horizontal_alignment = 2
+
+[node name="InteractPromptLabel" type="Label" parent="OpeningUI"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -175.0
+offset_right = 130.0
+offset_bottom = -145.0
+grow_horizontal = 2
+text = "Press E to use computer"
+horizontal_alignment = 1

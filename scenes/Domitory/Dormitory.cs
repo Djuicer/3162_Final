@@ -35,6 +35,10 @@ public partial class Dormitory : Node2D
 
 	private TextureButton computerButton;
 	private TextureButton outsideButton;
+	private Area2D computerInteractArea;
+	private Label interactPromptLabel;
+	private PackedScene computerScene;
+	private bool canUseComputer = false;
 
 	private int dialogueIndex = 0;
 	private List<(string speaker, string text)> openingDialogue;
@@ -47,6 +51,9 @@ public partial class Dormitory : Node2D
 		BuildOpeningDialogue();
 		UpdateAttributePanel();
 		StartFadeIn();
+
+		if (interactPromptLabel != null)
+			interactPromptLabel.Visible = false;
 	}
 
 	private void GetNodes()
@@ -70,6 +77,9 @@ public partial class Dormitory : Node2D
 
 		computerButton = GetNodeOrNull<TextureButton>("Button/ComputerButton");
 		outsideButton = GetNodeOrNull<TextureButton>("Button/OutsideButton");
+		computerInteractArea = GetNodeOrNull<Area2D>("ComputerInteractArea");
+		interactPromptLabel = GetNodeOrNull<Label>("OpeningUI/InteractPromptLabel");
+		computerScene = ResourceLoader.Load<PackedScene>("res://scenes/Screen/screen.tscn");
 
 		if (fadeOverlay == null) GD.PrintErr("Missing node: FadeOverlay");
 		if (openingUI == null) GD.PrintErr("Missing node: OpeningUI");
@@ -89,8 +99,50 @@ public partial class Dormitory : Node2D
 		if (computerButton == null) GD.PrintErr("Missing node: Button/ComputerButton");
 		if (outsideButton == null) GD.PrintErr("Missing node: Button/OutsideButton");
 
+		if (computerInteractArea != null)
+		{
+			computerInteractArea.BodyEntered += OnComputerAreaBodyEntered;
+			computerInteractArea.BodyExited += OnComputerAreaBodyExited;
+		}
+
+		if (interactPromptLabel != null)
+			interactPromptLabel.Visible = false;
+
 		if (continueButton != null)
 			continueButton.Pressed += OnContinuePressed;
+	}
+
+
+	public override void _Process(double delta)
+	{
+		if (interactPromptLabel == null)
+			return;
+
+		bool showPrompt = canUseComputer && !computerButton.Disabled;
+		interactPromptLabel.Visible = showPrompt;
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event.IsActionPressed("interact") && canUseComputer && !computerButton.Disabled)
+		{
+			if (computerScene != null)
+				GetTree().ChangeSceneToPacked(computerScene);
+			else
+				GD.PrintErr("Computer scene is missing.");
+		}
+	}
+
+	private void OnComputerAreaBodyEntered(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseComputer = true;
+	}
+
+	private void OnComputerAreaBodyExited(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseComputer = false;
 	}
 
 	private void SetupInitialState()
