@@ -16,7 +16,7 @@ public partial class StatusOverlay : CanvasLayer
 		panel.AnchorRight = 1;
 		panel.AnchorBottom = 1;
 		panel.OffsetLeft = -290;
-		panel.OffsetTop = -230;
+		panel.OffsetTop = -650;
 		panel.OffsetRight = -16;
 		panel.OffsetBottom = -16;
 		AddChild(panel);
