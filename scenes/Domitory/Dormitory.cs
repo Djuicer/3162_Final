@@ -61,7 +61,7 @@ public partial class Dormitory : Node2D
 
 	public override void _Ready()
 	{
-		StatusOverlay.AttachTo(this);
+		StatusOverlay.AttachTo(this, true);
 		GetNodes();
 		SetupInitialState();
 		LoadGameData();
@@ -88,12 +88,12 @@ public partial class Dormitory : Node2D
 		dialogueLabel = GetNodeOrNull<Label>("OpeningUI/DialoguePanel/DialogueLabel");
 		continueButton = GetNodeOrNull<Button>("OpeningUI/DialoguePanel/ContinueButton");
 
-		dayLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/DayLabel");
-		knowledgeLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/KnowledgeLabel");
-		codingSkillLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/CodingSkillLabel");
-		energyLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/EnergyLabel");
-		confidenceLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/ConfidenceLabel");
-		portfolioLabel = GetNode<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/PortfolioLabel");
+		dayLabel = GetNodeOrNull<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/DayLabel");
+		knowledgeLabel = GetNodeOrNull<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/KnowledgeLabel");
+		codingSkillLabel = GetNodeOrNull<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/CodingSkillLabel");
+		energyLabel = GetNodeOrNull<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/EnergyLabel");
+		confidenceLabel = GetNodeOrNull<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/ConfidenceLabel");
+		portfolioLabel = GetNodeOrNull<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/PortfolioLabel");
 
 		computerButton = GetNodeOrNull<TextureButton>("Button/ComputerButton");
 		outsideButton = GetNodeOrNull<TextureButton>("Button/OutsideButton");
@@ -492,9 +492,7 @@ public partial class Dormitory : Node2D
 		openingUI.Visible = true;
 		dialoguePanel.Visible = false;
 		ShowTutorialIfNeeded();
-		attributePanel.Visible = true;
-
-		UpdateAttributePanel();
+		attributePanel.Visible = false;
 
 		computerButton.Disabled = false;
 		outsideButton.Disabled = true;

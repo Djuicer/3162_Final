@@ -19,7 +19,7 @@ public partial class InnovationHub : Node2D
 
 	public override void _Ready()
 	{
-		StatusOverlay.AttachTo(this);
+		StatusOverlay.AttachTo(this, false);
 		_workstationInteractArea = GetNodeOrNull<Area2D>("WorkstationInteractArea");
 		_exitInteractArea = GetNodeOrNull<Area2D>("ExitInteractArea");
 		_developerStudentArea = GetNodeOrNull<Area2D>("DeveloperStudentInteractArea");

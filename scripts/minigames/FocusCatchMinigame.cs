@@ -32,6 +32,7 @@ public partial class FocusCatchMinigame : Control
 
     public override void _Ready()
     {
+        StatusOverlay.AttachTo(this, false);
         _timerLabel = GetNode<Label>("Panel/VBox/TimerLabel");
         _scoreLabel = GetNode<Label>("Panel/VBox/ScoreLabel");
         _resultLabel = GetNode<Label>("Panel/VBox/ResultLabel");

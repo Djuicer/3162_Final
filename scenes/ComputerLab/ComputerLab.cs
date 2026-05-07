@@ -12,7 +12,7 @@ public partial class ComputerLab : Node2D
 
 	public override void _Ready()
 	{
-		StatusOverlay.AttachTo(this);
+		StatusOverlay.AttachTo(this, false);
 		_pcInteractArea = GetNodeOrNull<Area2D>("PcInteractArea");
 		_exitInteractArea = GetNodeOrNull<Area2D>("ExitInteractArea");
 		_interactPromptLabel = GetNodeOrNull<Label>("UI/InteractPromptLabel");
