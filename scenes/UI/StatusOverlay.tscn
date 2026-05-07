@@ -1,82 +1,79 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cte6xapt3p3sr"]
 
-[ext_resource type="Script" path="res://scripts/ui/StatusOverlay.cs" id="1"]
+[ext_resource type="Script" uid="uid://crdajwjchu6m1" path="res://scripts/ui/StatusOverlay.cs" id="1"]
 
-[node name="StatusOverlay" type="CanvasLayer"]
+[node name="StatusOverlay" type="CanvasLayer" unique_id=210997434]
 script = ExtResource("1")
 
-[node name="StatusPanel" type="PanelContainer" parent="."]
-anchors_preset = 8
+[node name="StatusPanel" type="PanelContainer" parent="." unique_id=1138631854]
+anchors_preset = 6
 anchor_left = 1.0
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -290.0
-offset_top = -230.0
-offset_right = -16.0
-offset_bottom = -16.0
-
-[node name="PanelBackground" type="NinePatchRect" parent="StatusPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = -107.0
+offset_bottom = 107.0
+grow_horizontal = 0
 grow_vertical = 2
-modulate = Color(1, 1, 1, 0.08)
 
-[node name="Margin" type="MarginContainer" parent="StatusPanel"]
+[node name="PanelBackground" type="NinePatchRect" parent="StatusPanel" unique_id=586302465]
+modulate = Color(1, 1, 1, 0.08)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="StatusPanel" unique_id=23363891]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="StatsContainer" type="VBoxContainer" parent="StatusPanel/Margin"]
+[node name="StatsContainer" type="VBoxContainer" parent="StatusPanel/Margin" unique_id=900276770]
 layout_mode = 2
 
-[node name="HeaderLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="HeaderLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=767617883]
 layout_mode = 2
 text = "Status"
 
-[node name="DayLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="DayLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=2045344648]
 layout_mode = 2
 text = "Day"
 
-[node name="ActionsLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="ActionsLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=1616778643]
 layout_mode = 2
 text = "Actions"
 
-[node name="EnergyLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="EnergyLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=750613124]
 layout_mode = 2
 text = "Energy"
 
-[node name="FocusLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="FocusLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=1463208212]
 layout_mode = 2
 text = "Focus"
 
-[node name="KnowledgeLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="KnowledgeLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=1328115926]
 layout_mode = 2
 text = "Knowledge"
 
-[node name="ConfidenceLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="ConfidenceLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=1633604452]
 layout_mode = 2
 text = "Confidence"
 
-[node name="CareerReadinessLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="CareerReadinessLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=821518425]
 layout_mode = 2
 text = "Career Readiness"
 
-[node name="NetworkingLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="NetworkingLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=1712260557]
 layout_mode = 2
 text = "Networking"
 
-[node name="PortfolioLabel" type="Label" parent="StatusPanel/Margin/StatsContainer"]
+[node name="PortfolioLabel" type="Label" parent="StatusPanel/Margin/StatsContainer" unique_id=735721149]
 layout_mode = 2
 text = "Portfolio"
 
-[node name="FloatingTextLayer" type="Control" parent="."]
-anchors_preset = 8
+[node name="FloatingTextLayer" type="Control" parent="." unique_id=710086587]
+layout_mode = 3
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -85,3 +82,5 @@ offset_left = -300.0
 offset_top = -260.0
 offset_right = -20.0
 offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
