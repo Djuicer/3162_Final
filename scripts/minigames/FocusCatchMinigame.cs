@@ -18,6 +18,7 @@ public partial class FocusCatchMinigame : Control
     private float _spawnTimer = 0.0f;
     private int _score = 0;
     private bool _isFinished = false;
+    private bool _rewardApplied = false;
 
     private readonly RandomNumberGenerator _rng = new RandomNumberGenerator();
     private readonly List<FallingItem> _items = new List<FallingItem>();
@@ -34,6 +35,7 @@ public partial class FocusCatchMinigame : Control
         _timerLabel = GetNode<Label>("Panel/VBox/TimerLabel");
         _scoreLabel = GetNode<Label>("Panel/VBox/ScoreLabel");
         _resultLabel = GetNode<Label>("Panel/VBox/ResultLabel");
+        var instructionLabel = GetNodeOrNull<Label>("Panel/VBox/InstructionLabel");
         _continueButton = GetNode<Button>("Panel/VBox/ContinueButton");
         _catcher = GetNode<ColorRect>("PlayArea/Catcher");
         _playArea = GetNode<Control>("PlayArea");
@@ -41,6 +43,8 @@ public partial class FocusCatchMinigame : Control
         _continueButton.Pressed += OnContinuePressed;
         _continueButton.Visible = false;
         _resultLabel.Text = "";
+        if (instructionLabel != null)
+            instructionLabel.Text = "Move left/right to catch NOTE and avoid PHONE.";
 
         _rng.Randomize();
         UpdateHud();
@@ -166,6 +170,9 @@ public partial class FocusCatchMinigame : Control
     private void EndMinigame()
     {
         _isFinished = true;
+        if (_rewardApplied)
+            return;
+        _rewardApplied = true;
 
         foreach (FallingItem item in _items)
         {
@@ -177,7 +184,12 @@ public partial class FocusCatchMinigame : Control
         var profile = GlobalVars.Instance.Profile;
         var attributes = GlobalVars.Instance.Attributes;
 
-        profile.TrySpendAction(1);
+        if (!profile.TrySpendAction(1))
+        {
+            _resultLabel.Text = "No actions left. No rewards granted.";
+            _continueButton.Visible = true;
+            return;
+        }
 
         if (_score >= 15)
         {
@@ -205,6 +217,7 @@ public partial class FocusCatchMinigame : Control
 
     private void OnContinuePressed()
     {
+        _continueButton.Disabled = true;
         GetTree().ChangeSceneToFile("res://scenes/Screen/screen.tscn");
     }
 }

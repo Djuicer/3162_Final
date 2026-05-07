@@ -18,6 +18,7 @@ public partial class InterviewRhythmMinigame : Control
     private int _score = 0;
     private float _markerDirection = 1.0f;
     private bool _isFinished = false;
+    private bool _rewardApplied = false;
 
     public override void _Ready()
     {
@@ -115,11 +116,20 @@ public partial class InterviewRhythmMinigame : Control
     private void EndMinigame()
     {
         _isFinished = true;
+        if (_rewardApplied)
+            return;
+        _rewardApplied = true;
 
         var profile = GlobalVars.Instance.Profile;
         var attributes = GlobalVars.Instance.Attributes;
 
-        profile.TrySpendAction(1);
+        if (!profile.TrySpendAction(1))
+        {
+            _resultLabel.Text = "No actions left. No rewards granted.";
+            _instructionLabel.Text = "Interview finished.";
+            _continueButton.Visible = true;
+            return;
+        }
 
         if (_score >= 7)
         {
@@ -149,6 +159,7 @@ public partial class InterviewRhythmMinigame : Control
 
     private void OnContinuePressed()
     {
+        _continueButton.Disabled = true;
         GetTree().ChangeSceneToFile("res://scenes/Screen/screen.tscn");
     }
 }

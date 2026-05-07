@@ -6,6 +6,7 @@ public partial class ComputerScreen : Node2D
     private Label _profileLabel;
     private Label _statsLabel;
     private Label _feedbackLabel;
+    private bool _isTransitioning;
 
     public override void _Ready()
     {
@@ -34,6 +35,12 @@ public partial class ComputerScreen : Node2D
         var title = new Label { Text = "Student Profile", ThemeTypeVariation = "HeaderSmall" };
         layout.AddChild(title);
 
+        layout.AddChild(new Label
+        {
+            Text = "Choose one activity. Each activity uses 1 action. When actions reach 0, return to dorm and sleep.",
+            AutowrapMode = TextServer.AutowrapMode.WordSmart
+        });
+
         _profileLabel = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
         layout.AddChild(_profileLabel);
 
@@ -47,6 +54,7 @@ public partial class ComputerScreen : Node2D
         layout.AddChild(CreateActionButton("Coding Practice", OnCodingPracticePressed));
         layout.AddChild(CreateActionButton("Apply for Internship", OnApplyForInternshipPressed));
         layout.AddChild(CreateActionButton("Procrastinate", OnProcrastinatePressed));
+        layout.AddChild(CreateActionButton("Back to Dormitory", OnBackPressed));
 
         _feedbackLabel = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart, Modulate = new Color(0.95f, 0.95f, 0.4f) };
         layout.AddChild(_feedbackLabel);
@@ -61,6 +69,7 @@ public partial class ComputerScreen : Node2D
 
     private void OnStudyCsPressed()
     {
+        if (_isTransitioning) return;
         var state = GlobalVars.Instance;
         if (state.Profile.ActionsLeft <= 0)
         {
@@ -69,11 +78,13 @@ public partial class ComputerScreen : Node2D
             return;
         }
 
+        _isTransitioning = true;
         GetTree().ChangeSceneToFile("res://scenes/Minigames/FocusCatch/focus_catch.tscn");
     }
 
     private void OnCodingPracticePressed()
     {
+        if (_isTransitioning) return;
         var state = GlobalVars.Instance;
         if (state.Profile.ActionsLeft <= 0)
         {
@@ -82,12 +93,14 @@ public partial class ComputerScreen : Node2D
             return;
         }
 
+        _isTransitioning = true;
         GetTree().ChangeSceneToFile("res://scenes/Minigames/BugSquash/bug_squash.tscn");
     }
 
 
     private void OnApplyForInternshipPressed()
     {
+        if (_isTransitioning) return;
         var state = GlobalVars.Instance;
         if (state.Profile.ActionsLeft <= 0)
         {
@@ -96,7 +109,15 @@ public partial class ComputerScreen : Node2D
             return;
         }
 
+        _isTransitioning = true;
         GetTree().ChangeSceneToFile("res://scenes/Minigames/InterviewRhythm/interview_rhythm.tscn");
+    }
+
+    private void OnBackPressed()
+    {
+        if (_isTransitioning) return;
+        _isTransitioning = true;
+        GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
     }
 
     private void OnProcrastinatePressed()

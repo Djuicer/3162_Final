@@ -13,6 +13,7 @@ public partial class BugSquashMinigame : Control
     private float _timeRemaining = TotalTimeSeconds;
     private int _score = 0;
     private bool _isFinished = false;
+    private bool _rewardApplied = false;
 
     private readonly RandomNumberGenerator _rng = new RandomNumberGenerator();
 
@@ -21,6 +22,7 @@ public partial class BugSquashMinigame : Control
         _timerLabel = GetNode<Label>("Panel/VBox/TimerLabel");
         _scoreLabel = GetNode<Label>("Panel/VBox/ScoreLabel");
         _resultLabel = GetNode<Label>("Panel/VBox/ResultLabel");
+        var instructionLabel = GetNodeOrNull<Label>("Panel/VBox/InstructionLabel");
         _bugButton = GetNode<Button>("PlayArea/BugButton");
         _continueButton = GetNode<Button>("Panel/VBox/ContinueButton");
 
@@ -30,6 +32,8 @@ public partial class BugSquashMinigame : Control
         _continueButton.Pressed += OnContinuePressed;
 
         _resultLabel.Text = "";
+        if (instructionLabel != null)
+            instructionLabel.Text = "Click BUG as fast as possible before the timer ends.";
         _continueButton.Visible = false;
 
         SpawnBugAtRandomPosition();
@@ -85,12 +89,20 @@ public partial class BugSquashMinigame : Control
     private void EndMinigame()
     {
         _isFinished = true;
+        if (_rewardApplied)
+            return;
+        _rewardApplied = true;
         _bugButton.Visible = false;
 
         var profile = GlobalVars.Instance.Profile;
         var attributes = GlobalVars.Instance.Attributes;
 
-        profile.TrySpendAction(1);
+        if (!profile.TrySpendAction(1))
+        {
+            _resultLabel.Text = "No actions left. No rewards granted.";
+            _continueButton.Visible = true;
+            return;
+        }
 
         if (_score >= 15)
         {
@@ -120,6 +132,7 @@ public partial class BugSquashMinigame : Control
 
     private void OnContinuePressed()
     {
+        _continueButton.Disabled = true;
         GetTree().ChangeSceneToFile("res://scenes/Screen/screen.tscn");
     }
 }
