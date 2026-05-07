@@ -2,6 +2,7 @@ using Godot;
 
 public partial class InnovationHub : Node2D
 {
+	private CharacterBody2D _player;
 	private Area2D _workstationInteractArea;
 	private Area2D _exitInteractArea;
 	private Area2D _developerStudentArea;
@@ -22,6 +23,7 @@ public partial class InnovationHub : Node2D
 		StatusOverlay.AttachTo(this, false);
 		_workstationInteractArea = GetNodeOrNull<Area2D>("WorkstationInteractArea");
 		_exitInteractArea = GetNodeOrNull<Area2D>("ExitInteractArea");
+		_player = GetNodeOrNull<CharacterBody2D>("Player");
 		_developerStudentArea = GetNodeOrNull<Area2D>("DeveloperStudentInteractArea");
 		_developerStudentVisual = GetNodeOrNull<ColorRect>("DeveloperStudentVisual");
 		_interactPromptLabel = GetNodeOrNull<Label>("UI/InteractPromptLabel");
@@ -49,6 +51,7 @@ public partial class InnovationHub : Node2D
 
 		if (_interactPromptLabel != null)
 			_interactPromptLabel.Visible = false;
+		ApplyPendingSpawnIfAny();
 
 		bool day5Available = GlobalVars.Instance.Profile.CurrentDay >= 5;
 		if (_developerStudentVisual != null)
@@ -106,6 +109,7 @@ public partial class InnovationHub : Node2D
 		if (_canUseExit)
 		{
 			_isTransitioning = true;
+			GlobalVars.Instance.QueuePendingSpawn("DoorReturnSpawn");
 			GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
 		}
 	}
@@ -120,8 +124,20 @@ public partial class InnovationHub : Node2D
 		}
 
 		_isTransitioning = true;
-		state.ReturnScenePath = "res://scenes/InnovationHub/innovation_hub.tscn";
+		state.SetReturnContext("res://scenes/InnovationHub/innovation_hub.tscn", "InnovationHubWorkstationReturnSpawn");
 		GetTree().ChangeSceneToFile("res://scenes/Minigames/BugSquash/bug_squash.tscn");
+	}
+
+	private void ApplyPendingSpawnIfAny()
+	{
+		var state = GlobalVars.Instance;
+		if (state == null || _player == null || string.IsNullOrEmpty(state.PendingSpawnId))
+			return;
+
+		var marker = GetNodeOrNull<Marker2D>(state.PendingSpawnId);
+		if (marker != null)
+			_player.GlobalPosition = marker.GlobalPosition;
+		state.PendingSpawnId = "";
 	}
 
 	private void SetFeedback(string message)

@@ -44,6 +44,12 @@ color = Color(0.85, 0.85, 0.8, 1)
 [node name="Player" parent="." unique_id=915556689 instance=ExtResource("2")]
 position = Vector2(210, 520)
 
+[node name="CareerCentreBoothReturnSpawn" type="Marker2D" parent="." unique_id=400001]
+position = Vector2(760, 360)
+
+[node name="CareerCentreEntranceSpawn" type="Marker2D" parent="." unique_id=400002]
+position = Vector2(210, 520)
+
 [node name="InterviewInteractArea" type="Area2D" parent="." unique_id=2064621241]
 position = Vector2(818, 265)
 

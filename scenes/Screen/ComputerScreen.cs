@@ -40,7 +40,19 @@ public partial class ComputerScreen : Node2D
 			_returnButton.Pressed += OnBackPressed;
 	}
 
-	private void OnBackPressed() { if (!_isTransitioning) { _isTransitioning = true; GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn"); } }
+	private void OnBackPressed()
+	{
+		if (_isTransitioning)
+			return;
+		_isTransitioning = true;
+		var state = GlobalVars.Instance;
+		string returnScene = state?.ReturnScenePath;
+		if (string.IsNullOrEmpty(returnScene))
+			returnScene = "res://scenes/Domitory/dormitory.tscn";
+		if (!string.IsNullOrEmpty(state?.ReturnSpawnId))
+			state.QueuePendingSpawn(state.ReturnSpawnId);
+		GetTree().ChangeSceneToFile(returnScene);
+	}
 	private void OnEmailPressed() { if (!_isTransitioning) { _isTransitioning = true; GetTree().ChangeSceneToFile("res://scenes/Computer/Email/email.tscn"); } }
 
 	private void OnProcrastinatePressed()

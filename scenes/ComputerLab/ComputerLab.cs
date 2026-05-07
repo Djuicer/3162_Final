@@ -2,6 +2,7 @@ using Godot;
 
 public partial class ComputerLab : Node2D
 {
+	private CharacterBody2D _player;
 	private Area2D _pcInteractArea;
 	private Area2D _exitInteractArea;
 	private Label _interactPromptLabel;
@@ -15,6 +16,7 @@ public partial class ComputerLab : Node2D
 		StatusOverlay.AttachTo(this, false);
 		_pcInteractArea = GetNodeOrNull<Area2D>("PcInteractArea");
 		_exitInteractArea = GetNodeOrNull<Area2D>("ExitInteractArea");
+		_player = GetNodeOrNull<CharacterBody2D>("Player");
 		_interactPromptLabel = GetNodeOrNull<Label>("UI/InteractPromptLabel");
 		_feedbackLabel = GetNodeOrNull<Label>("UI/FeedbackLabel");
 
@@ -32,6 +34,7 @@ public partial class ComputerLab : Node2D
 
 		if (_interactPromptLabel != null)
 			_interactPromptLabel.Visible = false;
+		ApplyPendingSpawnIfAny();
 
 		SetFeedback("Interact with a PC to Study CS.");
 	}
@@ -72,6 +75,7 @@ public partial class ComputerLab : Node2D
 		if (_canUseExit)
 		{
 			_isTransitioning = true;
+			GlobalVars.Instance.QueuePendingSpawn("DoorReturnSpawn");
 			GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
 		}
 	}
@@ -86,8 +90,20 @@ public partial class ComputerLab : Node2D
 		}
 
 		_isTransitioning = true;
-		state.ReturnScenePath = "res://scenes/ComputerLab/computer_lab.tscn";
+		state.SetReturnContext("res://scenes/ComputerLab/computer_lab.tscn", "ComputerLabPCReturnSpawn");
 		GetTree().ChangeSceneToFile("res://scenes/Minigames/FocusCatch/focus_catch.tscn");
+	}
+
+	private void ApplyPendingSpawnIfAny()
+	{
+		var state = GlobalVars.Instance;
+		if (state == null || _player == null || string.IsNullOrEmpty(state.PendingSpawnId))
+			return;
+
+		var marker = GetNodeOrNull<Marker2D>(state.PendingSpawnId);
+		if (marker != null)
+			_player.GlobalPosition = marker.GlobalPosition;
+		state.PendingSpawnId = "";
 	}
 
 	private void SetFeedback(string message)
