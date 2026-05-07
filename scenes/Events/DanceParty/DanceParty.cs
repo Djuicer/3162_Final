@@ -21,7 +21,7 @@ public partial class DanceParty : Node2D
 
 	public override void _Ready()
 	{
-		StatusOverlay.AttachTo(this);
+		StatusOverlay.AttachTo(this, false);
 		_classmateArea = GetNode<Area2D>("ClassmateInteractArea");
 		_alumniArea = GetNode<Area2D>("AlumniInteractArea");
 		_interactPromptLabel = GetNode<Label>("UI/InteractPromptLabel");

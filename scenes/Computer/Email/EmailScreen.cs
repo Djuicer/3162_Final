@@ -16,7 +16,7 @@ public partial class EmailScreen : Control
 
 	public override void _Ready()
 	{
-		StatusOverlay.AttachTo(this);
+		StatusOverlay.AttachTo(this, false);
 		_emailList = GetNode<ItemList>("Panel/Margin/VBox/Content/HBox/EmailList");
 		_subjectLabel = GetNode<Label>("Panel/Margin/VBox/Content/HBox/Detail/Subject");
 		_bodyLabel = GetNode<Label>("Panel/Margin/VBox/Content/HBox/Detail/Body");

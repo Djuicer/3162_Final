@@ -28,6 +28,7 @@ public partial class StatusOverlay : CanvasLayer
 	private Label _portfolioLabel;
 	private Control _floatingTextLayer;
 	private int _floatingIndex;
+	private bool _showStatusPanel = true;
 
 	public override void _Ready()
 	{
@@ -61,7 +62,7 @@ public partial class StatusOverlay : CanvasLayer
 		_portfolioLabel.Text = $"Portfolio {s.Attributes.Portfolio}";
 	}
 
-	public static void AttachTo(Node parent)
+	public static void AttachTo(Node parent, bool showStatusPanel = false)
 	{
 		if (parent.GetNodeOrNull<StatusOverlay>("StatusOverlay") != null)
 			return;
@@ -73,6 +74,7 @@ public partial class StatusOverlay : CanvasLayer
 
 		var overlay = OverlayScene.Instantiate<StatusOverlay>();
 		overlay.Name = "StatusOverlay";
+		overlay._showStatusPanel = showStatusPanel;
 		parent.AddChild(overlay);
 	}
 
@@ -103,6 +105,7 @@ public partial class StatusOverlay : CanvasLayer
 	private void BindNodes()
 	{
 		_statusPanel = GetNode<PanelContainer>("StatusPanel");
+		_statusPanel.Visible = _showStatusPanel;
 		_panelBackground = GetNode<NinePatchRect>("StatusPanel/PanelBackground");
 		_headerLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/HeaderLabel");
 		_dayLabel = GetNode<Label>("StatusPanel/Margin/StatsContainer/DayLabel");

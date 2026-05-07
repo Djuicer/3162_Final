@@ -22,6 +22,7 @@ public partial class InterviewRhythmMinigame : Control
 
     public override void _Ready()
     {
+        StatusOverlay.AttachTo(this, false);
         _attemptLabel = GetNode<Label>("Panel/VBox/AttemptLabel");
         _scoreLabel = GetNode<Label>("Panel/VBox/ScoreLabel");
         _instructionLabel = GetNode<Label>("Panel/VBox/InstructionLabel");

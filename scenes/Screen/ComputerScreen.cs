@@ -12,7 +12,7 @@ public partial class ComputerScreen : Node2D
 
     public override void _Ready()
     {
-        StatusOverlay.AttachTo(this);
+        StatusOverlay.AttachTo(this, false);
         GetNodes();
         ConnectButtons();
         RefreshUi();
