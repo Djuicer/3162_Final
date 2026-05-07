@@ -14,6 +14,7 @@ public partial class GlobalVars : Node
 	public string IntroScenePath { get; set; } = DefaultDormitoryScenePath;
 
 	public bool HasSeenDormitoryTutorial { get; set; }
+	public string LastSceneBeforeMinigame { get; set; } = DefaultDormitoryScenePath;
 
 
 	public string GetCurrentHintMessage()
@@ -39,7 +40,7 @@ public partial class GlobalVars : Node
 			return "No actions left: sleep at bed.";
 		if (Attributes.Energy <= 20)
 			return "Low Energy: sleep soon.";
-		return "Use computer to train stats.";
+		return "Go to the Computer Lab to Study CS. Use dorm computer for profile and other actions.";
 	}
 
 	public void ResetGame()
