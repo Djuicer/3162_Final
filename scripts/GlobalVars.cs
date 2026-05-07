@@ -95,4 +95,12 @@ public partial class GlobalVars : Node
 			QueueFree();
 		}
 	}
+
+	public void NotifyStatChange(string statName, int delta)
+	{
+		if (delta == 0)
+			return;
+
+		StatusOverlay.NotifyStatChange(statName, delta);
+	}
 }

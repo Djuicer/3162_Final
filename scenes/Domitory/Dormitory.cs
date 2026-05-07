@@ -72,6 +72,8 @@ public partial class Dormitory : Node2D
 
 		if (interactPromptLabel != null)
 			interactPromptLabel.Visible = false;
+		if (attributePanel != null)
+			attributePanel.Visible = false;
 	}
 
 	private void GetNodes()
