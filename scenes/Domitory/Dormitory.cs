@@ -37,6 +37,8 @@ public partial class Dormitory : Node2D
 	private TextureButton outsideButton;
 	private Area2D computerInteractArea;
 	private Area2D bedInteractArea;
+	private Area2D doorInteractArea;
+	private Area2D innovationDoorInteractArea;
 	private Label interactPromptLabel;
 	private Label guidanceStatsLabel;
 	private Label dormitoryHintLabel;
@@ -46,6 +48,8 @@ public partial class Dormitory : Node2D
 	private PackedScene endingScene;
 	private bool canUseComputer = false;
 	private bool canUseBed = false;
+	private bool canUseDoor = false;
+	private bool canUseInnovationDoor = false;
 
 	private int dialogueIndex = 0;
 	private List<(string speaker, string text)> openingDialogue;
@@ -87,6 +91,8 @@ public partial class Dormitory : Node2D
 		outsideButton = GetNodeOrNull<TextureButton>("Button/OutsideButton");
 		computerInteractArea = GetNodeOrNull<Area2D>("ComputerInteractArea");
 		bedInteractArea = GetNodeOrNull<Area2D>("BedInteractArea");
+		doorInteractArea = GetNodeOrNull<Area2D>("DoorInteractArea");
+		innovationDoorInteractArea = GetNodeOrNull<Area2D>("InnovationDoorInteractArea");
 		interactPromptLabel = GetNodeOrNull<Label>("OpeningUI/InteractPromptLabel");
 		guidanceStatsLabel = GetNodeOrNull<Label>("OpeningUI/GuidancePanel/MarginContainer/VBoxContainer/StatsLabel");
 		dormitoryHintLabel = GetNodeOrNull<Label>("OpeningUI/GuidancePanel/MarginContainer/VBoxContainer/HintLabel");
@@ -123,6 +129,16 @@ public partial class Dormitory : Node2D
 			bedInteractArea.BodyEntered += OnBedAreaBodyEntered;
 			bedInteractArea.BodyExited += OnBedAreaBodyExited;
 		}
+		if (doorInteractArea != null)
+		{
+			doorInteractArea.BodyEntered += OnDoorAreaBodyEntered;
+			doorInteractArea.BodyExited += OnDoorAreaBodyExited;
+		}
+		if (innovationDoorInteractArea != null)
+		{
+			innovationDoorInteractArea.BodyEntered += OnInnovationDoorAreaBodyEntered;
+			innovationDoorInteractArea.BodyExited += OnInnovationDoorAreaBodyExited;
+		}
 
 		if (interactPromptLabel != null)
 			interactPromptLabel.Visible = false;
@@ -143,6 +159,19 @@ public partial class Dormitory : Node2D
 			return;
 
 		bool showPrompt = canUseComputer && !computerButton.Disabled;
+		if (canUseDoor)
+		{
+			interactPromptLabel.Text = "Press E to go to Computer Lab";
+			interactPromptLabel.Visible = true;
+			return;
+		}
+		if (canUseInnovationDoor)
+		{
+			interactPromptLabel.Text = "Press E to go to Innovation Hub";
+			interactPromptLabel.Visible = true;
+			return;
+		}
+
 		if (canUseBed)
 		{
 			interactPromptLabel.Text = "Press E to sleep";
@@ -178,6 +207,17 @@ public partial class Dormitory : Node2D
 			else
 				GD.PrintErr("Computer scene is missing.");
 		}
+
+		if (canUseDoor)
+		{
+			GetTree().ChangeSceneToFile("res://scenes/ComputerLab/computer_lab.tscn");
+			return;
+		}
+
+		if (canUseInnovationDoor)
+		{
+			GetTree().ChangeSceneToFile("res://scenes/InnovationHub/innovation_hub.tscn");
+		}
 	}
 
 	private void OnComputerAreaBodyEntered(Node2D body)
@@ -202,6 +242,30 @@ public partial class Dormitory : Node2D
 	{
 		if (body is CharacterBody2D)
 			canUseBed = false;
+	}
+
+	private void OnDoorAreaBodyEntered(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseDoor = true;
+	}
+
+	private void OnDoorAreaBodyExited(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseDoor = false;
+	}
+
+	private void OnInnovationDoorAreaBodyEntered(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseInnovationDoor = true;
+	}
+
+	private void OnInnovationDoorAreaBodyExited(Node2D body)
+	{
+		if (body is CharacterBody2D)
+			canUseInnovationDoor = false;
 	}
 
 	private void SleepAtBed()
