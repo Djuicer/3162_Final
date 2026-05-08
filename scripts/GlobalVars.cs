@@ -18,6 +18,8 @@ public partial class GlobalVars : Node
 
 	public bool HasSeenDormitoryTutorial { get; set; }
 	public bool HasReadDancePartyEmail { get; set; }
+	public bool HasShownDay3EmailNotification { get; set; }
+	public bool HasShownITBallEmailNotification { get; set; }
 	public bool DancePartyUnlocked { get; set; }
 	public bool PartyAttended { get; set; }
 	public bool PartyNetworkingUnlocked { get; set; }
@@ -62,6 +64,8 @@ public partial class GlobalVars : Node
 
 	public string GetDormitoryHintMessage()
 	{
+		if (HasUnreadImportantEmail())
+			return "You have new email. Check your computer.";
 		if (Profile.ActionsLeft <= 0)
 			return "No actions left: sleep at bed.";
 		if (Attributes.Energy <= 20)
@@ -74,6 +78,8 @@ public partial class GlobalVars : Node
 		Profile.ResetToDefaults();
 		Attributes.ResetToDefaults();
 		HasReadDancePartyEmail = false;
+		HasShownDay3EmailNotification = false;
+		HasShownITBallEmailNotification = false;
 		DancePartyUnlocked = false;
 			PartyAttended = false;
 			PartyNetworkingUnlocked = false;
@@ -87,6 +93,23 @@ public partial class GlobalVars : Node
 		ReturnScenePath = DefaultDormitoryScenePath;
 		ReturnSpawnId = "";
 		PendingSpawnId = "";
+	}
+
+	public bool IsDancePartyEmailAvailable()
+	{
+		return Profile.CurrentDay >= 3;
+	}
+
+	public bool IsITBallEmailAvailable()
+	{
+		return ITBallInvited;
+	}
+
+	public bool HasUnreadImportantEmail()
+	{
+		bool hasUnreadDay3 = IsDancePartyEmailAvailable() && !HasShownDay3EmailNotification && !HasReadDancePartyEmail;
+		bool hasUnreadITBall = IsITBallEmailAvailable() && !HasShownITBallEmailNotification && !ITBallAttended;
+		return hasUnreadDay3 || hasUnreadITBall;
 	}
 
 	public void SetReturnContext(string scenePath, string spawnId)

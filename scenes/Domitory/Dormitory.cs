@@ -45,6 +45,7 @@ public partial class Dormitory : Node2D
 	private Node2D doorPromptAnchor;
 	private Label guidanceStatsLabel;
 	private Label dormitoryHintLabel;
+	private Label emailNotificationLabel;
 	private Panel tutorialPanel;
 	private Button tutorialOkButton;
 	private PackedScene computerScene;
@@ -59,6 +60,7 @@ public partial class Dormitory : Node2D
 	private Button travelInnovationHubButton;
 	private Button travelCareerCentreButton;
 	private Button travelCancelButton;
+	private SceneTreeTimer emailNotificationTimer;
 
 	private int dialogueIndex = 0;
 	private List<(string speaker, string text)> openingDialogue;
@@ -117,6 +119,7 @@ public partial class Dormitory : Node2D
 		travelCancelButton = GetNodeOrNull<Button>("OpeningUI/TravelMenuPanel/MarginContainer/VBoxContainer/CancelButton");
 		guidanceStatsLabel = GetNodeOrNull<Label>("OpeningUI/GuidancePanel/MarginContainer/VBoxContainer/StatsLabel");
 		dormitoryHintLabel = GetNodeOrNull<Label>("OpeningUI/GuidancePanel/MarginContainer/VBoxContainer/HintLabel");
+		emailNotificationLabel = GetNodeOrNull<Label>("OpeningUI/EmailNotificationLabel");
 		tutorialPanel = GetNodeOrNull<Panel>("OpeningUI/TutorialPanel");
 		tutorialOkButton = GetNodeOrNull<Button>("OpeningUI/TutorialPanel/MarginContainer/VBoxContainer/OkButton");
 		computerScene = ResourceLoader.Load<PackedScene>("res://scenes/Screen/screen.tscn");
@@ -157,6 +160,8 @@ public partial class Dormitory : Node2D
 		}
 		if (interactPromptLabel != null)
 			interactPromptLabel.Visible = false;
+		if (emailNotificationLabel != null)
+			emailNotificationLabel.Visible = false;
 		if (travelMenuPanel != null)
 			travelMenuPanel.Visible = false;
 
@@ -180,6 +185,7 @@ public partial class Dormitory : Node2D
 	public override void _Process(double delta)
 	{
 		RefreshGuidanceUi();
+		TryShowEmailNotifications();
 
 		if (interactPromptLabel == null)
 			return;
@@ -426,6 +432,50 @@ public partial class Dormitory : Node2D
 	{
 		if (tutorialPanel != null)
 			tutorialPanel.Visible = false;
+	}
+
+	private void TryShowEmailNotifications()
+	{
+		var state = GlobalVars.Instance;
+		if (state == null)
+			return;
+
+		if (state.IsDancePartyEmailAvailable() && !state.HasShownDay3EmailNotification && !state.HasReadDancePartyEmail)
+		{
+			state.HasShownDay3EmailNotification = true;
+			ShowEmailNotification("CS Society Dance Party Tonight");
+			return;
+		}
+
+		if (state.IsITBallEmailAvailable() && !state.HasShownITBallEmailNotification && !state.ITBallAttended)
+		{
+			state.HasShownITBallEmailNotification = true;
+			ShowEmailNotification("IT Ball Invitation");
+		}
+	}
+
+	private async void ShowEmailNotification(string subject)
+	{
+		if (emailNotificationLabel == null)
+			return;
+
+		emailNotificationLabel.Text = $"New Email Received: {subject}";
+		emailNotificationLabel.Visible = true;
+		emailNotificationLabel.Modulate = new Color(1f, 1f, 1f, 1f);
+
+		emailNotificationTimer = GetTree().CreateTimer(2.8);
+		await ToSignal(emailNotificationTimer, SceneTreeTimer.SignalName.Timeout);
+
+		if (IsInstanceValid(emailNotificationLabel))
+		{
+			var tween = CreateTween();
+			tween.TweenProperty(emailNotificationLabel, "modulate:a", 0.0f, 0.4f);
+			tween.Finished += () =>
+			{
+				if (IsInstanceValid(emailNotificationLabel))
+					emailNotificationLabel.Visible = false;
+			};
+		}
 	}
 
 	private void SetupInitialState()

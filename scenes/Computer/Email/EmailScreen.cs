@@ -96,6 +96,7 @@ public partial class EmailScreen : Control
 		if (isDanceParty)
 		{
 			GlobalVars.Instance.HasReadDancePartyEmail = true;
+			GlobalVars.Instance.HasShownDay3EmailNotification = true;
 			GlobalVars.Instance.DancePartyUnlocked = true;
 			if (GlobalVars.Instance.PartyAttended)
 			{
@@ -106,6 +107,7 @@ public partial class EmailScreen : Control
 		}
 		if (isItBall)
 		{
+			GlobalVars.Instance.HasShownITBallEmailNotification = true;
 			if (GlobalVars.Instance.ITBallAttended)
 			{
 				_statusLabel.Text = GlobalVars.Instance.JoinedDeveloperGroup
