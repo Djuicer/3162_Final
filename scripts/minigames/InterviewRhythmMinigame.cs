@@ -19,6 +19,10 @@ public partial class InterviewRhythmMinigame : Control
 	private float _markerDirection = 1.0f;
 	private bool _isFinished = false;
 	private bool _rewardApplied = false;
+	private bool _hasStarted = false;
+
+	private Control _introOverlay;
+	private Button _startButton;
 
 	public override void _Ready()
 	{
@@ -36,12 +40,17 @@ public partial class InterviewRhythmMinigame : Control
 		_continueButton.Visible = false;
 		_resultLabel.Text = "";
 
+		BuildIntroOverlay(
+			"Interview Rhythm",
+			"Press Space when the marker is inside the target zone.\nGood timing improves your interview performance."
+		);
+
 		UpdateHud();
 	}
 
 	public override void _Process(double delta)
 	{
-		if (_isFinished)
+		if (_isFinished || !_hasStarted)
 			return;
 
 		MoveMarker((float)delta);
@@ -49,7 +58,7 @@ public partial class InterviewRhythmMinigame : Control
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (_isFinished)
+		if (_isFinished || !_hasStarted)
 			return;
 
 		if (@event.IsActionPressed("ui_accept") || (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo && keyEvent.Keycode == Key.Space))
@@ -156,6 +165,56 @@ public partial class InterviewRhythmMinigame : Control
 
 		_instructionLabel.Text = "Interview finished.";
 		_continueButton.Visible = true;
+	}
+
+	private void BuildIntroOverlay(string title, string instructions)
+	{
+		_introOverlay = new ColorRect
+		{
+			Name = "IntroOverlay",
+			AnchorRight = 1.0f,
+			AnchorBottom = 1.0f,
+			Color = new Color(0f, 0f, 0f, 0.8f),
+			MouseFilter = MouseFilterEnum.Stop
+		};
+
+		var panel = new Panel
+		{
+			AnchorLeft = 0.5f,
+			AnchorTop = 0.5f,
+			AnchorRight = 0.5f,
+			AnchorBottom = 0.5f,
+			OffsetLeft = -300f,
+			OffsetTop = -170f,
+			OffsetRight = 300f,
+			OffsetBottom = 170f
+		};
+
+		var vbox = new VBoxContainer
+		{
+			AnchorRight = 1.0f,
+			AnchorBottom = 1.0f,
+			OffsetLeft = 20f,
+			OffsetTop = 20f,
+			OffsetRight = -20f,
+			OffsetBottom = -20f
+		};
+
+		vbox.AddChild(new Label { Text = title, HorizontalAlignment = HorizontalAlignment.Center });
+		vbox.AddChild(new Label { Text = instructions, AutowrapMode = TextServer.AutowrapMode.WordSmart });
+		_startButton = new Button { Text = "Start", SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter };
+		_startButton.Pressed += OnStartPressed;
+		vbox.AddChild(_startButton);
+		panel.AddChild(vbox);
+		_introOverlay.AddChild(panel);
+		AddChild(_introOverlay);
+	}
+
+	private void OnStartPressed()
+	{
+		_hasStarted = true;
+		_startButton.Disabled = true;
+		_introOverlay.QueueFree();
 	}
 
 	private void OnContinuePressed()

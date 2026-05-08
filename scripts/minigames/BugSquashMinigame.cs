@@ -14,6 +14,10 @@ public partial class BugSquashMinigame : Control
 	private int _score = 0;
 	private bool _isFinished = false;
 	private bool _rewardApplied = false;
+	private bool _hasStarted = false;
+
+	private Control _introOverlay;
+	private Button _startButton;
 
 	private readonly RandomNumberGenerator _rng = new RandomNumberGenerator();
 
@@ -36,14 +40,18 @@ public partial class BugSquashMinigame : Control
 		if (instructionLabel != null)
 			instructionLabel.Text = "Click BUG as fast as possible before the timer ends.";
 		_continueButton.Visible = false;
+		_bugButton.Visible = false;
 
-		SpawnBugAtRandomPosition();
+		BuildIntroOverlay(
+			"Bug Squash",
+			"Click bugs before time runs out.\nEach bug gives score.\nAvoid wrong targets if they appear."
+		);
 		UpdateHud();
 	}
 
 	public override void _Process(double delta)
 	{
-		if (_isFinished)
+		if (_isFinished || !_hasStarted)
 			return;
 
 		_timeRemaining -= (float)delta;
@@ -58,7 +66,7 @@ public partial class BugSquashMinigame : Control
 
 	private void OnBugClicked()
 	{
-		if (_isFinished)
+		if (_isFinished || !_hasStarted)
 			return;
 
 		_score += 1;
@@ -132,6 +140,56 @@ public partial class BugSquashMinigame : Control
 		}
 
 		_continueButton.Visible = true;
+	}
+
+	private void BuildIntroOverlay(string title, string instructions)
+	{
+		_introOverlay = new ColorRect
+		{
+			Name = "IntroOverlay",
+			AnchorRight = 1.0f,
+			AnchorBottom = 1.0f,
+			Color = new Color(0f, 0f, 0f, 0.8f),
+			MouseFilter = MouseFilterEnum.Stop
+		};
+
+		var panel = new Panel
+		{
+			AnchorLeft = 0.5f,
+			AnchorTop = 0.5f,
+			AnchorRight = 0.5f,
+			AnchorBottom = 0.5f,
+			OffsetLeft = -280f,
+			OffsetTop = -170f,
+			OffsetRight = 280f,
+			OffsetBottom = 170f
+		};
+		var vbox = new VBoxContainer
+		{
+			AnchorRight = 1.0f,
+			AnchorBottom = 1.0f,
+			OffsetLeft = 20f,
+			OffsetTop = 20f,
+			OffsetRight = -20f,
+			OffsetBottom = -20f
+		};
+		vbox.AddChild(new Label { Text = title, HorizontalAlignment = HorizontalAlignment.Center });
+		vbox.AddChild(new Label { Text = instructions, AutowrapMode = TextServer.AutowrapMode.WordSmart });
+		_startButton = new Button { Text = "Start", SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter };
+		_startButton.Pressed += OnStartPressed;
+		vbox.AddChild(_startButton);
+		panel.AddChild(vbox);
+		_introOverlay.AddChild(panel);
+		AddChild(_introOverlay);
+	}
+
+	private void OnStartPressed()
+	{
+		_hasStarted = true;
+		_startButton.Disabled = true;
+		_introOverlay.QueueFree();
+		_bugButton.Visible = true;
+		SpawnBugAtRandomPosition();
 	}
 
 	private void OnContinuePressed()
