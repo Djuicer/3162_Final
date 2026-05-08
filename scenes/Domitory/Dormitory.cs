@@ -61,6 +61,7 @@ public partial class Dormitory : Node2D
 	private Button travelCareerCentreButton;
 	private Button travelCancelButton;
 	private SceneTreeTimer emailNotificationTimer;
+	private bool canShowEmailNotifications = false;
 
 	private int dialogueIndex = 0;
 	private List<(string speaker, string text)> openingDialogue;
@@ -76,6 +77,7 @@ public partial class Dormitory : Node2D
 		UpdateAttributePanel();
 		RefreshGuidanceUi();
 		StartFadeIn();
+		EnableEmailNotificationsWhenSceneIsStable();
 
 		if (interactPromptLabel != null)
 			interactPromptLabel.Visible = false;
@@ -262,6 +264,7 @@ public partial class Dormitory : Node2D
 			if (computerScene != null)
 			{
 				GlobalVars.Instance.SetReturnContext("res://scenes/Domitory/dormitory.tscn", "ComputerReturnSpawn");
+				BeginSceneTransition();
 				TransitionManager.Instance?.ChangeSceneToPackedWithFade(computerScene);
 			}
 			else
@@ -331,6 +334,7 @@ public partial class Dormitory : Node2D
 
 	private void TravelTo(string scenePath)
 	{
+		BeginSceneTransition();
 		string targetSpawn = scenePath switch
 		{
 			"res://scenes/ComputerLab/computer_lab.tscn" => "ComputerLabEntranceSpawn",
@@ -365,6 +369,8 @@ public partial class Dormitory : Node2D
 
 	private void SleepAtBed()
 	{
+		BeginSceneTransition();
+
 		var state = GlobalVars.Instance;
 		if (state == null)
 			return;
@@ -436,33 +442,41 @@ public partial class Dormitory : Node2D
 
 	private void TryShowEmailNotifications()
 	{
+		if (!canShowEmailNotifications)
+			return;
+
 		var state = GlobalVars.Instance;
 		if (state == null)
 			return;
 
 		if (state.IsDancePartyEmailAvailable() && !state.HasShownDay3EmailNotification && !state.HasReadDancePartyEmail)
 		{
-			state.HasShownDay3EmailNotification = true;
-			ShowEmailNotification("CS Society Dance Party Tonight");
+			if (ShowEmailNotification("CS Society Dance Party Tonight"))
+				state.HasShownDay3EmailNotification = true;
 			return;
 		}
 
 		if (state.IsITBallEmailAvailable() && !state.HasShownITBallEmailNotification && !state.ITBallAttended)
 		{
-			state.HasShownITBallEmailNotification = true;
-			ShowEmailNotification("IT Ball Invitation");
+			if (ShowEmailNotification("IT Ball Invitation"))
+				state.HasShownITBallEmailNotification = true;
 		}
 	}
 
-	private async void ShowEmailNotification(string subject)
+	private bool ShowEmailNotification(string subject)
 	{
-		if (emailNotificationLabel == null)
-			return;
+		if (!canShowEmailNotifications || emailNotificationLabel == null)
+			return false;
 
 		emailNotificationLabel.Text = $"New Email Received: {subject}";
 		emailNotificationLabel.Visible = true;
 		emailNotificationLabel.Modulate = new Color(1f, 1f, 1f, 1f);
+		FadeOutEmailNotificationAsync();
+		return true;
+	}
 
+	private async void FadeOutEmailNotificationAsync()
+	{
 		emailNotificationTimer = GetTree().CreateTimer(2.8);
 		await ToSignal(emailNotificationTimer, SceneTreeTimer.SignalName.Timeout);
 
@@ -476,6 +490,21 @@ public partial class Dormitory : Node2D
 					emailNotificationLabel.Visible = false;
 			};
 		}
+	}
+
+	private async void EnableEmailNotificationsWhenSceneIsStable()
+	{
+		canShowEmailNotifications = false;
+		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+		await ToSignal(GetTree().CreateTimer(0.15f), SceneTreeTimer.SignalName.Timeout);
+		canShowEmailNotifications = true;
+	}
+
+	private void BeginSceneTransition()
+	{
+		canShowEmailNotifications = false;
+		if (emailNotificationLabel != null)
+			emailNotificationLabel.Visible = false;
 	}
 
 	private void SetupInitialState()
