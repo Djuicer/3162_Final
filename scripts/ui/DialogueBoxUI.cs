@@ -17,6 +17,8 @@ public partial class DialogueBoxUI : CanvasLayer
 	private VBoxContainer _choiceList;
 	private bool _skipRequested;
 	private bool _isTyping;
+	private bool _awaitingContinue;
+	private TaskCompletionSource<bool> _continueTcs;
 
 	public override void _Ready()
 	{
@@ -27,6 +29,7 @@ public partial class DialogueBoxUI : CanvasLayer
 		_continueHintLabel = GetNode<Label>("Root/DialoguePanel/MarginContainer/Content/ContinueHintLabel");
 		_choiceContainer = GetNode<Control>("Root/ChoiceContainer");
 		_choiceList = GetNode<VBoxContainer>("Root/ChoiceContainer/MarginContainer/ChoiceList");
+		_dialoguePanel.GuiInput += OnDialoguePanelGuiInput;
 
 		_root.Visible = false;
 		_choiceContainer.Visible = false;
@@ -36,9 +39,9 @@ public partial class DialogueBoxUI : CanvasLayer
 	{
 		if (!_root.Visible)
 			return;
-		if (@event.IsActionPressed("interact") || @event.IsActionPressed("ui_accept") || @event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left })
+		if (@event.IsActionPressed("interact") || @event.IsActionPressed("ui_accept"))
 		{
-			_skipRequested = true;
+			TryAdvance();
 			GetViewport().SetInputAsHandled();
 		}
 	}
@@ -51,6 +54,7 @@ public partial class DialogueBoxUI : CanvasLayer
 		_continueHintLabel.Visible = false;
 		await AnimatePopupAsync();
 		await TypeLineAsync(line);
+		await WaitForContinueAsync();
 	}
 
 	public async Task<int> ShowChoicesAsync(IReadOnlyList<string> choices)
@@ -113,6 +117,41 @@ public partial class DialogueBoxUI : CanvasLayer
 		}
 		_isTyping = false;
 		_skipRequested = false;
+	}
+
+	private void OnDialoguePanelGuiInput(InputEvent @event)
+	{
+		if (!_root.Visible || _choiceContainer.Visible)
+			return;
+		if (@event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left })
+		{
+			TryAdvance();
+			GetViewport().SetInputAsHandled();
+		}
+	}
+
+	private async Task WaitForContinueAsync()
+	{
+		_continueHintLabel.Text = "Click dialogue / Press E, Enter, or Space";
+		_continueHintLabel.Visible = true;
+		_awaitingContinue = true;
+		_continueTcs = new TaskCompletionSource<bool>();
+		await _continueTcs.Task;
+		_awaitingContinue = false;
+		_continueHintLabel.Visible = false;
+	}
+
+	private void TryAdvance()
+	{
+		if (_choiceContainer.Visible)
+			return;
+		if (_isTyping)
+		{
+			_skipRequested = true;
+			return;
+		}
+		if (_awaitingContinue)
+			_continueTcs?.TrySetResult(true);
 	}
 
 	private void ClearChoices()
