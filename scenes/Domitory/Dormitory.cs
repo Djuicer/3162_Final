@@ -20,12 +20,10 @@ public partial class Dormitory : Node2D
 
 	private CanvasLayer openingUI;
 	private Panel dialoguePanel;
+	private DialogueBoxUI _openingDialogueUi;
 	private Panel attributePanel;
 
-	private Label speakerLabel;
-	private Label dialogueLabel;
-	private Button continueButton;
-
+	
 	private Label dayLabel;
 	private Label knowledgeLabel;
 	private Label codingSkillLabel;
@@ -65,8 +63,7 @@ public partial class Dormitory : Node2D
 	private bool _lowEnergyReactionShown;
 	private bool _noActionsReactionShown;
 
-	private int dialogueIndex = 0;
-	private List<(string speaker, string text)> openingDialogue;
+		private List<(string speaker, string text)> openingDialogue;
 
 	public override void _Ready()
 	{
@@ -98,10 +95,8 @@ public partial class Dormitory : Node2D
 		openingUI = GetNodeOrNull<CanvasLayer>("OpeningUI");
 		dialoguePanel = GetNodeOrNull<Panel>("OpeningUI/DialoguePanel");
 		attributePanel = GetNodeOrNull<Panel>("OpeningUI/AttributePanel");
-
-		speakerLabel = GetNodeOrNull<Label>("OpeningUI/DialoguePanel/SpeakerLabel");
-		dialogueLabel = GetNodeOrNull<Label>("OpeningUI/DialoguePanel/DialogueLabel");
-		continueButton = GetNodeOrNull<Button>("OpeningUI/DialoguePanel/ContinueButton");
+		_openingDialogueUi = GD.Load<PackedScene>("res://scenes/UI/Dialogue/dialogue_box.tscn").Instantiate<DialogueBoxUI>();
+		AddChild(_openingDialogueUi);
 
 		dayLabel = GetNodeOrNull<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/DayLabel");
 		knowledgeLabel = GetNodeOrNull<Label>("OpeningUI/AttributePanel/MarginContainer/VBoxContainer/KnowledgeLabel");
@@ -137,11 +132,7 @@ public partial class Dormitory : Node2D
 		if (openingUI == null) GD.PrintErr("Missing node: OpeningUI");
 		if (dialoguePanel == null) GD.PrintErr("Missing node: OpeningUI/DialoguePanel");
 		if (attributePanel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel");
-		if (speakerLabel == null) GD.PrintErr("Missing node: OpeningUI/DialoguePanel/SpeakerLabel");
-		if (dialogueLabel == null) GD.PrintErr("Missing node: OpeningUI/DialoguePanel/DialogueLabel");
-		if (continueButton == null) GD.PrintErr("Missing node: OpeningUI/DialoguePanel/ContinueButton");
-
-		if (dayLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/DayLabel");
+				if (dayLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/DayLabel");
 		if (knowledgeLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/KnowledgeLabel");
 		if (codingSkillLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/CodingSkillLabel");
 		if (energyLabel == null) GD.PrintErr("Missing node: OpeningUI/AttributePanel/EnergyLabel");
@@ -173,8 +164,6 @@ public partial class Dormitory : Node2D
 		if (travelMenuPanel != null)
 			travelMenuPanel.Visible = false;
 
-		if (continueButton != null)
-			continueButton.Pressed += OnContinuePressed;
 
 		if (tutorialOkButton != null)
 			tutorialOkButton.Pressed += OnTutorialOkPressed;
@@ -635,35 +624,19 @@ public partial class Dormitory : Node2D
 		}));
 	}
 
-	private void StartOpeningDialogue()
+	private async void StartOpeningDialogue()
 	{
 		openingUI.Visible = true;
-		dialoguePanel.Visible = true;
+		if (dialoguePanel != null)
+			dialoguePanel.Visible = false;
 		attributePanel.Visible = false;
 
-		dialogueIndex = 0;
-		ShowDialogueLine();
-	}
+		foreach (var line in openingDialogue)
+			await _openingDialogueUi.ShowLineAsync(line.speaker, line.text);
 
-	private void ShowDialogueLine()
-	{
-		if (dialogueIndex >= openingDialogue.Count)
-		{
-			MarkOpeningAsSeen();
-			FinishOpeningScene();
-			return;
-		}
-
-		var line = openingDialogue[dialogueIndex];
-
-		speakerLabel.Text = line.speaker;
-		dialogueLabel.Text = line.text;
-	}
-
-	private void OnContinuePressed()
-	{
-		dialogueIndex++;
-		ShowDialogueLine();
+		_openingDialogueUi.HideAll();
+		MarkOpeningAsSeen();
+		FinishOpeningScene();
 	}
 
 	private void FinishOpeningScene()
