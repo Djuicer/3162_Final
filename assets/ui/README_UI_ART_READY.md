@@ -1,40 +1,55 @@
-# UI Art-Ready Guide
+# UI Art-Ready Guide (User Profile)
 
-This project is set up so you can replace UI visuals in Godot without rewriting scripts.
+The Tab User Profile is intentionally set up so visual style is edited in Godot resources, not C# code.
 
-## New global profile UI
-- User Profile overlay scene: `res://scenes/UI/UserProfileOverlay/user_profile_overlay.tscn`
-- Profile hint scene: `res://scenes/UI/ProfileHint/profile_hint.tscn`
-- Overlay spawner: `res://scripts/ui/StatusOverlay.cs`
+## User Profile scene and theme paths
+- User Profile scene: `res://scenes/UI/UserProfileOverlay/user_profile_overlay.tscn`
+- User Profile theme: `res://assets/ui/theme/user_profile_theme.tres`
 
-## Where to assign future art
-- Profile panel frame/background:
-  - `user_profile_overlay.tscn` → `ProfilePanel/ProfileFrame` (`NinePatchRect`, decorative)
-- Small Tab hint frame/background:
-  - `profile_hint.tscn` → `HintFrame/ArtBackground` (`NinePatchRect`, decorative)
-- Existing event/dialogue frames remain unchanged.
+## What the script should do (and not do)
+- Script (`res://scripts/ui/UserProfileOverlay.cs`) should only:
+  - toggle show/hide on Tab/Esc
+  - update attribute text values
+- Script should **not** be used to set font colors, font sizes, panel colors, outlines, or shadows.
 
-## Decorative nodes and mouse safety
-Decorative nodes are non-interactive and should remain `MouseFilter = Ignore`:
-- `ProfilePanel/ProfileFrame`
-- `ProfileHint/HintFrame/ArtBackground`
-- `StatusOverlay/FloatingTextLayer`
+## Where to change font color and font size
+Open `res://assets/ui/theme/user_profile_theme.tres` in the Godot Inspector.
 
-When the User Profile is hidden, it does not block clicks.
+Recommended entries to edit:
+- `Label/colors/font_color`
+- `Label/font_sizes/font_size`
+- `ProfileHeader/colors/font_color`
+- `ProfileHeader/font_sizes/font_size`
+- `ProfileAttribute/colors/font_color`
+- `ProfileAttribute/font_sizes/font_size`
+- Optional readability:
+  - `Label/colors/font_outline_color`
+  - `Label/constants/outline_size`
 
-## Editing text or icons later
-- Profile text labels are in `user_profile_overlay.tscn` under:
-  - `HeaderLabel`
-  - `ProfileInfoContainer/ProfileInfoLabel`
-  - `AttributesContainer/AttributesLabel`
-  - `RouteStatusContainer/RouteStatusLabel`
-  - `HintLabel`
-- Hint text is in `profile_hint.tscn` → `HintFrame/Label`.
-- If you want attribute icons, add `TextureRect` nodes inside `AttributesContainer` rows.
+## Where to assign future panel/background art
+Open `res://scenes/UI/UserProfileOverlay/user_profile_overlay.tscn` and select:
+- `ProfilePanel/ProfileFrame` (`NinePatchRect`)
 
-## Shared theme
-- Theme resource: `res://assets/ui/theme/default_ui_theme.tres`
-- Apply/update shared styles for:
-  - `Button`
-  - `Label`
-  - `PanelContainer` / `Panel`
+Assign art by changing:
+- `texture` (your PNG frame/background)
+- nine-patch margins (`patch_margin_*`) to fit your frame borders
+- `modulate` if you want tint/transparency adjustments
+
+The text content is inside `ProfilePanel/MarginContainer`, which keeps spacing from edges.
+
+## Where to add attribute icons
+In `user_profile_overlay.tscn`, each attribute row has a placeholder `TextureRect`:
+- `EnergyRow/EnergyIcon`
+- `FocusRow/FocusIcon`
+- `KnowledgeRow/KnowledgeIcon`
+- `ConfidenceRow/ConfidenceIcon`
+- `CareerReadinessRow/CareerReadinessIcon`
+- `NetworkingRow/NetworkingIcon`
+- `PortfolioRow/PortfolioIcon`
+
+Assign textures directly to those nodes in the editor.
+
+## Important warning
+If text becomes unreadable, fix it in the scene/theme resources above.
+
+**Avoid changing C# just to adjust colors, size, or panel art.**

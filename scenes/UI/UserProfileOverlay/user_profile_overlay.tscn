@@ -1,119 +1,160 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/UserProfileOverlay.cs" id="1_script"]
-[ext_resource type="Theme" path="res://assets/ui/theme/default_ui_theme.tres" id="2_theme"]
+[ext_resource type="Theme" path="res://assets/ui/theme/user_profile_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/ui/PNG/Yellow/Default/slide_vertical_grey_section_wide.png" id="3_panel_texture"]
 
 [node name="UserProfileOverlay" type="CanvasLayer"]
-theme = ExtResource("2_theme")
 script = ExtResource("1_script")
 
-[node name="UserProfileOverlay" type="PanelContainer" parent="."]
+[node name="ProfilePanel" type="PanelContainer" parent="."]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -230.0
-offset_top = -170.0
-offset_right = 230.0
-offset_bottom = 170.0
+offset_left = -260.0
+offset_top = -190.0
+offset_right = 260.0
+offset_bottom = 190.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ProfileFrame" type="NinePatchRect" parent="UserProfileOverlay"]
-modulate = Color(0.05, 0.07, 0.1, 0.92)
-layout_mode = 2
+theme = ExtResource("2_theme")
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UserProfileOverlay/ProfileFrame"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
-
-[node name="ProfileContent" type="VBoxContainer" parent="UserProfileOverlay/ProfileFrame/MarginContainer"]
+[node name="ProfileFrame" type="NinePatchRect" parent="ProfilePanel"]
 layout_mode = 2
-theme_override_constants/separation = 14
+mouse_filter = 2
+texture = ExtResource("3_panel_texture")
+region_rect = Rect2(0, 0, 256, 256)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+modulate = Color(0.18, 0.22, 0.28, 0.85)
 
-[node name="HeaderLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent"]
+[node name="MarginContainer" type="MarginContainer" parent="ProfilePanel"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.97, 0.98, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 24
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="ProfileContent" type="VBoxContainer" parent="ProfilePanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HeaderLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent"]
+layout_mode = 2
+theme_type_variation = &"ProfileHeader"
 text = "User Profile"
 
-[node name="AttributesContainer" type="VBoxContainer" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent"]
+[node name="AttributesContainer" type="VBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 8
 
-[node name="EnergyLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="EnergyRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 18
-text = "Energy: 100"
+theme_override_constants/separation = 8
 
-[node name="FocusLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="EnergyIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/EnergyRow"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 18
-text = "Focus: 50"
+stretch_mode = 5
 
-[node name="KnowledgeLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="EnergyLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/EnergyRow"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 18
-text = "Knowledge: 50"
+theme_type_variation = &"ProfileAttribute"
+text = "Energy: 0"
 
-[node name="ConfidenceLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="FocusRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 18
-text = "Confidence: 50"
+theme_override_constants/separation = 8
 
-[node name="CareerReadinessLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="FocusIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/FocusRow"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 18
+stretch_mode = 5
+
+[node name="FocusLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/FocusRow"]
+layout_mode = 2
+theme_type_variation = &"ProfileAttribute"
+text = "Focus: 0"
+
+[node name="KnowledgeRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="KnowledgeIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/KnowledgeRow"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="KnowledgeLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/KnowledgeRow"]
+layout_mode = 2
+theme_type_variation = &"ProfileAttribute"
+text = "Knowledge: 0"
+
+[node name="ConfidenceRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ConfidenceIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/ConfidenceRow"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="ConfidenceLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/ConfidenceRow"]
+layout_mode = 2
+theme_type_variation = &"ProfileAttribute"
+text = "Confidence: 0"
+
+[node name="CareerReadinessRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CareerReadinessIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/CareerReadinessRow"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="CareerReadinessLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/CareerReadinessRow"]
+layout_mode = 2
+theme_type_variation = &"ProfileAttribute"
 text = "Career Readiness: 0"
 
-[node name="NetworkingLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="NetworkingRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 18
+theme_override_constants/separation = 8
+
+[node name="NetworkingIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/NetworkingRow"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="NetworkingLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/NetworkingRow"]
+layout_mode = 2
+theme_type_variation = &"ProfileAttribute"
 text = "Networking: 0"
 
-[node name="PortfolioLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="PortfolioRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 18
+theme_override_constants/separation = 8
+
+[node name="PortfolioIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/PortfolioRow"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="PortfolioLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/PortfolioRow"]
+layout_mode = 2
+theme_type_variation = &"ProfileAttribute"
 text = "Portfolio: 0"
 
-[node name="HintLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent"]
+[node name="HintLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.78, 0.84, 0.93, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 13
+theme_type_variation = &"ProfileHint"
 text = "Press Tab (or Esc) to close"
 
 [node name="CloseHintLabel" type="Label" parent="."]
@@ -126,8 +167,7 @@ offset_top = 14.0
 offset_right = -12.0
 offset_bottom = 38.0
 grow_horizontal = 0
-theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
-theme_override_constants/outline_size = 1
+theme = ExtResource("2_theme")
+theme_type_variation = &"ProfileHint"
 text = "Attributes open"
 horizontal_alignment = 2
