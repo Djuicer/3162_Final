@@ -7,7 +7,7 @@
 theme = ExtResource("2_theme")
 script = ExtResource("1_script")
 
-[node name="ProfilePanel" type="PanelContainer" parent="."]
+[node name="UserProfileOverlay" type="PanelContainer" parent="."]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -21,51 +21,61 @@ offset_bottom = 170.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ProfileFrame" type="NinePatchRect" parent="ProfilePanel"]
+[node name="ProfileFrame" type="NinePatchRect" parent="UserProfileOverlay"]
 modulate = Color(1, 1, 1, 0.08)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="ProfilePanel"]
-layout_mode = 2
+[node name="MarginContainer" type="MarginContainer" parent="UserProfileOverlay/ProfileFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="ProfileContent" type="VBoxContainer" parent="ProfilePanel/MarginContainer"]
+[node name="ProfileContent" type="VBoxContainer" parent="UserProfileOverlay/ProfileFrame/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="HeaderLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent"]
+[node name="HeaderLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent"]
 layout_mode = 2
 text = "User Profile"
 
-[node name="ProfileInfoContainer" type="VBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent"]
+[node name="AttributesContainer" type="VBoxContainer" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent"]
 layout_mode = 2
 
-[node name="ProfileInfoLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/ProfileInfoContainer"]
+[node name="EnergyLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
 layout_mode = 2
-autowrap_mode = 3
-text = "Current Day: 1 / 7\nActions Left: 3 / 3"
-
-[node name="AttributesContainer" type="VBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent"]
-layout_mode = 2
-
-[node name="AttributesLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
-layout_mode = 2
-autowrap_mode = 3
 text = "Energy: 100"
 
-[node name="RouteStatusContainer" type="VBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent"]
+[node name="FocusLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
 layout_mode = 2
+text = "Focus: 50"
 
-[node name="RouteStatusLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/RouteStatusContainer"]
+[node name="KnowledgeLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
 layout_mode = 2
-autowrap_mode = 3
-text = "Dance Party connection: No"
+text = "Knowledge: 50"
 
-[node name="HintLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent"]
+[node name="ConfidenceLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+layout_mode = 2
+text = "Confidence: 50"
+
+[node name="CareerReadinessLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+layout_mode = 2
+text = "Career Readiness: 0"
+
+[node name="NetworkingLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+layout_mode = 2
+text = "Networking: 0"
+
+[node name="PortfolioLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent/AttributesContainer"]
+layout_mode = 2
+text = "Portfolio: 0"
+
+[node name="HintLabel" type="Label" parent="UserProfileOverlay/ProfileFrame/MarginContainer/ProfileContent"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Press Tab (or Esc) to close"
@@ -80,5 +90,5 @@ offset_top = 14.0
 offset_right = -12.0
 offset_bottom = 38.0
 grow_horizontal = 0
-text = "Profile open"
+text = "Attributes open"
 horizontal_alignment = 2
