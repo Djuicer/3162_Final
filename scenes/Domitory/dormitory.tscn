@@ -15,6 +15,13 @@ size = Vector2(190, 130)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door_interact"]
 size = Vector2(170, 130)
 
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_horizontal"]
+size = Vector2(1152, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_vertical"]
+size = Vector2(16, 648)
+
 [node name="Dormitory" type="Node2D" unique_id=615578868]
 script = ExtResource("1_gpvd8")
 
@@ -33,6 +40,32 @@ position = Vector2(260, 310)
 
 [node name="DoorReturnSpawn" type="Marker2D" parent="." unique_id=100002]
 position = Vector2(250, 510)
+
+[node name="SceneBounds" type="Node2D" parent="." unique_id=198600001]
+
+[node name="TopWall" type="StaticBody2D" parent="SceneBounds" unique_id=198600002]
+position = Vector2(576, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBounds/TopWall" unique_id=198600003]
+shape = SubResource("RectangleShape2D_wall_horizontal")
+
+[node name="BottomWall" type="StaticBody2D" parent="SceneBounds" unique_id=198600004]
+position = Vector2(576, 656)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBounds/BottomWall" unique_id=198600005]
+shape = SubResource("RectangleShape2D_wall_horizontal")
+
+[node name="LeftWall" type="StaticBody2D" parent="SceneBounds" unique_id=198600006]
+position = Vector2(-8, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBounds/LeftWall" unique_id=198600007]
+shape = SubResource("RectangleShape2D_wall_vertical")
+
+[node name="RightWall" type="StaticBody2D" parent="SceneBounds" unique_id=198600008]
+position = Vector2(1160, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBounds/RightWall" unique_id=198600009]
+shape = SubResource("RectangleShape2D_wall_vertical")
 
 [node name="BedReturnSpawn" type="Marker2D" parent="." unique_id=100003]
 position = Vector2(760, 320)

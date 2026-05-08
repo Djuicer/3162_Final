@@ -87,10 +87,6 @@ layout_mode = 2
 layout_mode = 2
 text = "Attend Party"
 
-[node name="ViewEventDetailsButton" type="Button" parent="EmailPanel/MarginContainer/ContentContainer/ButtonContainer"]
-layout_mode = 2
-text = "View Event Details"
-
 [node name="AttendITBallButton" type="Button" parent="EmailPanel/MarginContainer/ContentContainer/ButtonContainer"]
 layout_mode = 2
 text = "Attend IT Ball"

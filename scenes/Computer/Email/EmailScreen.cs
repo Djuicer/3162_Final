@@ -10,7 +10,6 @@ public partial class EmailScreen : Control
 	private Label _bodyLabel;
 	private Label _statusLabel;
 	private Button _attendPartyButton;
-	private Button _viewEventDetailsButton;
 	private Button _attendItBallButton;
 	private readonly List<MailItem> _mails = new();
 
@@ -22,13 +21,11 @@ public partial class EmailScreen : Control
 		_bodyLabel = GetNode<Label>("EmailPanel/MarginContainer/ContentContainer/BodyPanel/BodyRow/DetailContainer/BodyLabel");
 		_statusLabel = GetNode<Label>("EmailPanel/MarginContainer/ContentContainer/StatusLabel");
 		_attendPartyButton = GetNode<Button>("EmailPanel/MarginContainer/ContentContainer/ButtonContainer/AttendPartyButton");
-		_viewEventDetailsButton = GetNode<Button>("EmailPanel/MarginContainer/ContentContainer/ButtonContainer/ViewEventDetailsButton");
 		_attendItBallButton = GetNode<Button>("EmailPanel/MarginContainer/ContentContainer/ButtonContainer/AttendITBallButton");
 		var backButton = GetNode<Button>("EmailPanel/MarginContainer/ContentContainer/ButtonContainer/BackButton");
 
 		_emailList.ItemSelected += OnEmailSelected;
 		_attendPartyButton.Pressed += OnAttendPartyPressed;
-		_viewEventDetailsButton.Pressed += OnViewEventDetailsPressed;
 		_attendItBallButton.Pressed += OnAttendITBallPressed;
 		backButton.Pressed += () => TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Screen/screen.tscn");
 
@@ -40,7 +37,6 @@ public partial class EmailScreen : Control
 		_mails.Clear();
 		_emailList.Clear();
 		_attendPartyButton.Visible = false;
-		_viewEventDetailsButton.Visible = false;
 		_attendItBallButton.Visible = false;
 
 		_mails.Add(new MailItem(
@@ -91,7 +87,6 @@ public partial class EmailScreen : Control
 			bool isDanceParty = mail.Id == "dance_party";
 		bool isItBall = mail.Id == "it_ball";
 		_attendPartyButton.Visible = isDanceParty && !GlobalVars.Instance.PartyAttended;
-		_viewEventDetailsButton.Visible = isItBall;
 		_attendItBallButton.Visible = isItBall;
 		if (isDanceParty)
 		{
@@ -116,7 +111,7 @@ public partial class EmailScreen : Control
 			}
 			else
 			{
-				_statusLabel.Text = "Open details to learn more about this opportunity.";
+				_statusLabel.Text = "Attend the IT Ball to network with student developers and project teams.";
 			}
 		}
 	}
@@ -144,10 +139,6 @@ public partial class EmailScreen : Control
 		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Events/DanceParty/dance_party.tscn");
 	}
 
-	private void OnViewEventDetailsPressed()
-	{
-		_statusLabel.Text = "The IT Ball event will be added later.";
-	}
 
 	private void OnAttendITBallPressed()
 	{
