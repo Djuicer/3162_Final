@@ -62,6 +62,8 @@ public partial class Dormitory : Node2D
 	private Button travelCancelButton;
 	private SceneTreeTimer emailNotificationTimer;
 	private bool canShowEmailNotifications = false;
+	private bool _lowEnergyReactionShown;
+	private bool _noActionsReactionShown;
 
 	private int dialogueIndex = 0;
 	private List<(string speaker, string text)> openingDialogue;
@@ -78,6 +80,10 @@ public partial class Dormitory : Node2D
 		RefreshGuidanceUi();
 		StartFadeIn();
 		EnableEmailNotificationsWhenSceneIsStable();
+
+		string pendingReaction = GlobalVars.Instance?.ConsumePendingReactionMessage() ?? "";
+		if (!string.IsNullOrWhiteSpace(pendingReaction))
+			GlobalVars.Instance.ShowReaction(pendingReaction);
 
 		if (interactPromptLabel != null)
 			interactPromptLabel.Visible = false;
@@ -188,6 +194,7 @@ public partial class Dormitory : Node2D
 	{
 		RefreshGuidanceUi();
 		TryShowEmailNotifications();
+		TryShowThresholdReactions();
 
 		if (interactPromptLabel == null)
 			return;
@@ -224,6 +231,40 @@ public partial class Dormitory : Node2D
 
 		PositionPromptNearTarget(promptTarget);
 		interactPromptLabel.Visible = true;
+	}
+
+
+	private void TryShowThresholdReactions()
+	{
+		var state = GlobalVars.Instance;
+		if (state == null)
+			return;
+
+		if (state.Attributes.Energy <= 20)
+		{
+			if (!_lowEnergyReactionShown)
+			{
+				state.ShowReaction("I'm exhausted... I should sleep soon.");
+				_lowEnergyReactionShown = true;
+			}
+		}
+		else
+		{
+			_lowEnergyReactionShown = false;
+		}
+
+		if (state.Profile.ActionsLeft <= 0)
+		{
+			if (!_noActionsReactionShown)
+			{
+				state.ShowReaction("I've done enough today. I should get some rest.");
+				_noActionsReactionShown = true;
+			}
+		}
+		else
+		{
+			_noActionsReactionShown = false;
+		}
 	}
 
 	private void PositionPromptNearTarget(InteractablePromptTarget target)
@@ -379,6 +420,9 @@ public partial class Dormitory : Node2D
 		state.Attributes.IncreaseFocus(10);
 		state.Profile.CurrentDay += 1;
 		state.Profile.ResetActionsForNewDay();
+		state.ShowReaction("Tomorrow is another chance.");
+		_lowEnergyReactionShown = false;
+		_noActionsReactionShown = false;
 
 		GD.Print($"[Sleep] Day={state.Profile.CurrentDay}/{state.Profile.FinalDay}, Actions={state.Profile.ActionsLeft}/{state.Profile.MaxActionsPerDay}, Focus={state.Attributes.Focus}/100, Energy={state.Attributes.Energy}/100, Knowledge={state.Attributes.Knowledge}/100, Confidence={state.Attributes.Confidence}/100, CareerReadiness={state.Profile.CareerReadiness}/100");
 

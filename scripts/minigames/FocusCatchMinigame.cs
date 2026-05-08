@@ -212,6 +212,7 @@ public partial class FocusCatchMinigame : Control
                 "You avoided distractions and made strong study progress.",
                 "+15 Knowledge\n+5 Focus\n-10 Energy"
             );
+            GlobalVars.Instance.ShowReaction("That actually went well. I'm getting better.");
         }
         else if (_score >= 8)
         {
@@ -222,6 +223,7 @@ public partial class FocusCatchMinigame : Control
                 "You stayed on track and made steady study progress.",
                 "+10 Knowledge\n-10 Energy"
             );
+            GlobalVars.Instance.ShowReaction("That actually went well. I'm getting better.");
         }
         else
         {
@@ -233,6 +235,7 @@ public partial class FocusCatchMinigame : Control
                 "Distractions got in the way, but you still learned a little.",
                 "+3 Knowledge\n-15 Energy\n-5 Confidence"
             );
+            GlobalVars.Instance.ShowReaction("That was rough, but I can still recover.");
         }
 
         _continueButton.Visible = true;

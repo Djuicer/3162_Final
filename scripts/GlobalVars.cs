@@ -31,6 +31,23 @@ public partial class GlobalVars : Node
 	public int ITBallGoodChoices { get; set; }
 	public bool JoinedDeveloperGroup { get; set; }
 
+	public string PendingReactionMessage { get; private set; } = "";
+
+	public void ShowReaction(string message)
+	{
+		if (string.IsNullOrWhiteSpace(message))
+			return;
+
+		PendingReactionMessage = message;
+		StatusOverlay.ShowReaction(message);
+	}
+
+	public string ConsumePendingReactionMessage()
+	{
+		string message = PendingReactionMessage;
+		PendingReactionMessage = "";
+		return message;
+	}
 
 	public string GetCurrentHintMessage()
 	{
@@ -90,6 +107,7 @@ public partial class GlobalVars : Node
 				ITBallAttended = false;
 				ITBallGoodChoices = 0;
 				JoinedDeveloperGroup = false;
+		PendingReactionMessage = "";
 		ReturnScenePath = DefaultDormitoryScenePath;
 		ReturnSpawnId = "";
 		PendingSpawnId = "";

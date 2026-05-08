@@ -172,6 +172,7 @@ public partial class InnovationHub : Node2D
 			s.Attributes.IncreasePortfolio(5);
 			s.Day5NpcMet = true;
 			s.ITBallInvited = true;
+			s.ShowReaction("That conversation opened a real door for me.");
 			EndDeveloperDialogue("The developer student is impressed and invites you to the IT Ball.");
 		});
 		AddDialogueChoice("I'm still figuring things out, but I want to learn from people who are building real projects.", () =>
@@ -181,6 +182,7 @@ public partial class InnovationHub : Node2D
 			s.Attributes.IncreaseNetworking(5);
 			s.Day5NpcMet = true;
 			s.ITBallInvited = true;
+			s.ShowReaction("Maybe I'm finally being taken seriously.");
 			EndDeveloperDialogue("The developer student sees potential and invites you to the IT Ball.");
 		});
 		AddDialogueChoice("I mostly just want quick money. I don't really care what the project is.", () =>
@@ -190,6 +192,7 @@ public partial class InnovationHub : Node2D
 			s.Attributes.DecreaseNetworking(5);
 			s.Day5NpcMet = true;
 			s.ITBallInvited = false;
+			s.ShowReaction("I blew that chance. I need to refocus.");
 			EndDeveloperDialogue("The developer student does not think you are ready for the opportunity.");
 		});
 	}

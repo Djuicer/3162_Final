@@ -22,6 +22,9 @@ public partial class StatusOverlay : CanvasLayer
 	private Label _growthRow;
 	private Label _careerRow;
 	private Control _floatingTextLayer;
+	private PanelContainer _reactionPanel;
+	private Label _reactionLabel;
+	private SceneTreeTimer _reactionHideTimer;
 	private int _floatingIndex;
 	private bool _showStatusPanel = true;
 
@@ -73,6 +76,11 @@ public partial class StatusOverlay : CanvasLayer
 		_instance?.SpawnFloatingText(statName, delta);
 	}
 
+	public static void ShowReaction(string message)
+	{
+		_instance?.ShowReactionMessage(message);
+	}
+
 	private void SpawnFloatingText(string statName, int delta)
 	{
 		if (_floatingTextLayer == null || delta == 0)
@@ -93,6 +101,35 @@ public partial class StatusOverlay : CanvasLayer
 		tween.Finished += () => pop.QueueFree();
 	}
 
+
+	private void ShowReactionMessage(string message)
+	{
+		if (_reactionPanel == null || _reactionLabel == null || string.IsNullOrWhiteSpace(message))
+			return;
+
+		_reactionLabel.Text = message;
+		_reactionPanel.Modulate = new Color(1f, 1f, 1f, 1f);
+		_reactionPanel.Visible = true;
+
+		_reactionHideTimer = GetTree().CreateTimer(2.8f);
+		_reactionHideTimer.Timeout += () =>
+		{
+			if (!IsInstanceValid(_reactionPanel))
+				return;
+
+			var tween = CreateTween();
+			tween.TweenProperty(_reactionPanel, "modulate:a", 0.0f, 0.3f);
+			tween.Finished += () =>
+			{
+				if (IsInstanceValid(_reactionPanel))
+				{
+					_reactionPanel.Visible = false;
+					_reactionPanel.Modulate = new Color(1f, 1f, 1f, 1f);
+				}
+			};
+		};
+	}
+
 	private void BindNodes()
 	{
 		_statusPanel = GetNode<PanelContainer>("StatusPanel");
@@ -104,12 +141,18 @@ public partial class StatusOverlay : CanvasLayer
 		_growthRow = GetNode<Label>("StatusPanel/Margin/StatusContent/GrowthRow");
 		_careerRow = GetNode<Label>("StatusPanel/Margin/StatusContent/CareerRow");
 		_floatingTextLayer = GetNode<Control>("FloatingTextLayer");
+		_reactionPanel = GetNode<PanelContainer>("ReactionPanel");
+		_reactionLabel = GetNode<Label>("ReactionPanel/Margin/ReactionLabel");
 
 		// Overlay visuals should never consume clicks meant for scene UI beneath them.
 		_statusPanel.MouseFilter = Control.MouseFilterEnum.Ignore;
 		_floatingTextLayer.MouseFilter = Control.MouseFilterEnum.Ignore;
 		SetMouseFilterRecursive(_statusPanel, Control.MouseFilterEnum.Ignore);
 		SetMouseFilterRecursive(_floatingTextLayer, Control.MouseFilterEnum.Ignore);
+		SetMouseFilterRecursive(_reactionPanel, Control.MouseFilterEnum.Ignore);
+
+		if (_reactionPanel != null)
+			_reactionPanel.Visible = false;
 	}
 
 	private static void SetMouseFilterRecursive(Node node, Control.MouseFilterEnum mouseFilter)

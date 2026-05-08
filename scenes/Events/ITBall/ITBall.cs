@@ -107,16 +107,19 @@ public partial class ITBall : Node2D
 		{
 			s.JoinedDeveloperGroup = true;
 			_statusLabel.Text = "The developer group is impressed. They invite you to join their app project.";
+			s.ShowReaction("This could become something bigger than just finding a job.");
 		}
 		else if (goodDialogue)
 		{
 			s.JoinedDeveloperGroup = false;
 			_statusLabel.Text = "You made a good impression, but you need stronger skills and portfolio work before joining the project.";
+			s.ShowReaction("I'm close. I need to keep building my skills.");
 		}
 		else
 		{
 			s.JoinedDeveloperGroup = false;
 			_statusLabel.Text = "The developers decide you are not ready for the project yet.";
+			s.ShowReaction("That stings, but I can still turn this around.");
 		}
 
 		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Domitory/dormitory.tscn");
