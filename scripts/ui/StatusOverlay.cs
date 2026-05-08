@@ -18,6 +18,8 @@ public partial class StatusOverlay : CanvasLayer
 	private PanelContainer _reactionPanel;
 	private Label _reactionLabel;
 	private int _floatingIndex;
+	private Label _dayLabel;
+	private Label _actionsLabel;
 
 	public override void _Ready()
 	{
@@ -30,6 +32,9 @@ public partial class StatusOverlay : CanvasLayer
 		SetMouseFilterRecursive(_reactionPanel, Control.MouseFilterEnum.Ignore);
 		_reactionPanel.Visible = false;
 		AttachUserProfileAndHint();
+		_dayLabel = GetNodeOrNull<Label>("DayActionsHud/HudFrame/MarginContainer/HudContent/DayLabel");
+		_actionsLabel = GetNodeOrNull<Label>("DayActionsHud/HudFrame/MarginContainer/HudContent/ActionsLabel");
+		RefreshDayActionsHud();
 	}
 
 	private void AttachUserProfileAndHint()
@@ -47,6 +52,11 @@ public partial class StatusOverlay : CanvasLayer
 			hint.Name = "ProfileHint";
 			AddChild(hint);
 		}
+	}
+
+	public override void _Process(double delta)
+	{
+		RefreshDayActionsHud();
 	}
 
 	public override void _ExitTree()
@@ -113,7 +123,17 @@ public partial class StatusOverlay : CanvasLayer
 		foreach (Node child in node.GetChildren()) SetMouseFilterRecursive(child, mouseFilter);
 	}
 
-	private void ApplyAnchors()
+	
+	private void RefreshDayActionsHud()
+	{
+		if (GlobalVars.Instance == null || _dayLabel == null || _actionsLabel == null)
+			return;
+
+		var profile = GlobalVars.Instance.Profile;
+		_dayLabel.Text = $"Day {profile.CurrentDay} / {profile.FinalDay}";
+		_actionsLabel.Text = $"Actions {profile.ActionsLeft} / {profile.MaxActionsPerDay}";
+	}
+private void ApplyAnchors()
 	{
 		_floatingTextLayer.OffsetLeft = FloatingLayerTopLeftOffset.X;
 		_floatingTextLayer.OffsetTop = FloatingLayerTopLeftOffset.Y;

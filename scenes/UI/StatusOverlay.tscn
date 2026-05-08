@@ -7,6 +7,49 @@
 theme = ExtResource("2_theme")
 script = ExtResource("1")
 
+[node name="DayActionsHud" type="Control" parent="." unique_id=154492201]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -168.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 76.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="HudFrame" type="PanelContainer" parent="DayActionsHud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="ArtBackground" type="NinePatchRect" parent="DayActionsHud/HudFrame"]
+modulate = Color(1, 1, 1, 0.08)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DayActionsHud/HudFrame"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="HudContent" type="VBoxContainer" parent="DayActionsHud/HudFrame/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="DayLabel" type="Label" parent="DayActionsHud/HudFrame/MarginContainer/HudContent"]
+layout_mode = 2
+text = "Day 1 / 7"
+
+[node name="ActionsLabel" type="Label" parent="DayActionsHud/HudFrame/MarginContainer/HudContent"]
+layout_mode = 2
+text = "Actions 3 / 3"
+
 [node name="FloatingTextLayer" type="Control" parent="." unique_id=710086587]
 layout_mode = 3
 anchors_preset = 3

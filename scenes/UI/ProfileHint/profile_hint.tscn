@@ -27,7 +27,7 @@ mouse_filter = 2
 
 [node name="Label" type="Label" parent="HintFrame"]
 layout_mode = 2
-text = "Tab: Profile"
+text = "Tab: Attributes"
 horizontal_alignment = 1
 vertical_alignment = 1
 mouse_filter = 2
