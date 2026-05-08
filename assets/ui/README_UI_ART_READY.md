@@ -2,37 +2,39 @@
 
 This project is set up so you can replace UI visuals in Godot without rewriting scripts.
 
+## New global profile UI
+- User Profile overlay scene: `res://scenes/UI/UserProfileOverlay/user_profile_overlay.tscn`
+- Profile hint scene: `res://scenes/UI/ProfileHint/profile_hint.tscn`
+- Overlay spawner: `res://scripts/ui/StatusOverlay.cs`
+
+## Where to assign future art
+- Profile panel frame/background:
+  - `user_profile_overlay.tscn` → `ProfilePanel/ProfileFrame` (`NinePatchRect`, decorative)
+- Small Tab hint frame/background:
+  - `profile_hint.tscn` → `HintFrame/ArtBackground` (`NinePatchRect`, decorative)
+- Existing event/dialogue frames remain unchanged.
+
+## Decorative nodes and mouse safety
+Decorative nodes are non-interactive and should remain `MouseFilter = Ignore`:
+- `ProfilePanel/ProfileFrame`
+- `ProfileHint/HintFrame/ArtBackground`
+- `StatusOverlay/FloatingTextLayer`
+
+When the User Profile is hidden, it does not block clicks.
+
+## Editing text or icons later
+- Profile text labels are in `user_profile_overlay.tscn` under:
+  - `HeaderLabel`
+  - `ProfileInfoContainer/ProfileInfoLabel`
+  - `AttributesContainer/AttributesLabel`
+  - `RouteStatusContainer/RouteStatusLabel`
+  - `HintLabel`
+- Hint text is in `profile_hint.tscn` → `HintFrame/Label`.
+- If you want attribute icons, add `TextureRect` nodes inside `AttributesContainer` rows.
+
 ## Shared theme
 - Theme resource: `res://assets/ui/theme/default_ui_theme.tres`
 - Apply/update shared styles for:
   - `Button`
   - `Label`
   - `PanelContainer` / `Panel`
-
-## Panel/frame texture slots (assign later)
-Use `NinePatchRect` nodes named `ArtBackground` to assign frame textures later.
-- `scenes/UI/StatusOverlay.tscn` → `StatusPanel/ArtBackground`
-- `scenes/Screen/screen.tscn` → `ComputerInfoPanel/ArtBackground`
-- `scenes/Computer/Email/email.tscn` → `EmailPanel/ArtBackground`
-- `scenes/Events/DanceParty/dance_party.tscn` → `UI/DialoguePanel/ArtBackground`
-- `scenes/Events/ITBall/it_ball.tscn` → `UI/DialoguePanel/ArtBackground`
-- `scenes/Ending/ending.tscn` → `CenterContainer/EndingPanel/ArtBackground`
-
-> Assign UI frame texture here later (NinePatchRect texture + patch margins).
-
-## Decorative nodes and mouse safety
-Keep decorative overlays as `MouseFilter = Ignore` so they do not block clicks:
-- Any `ArtBackground` node.
-- `StatusOverlay/FloatingTextLayer`.
-- Non-interactive tint/overlay nodes.
-
-## Buttons: where to reskin
-- Preferred: style `Button` in `default_ui_theme.tres`.
-- Optional: replace specific buttons with `TextureButton` in editor if desired.
-- Important button groups:
-  - Computer screen (`EmailButton`, `BrowserButton`, `ReturnButton`)
-  - Email panel (`BackButton`, event buttons)
-  - Dorm travel menu buttons
-  - Dialogue choice buttons
-  - Minigame continue buttons
-  - Ending `PlayAgainButton`
