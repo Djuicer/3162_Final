@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://bxaftudkv7pxg"]
 
-[ext_resource type="Script" path="res://scenes/Events/ITBall/ITBall.cs" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/Player/player.tscn" id="2"]
+[ext_resource type="Script" uid="uid://d3ipuydp6ukt7" path="res://scenes/Events/ITBall/ITBall.cs" id="1"]
+[ext_resource type="PackedScene" uid="uid://drnt3q66eln2b" path="res://scenes/Player/player.tscn" id="2"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(130, 150)
@@ -12,126 +12,116 @@ size = Vector2(130, 150)
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(460, 80)
 
-[node name="ITBall" type="Node2D"]
+[node name="ITBall" type="Node2D" unique_id=917639020]
 script = ExtResource("1")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=534175527]
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.15, 0.11, 0.2, 1)
 
-[node name="ITBallAppDeveloperNPC" type="Node2D" parent="."]
+[node name="ITBallAppDeveloperNPC" type="Node2D" parent="." unique_id=2120550337]
 position = Vector2(325, 305)
 
-[node name="Visual" type="ColorRect" parent="ITBallAppDeveloperNPC"]
+[node name="Visual" type="ColorRect" parent="ITBallAppDeveloperNPC" unique_id=864489719]
 offset_left = -35.0
 offset_top = -55.0
 offset_right = 35.0
 offset_bottom = 55.0
 color = Color(0.3, 0.7, 0.9, 1)
 
-[node name="PromptPosition" type="Marker2D" parent="ITBallAppDeveloperNPC"]
+[node name="PromptPosition" type="Marker2D" parent="ITBallAppDeveloperNPC" unique_id=533599354]
 position = Vector2(0, -80)
 
-[node name="InteractionArea" type="Area2D" parent="ITBallAppDeveloperNPC"]
+[node name="InteractionArea" type="Area2D" parent="ITBallAppDeveloperNPC" unique_id=1393282985]
 
-[node name="ITBallProjectLeadNPC" type="Node2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ITBallAppDeveloperNPC/InteractionArea" unique_id=1160791431]
+shape = SubResource("1")
+
+[node name="ITBallProjectLeadNPC" type="Node2D" parent="." unique_id=1380500051]
 position = Vector2(805, 285)
 
-[node name="Visual" type="ColorRect" parent="ITBallProjectLeadNPC"]
+[node name="Visual" type="ColorRect" parent="ITBallProjectLeadNPC" unique_id=1323647399]
 offset_left = -35.0
 offset_top = -55.0
 offset_right = 35.0
 offset_bottom = 55.0
 color = Color(0.95, 0.65, 0.3, 1)
 
-[node name="PromptPosition" type="Marker2D" parent="ITBallProjectLeadNPC"]
+[node name="PromptPosition" type="Marker2D" parent="ITBallProjectLeadNPC" unique_id=544295126]
 position = Vector2(0, -80)
 
-[node name="InteractionArea" type="Area2D" parent="ITBallProjectLeadNPC"]
+[node name="InteractionArea" type="Area2D" parent="ITBallProjectLeadNPC" unique_id=1930279225]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ITBallAppDeveloperNPC/InteractionArea"]
-shape = SubResource("1")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ITBallProjectLeadNPC/InteractionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ITBallProjectLeadNPC/InteractionArea" unique_id=490084493]
 shape = SubResource("2")
 
-[node name="Player" parent="." instance=ExtResource("2")]
+[node name="Player" parent="." unique_id=915856223 instance=ExtResource("2")]
 position = Vector2(575, 550)
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="." unique_id=415128304]
 
-[node name="TopWall" type="CollisionShape2D" parent="Walls"]
+[node name="TopWall" type="CollisionShape2D" parent="Walls" unique_id=500504876]
 position = Vector2(576, -10)
 shape = SubResource("3")
 
-[node name="BottomWall" type="CollisionShape2D" parent="Walls"]
+[node name="BottomWall" type="CollisionShape2D" parent="Walls" unique_id=112936366]
 position = Vector2(576, 658)
 shape = SubResource("3")
 
-[node name="LeftWall" type="CollisionShape2D" parent="Walls"]
+[node name="LeftWall" type="CollisionShape2D" parent="Walls" unique_id=1225841248]
 position = Vector2(-8, 324)
 rotation = 1.5708
 shape = SubResource("3")
 
-[node name="RightWall" type="CollisionShape2D" parent="Walls"]
+[node name="RightWall" type="CollisionShape2D" parent="Walls" unique_id=1632929066]
 position = Vector2(1160, 324)
 rotation = 1.5708
 shape = SubResource("3")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1393095583]
 
-[node name="InteractPromptLabel" type="Label" parent="UI"]
+[node name="InteractPromptLabel" type="Label" parent="UI" unique_id=1042852045]
 offset_left = 16.0
 offset_top = 600.0
 offset_right = 420.0
 offset_bottom = 632.0
 text = "Press E to talk"
 
-[node name="DialoguePanel" type="PanelContainer" parent="UI"]
+[node name="DialoguePanel" type="PanelContainer" parent="UI" unique_id=1112625794]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 1136.0
-offset_bottom = 280.0
+offset_right = 415.0
+offset_bottom = 166.0
 
-[node name="ContentContainer" type="VBoxContainer" parent="UI/DialoguePanel"]
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 1108.0
-offset_bottom = 252.0
+[node name="ContentContainer" type="VBoxContainer" parent="UI/DialoguePanel" unique_id=276774234]
+layout_mode = 2
 
-[node name="InstructionLabel" type="Label" parent="UI/DialoguePanel/ContentContainer"]
+[node name="InstructionLabel" type="Label" parent="UI/DialoguePanel/ContentContainer" unique_id=549833655]
 layout_mode = 2
 text = "Talk to developers and make a strong impression."
 
-[node name="StatusLabel" type="Label" parent="UI/DialoguePanel/ContentContainer"]
+[node name="StatusLabel" type="Label" parent="UI/DialoguePanel/ContentContainer" unique_id=1823931883]
 layout_mode = 2
-autowrap_mode = 3
 text = "Status"
+autowrap_mode = 3
 
-[node name="NpcNameLabel" type="Label" parent="UI/DialoguePanel/ContentContainer"]
+[node name="NpcNameLabel" type="Label" parent="UI/DialoguePanel/ContentContainer" unique_id=1065586040]
 layout_mode = 2
 
-[node name="DialogueLabel" type="Label" parent="UI/DialoguePanel/ContentContainer"]
+[node name="DialogueLabel" type="Label" parent="UI/DialoguePanel/ContentContainer" unique_id=94129383]
 layout_mode = 2
 autowrap_mode = 3
 
-[node name="Choices" type="VBoxContainer" parent="UI/DialoguePanel/ContentContainer"]
+[node name="Choices" type="VBoxContainer" parent="UI/DialoguePanel/ContentContainer" unique_id=926195596]
 layout_mode = 2
 
-[node name="ActionRow" type="HBoxContainer" parent="UI/DialoguePanel/ContentContainer"]
+[node name="ActionRow" type="HBoxContainer" parent="UI/DialoguePanel/ContentContainer" unique_id=1509455017]
 layout_mode = 2
 
-[node name="FinishEventButton" type="Button" parent="UI/DialoguePanel/ContentContainer/ActionRow"]
+[node name="FinishEventButton" type="Button" parent="UI/DialoguePanel/ContentContainer/ActionRow" unique_id=1896785924]
 layout_mode = 2
 text = "Finish Event"
 
-[node name="ArtBackground" type="NinePatchRect" parent="UI/DialoguePanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
+[node name="ArtBackground" type="NinePatchRect" parent="UI/DialoguePanel" unique_id=994296700]
+layout_mode = 2

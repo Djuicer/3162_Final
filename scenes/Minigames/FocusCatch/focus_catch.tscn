@@ -1,8 +1,8 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://0cdwnd6uiiwo"]
 
-[ext_resource type="Script" path="res://scripts/minigames/FocusCatchMinigame.cs" id="1_focus"]
+[ext_resource type="Script" uid="uid://fl5h8txmqunt" path="res://scripts/minigames/FocusCatchMinigame.cs" id="1_focus"]
 
-[node name="FocusCatch" type="Control"]
+[node name="FocusCatch" type="Control" unique_id=18008148]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,15 +11,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_focus")
 
-[node name="PlayArea" type="ColorRect" parent="."]
+[node name="PlayArea" type="ColorRect" parent="." unique_id=890661436]
 layout_mode = 0
-offset_left = 120.0
-offset_top = 110.0
-offset_right = 1000.0
-offset_bottom = 620.0
+offset_left = 264.0
+offset_top = 131.0
+offset_right = 1144.0
+offset_bottom = 641.0
 color = Color(0.09, 0.09, 0.12, 1)
 
-[node name="Catcher" type="ColorRect" parent="PlayArea"]
+[node name="Catcher" type="ColorRect" parent="PlayArea" unique_id=1118103240]
 layout_mode = 0
 offset_left = 390.0
 offset_top = 460.0
@@ -27,42 +27,41 @@ offset_right = 490.0
 offset_bottom = 500.0
 color = Color(0.45, 0.75, 1, 1)
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=774899481]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 360.0
-offset_bottom = 240.0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 343.0
+offset_bottom = 222.0
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=2040558617]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 330.0
 offset_bottom = 210.0
 
-[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+[node name="TitleLabel" type="Label" parent="Panel/VBox" unique_id=536774898]
 layout_mode = 2
 text = "Focus Catch"
 
-[node name="TimerLabel" type="Label" parent="Panel/VBox"]
+[node name="TimerLabel" type="Label" parent="Panel/VBox" unique_id=75378172]
 layout_mode = 2
 text = "Timer: 30"
-[node name="InstructionLabel" type="Label" parent="Panel/VBox"]
+
+[node name="InstructionLabel" type="Label" parent="Panel/VBox" unique_id=1100104326]
 layout_mode = 2
-autowrap_mode = 2
 text = "Move left/right to catch NOTE and avoid PHONE."
+autowrap_mode = 2
 
-
-[node name="ScoreLabel" type="Label" parent="Panel/VBox"]
+[node name="ScoreLabel" type="Label" parent="Panel/VBox" unique_id=114137444]
 layout_mode = 2
 text = "Score: 0"
 
-[node name="ResultLabel" type="Label" parent="Panel/VBox"]
+[node name="ResultLabel" type="Label" parent="Panel/VBox" unique_id=918571360]
 layout_mode = 2
 autowrap_mode = 2
-text = ""
 
-[node name="ContinueButton" type="Button" parent="Panel/VBox"]
+[node name="ContinueButton" type="Button" parent="Panel/VBox" unique_id=372730249]
 layout_mode = 2
 text = "Continue"
