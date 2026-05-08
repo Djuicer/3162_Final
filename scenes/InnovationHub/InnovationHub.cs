@@ -110,7 +110,7 @@ public partial class InnovationHub : Node2D
 		{
 			_isTransitioning = true;
 			GlobalVars.Instance.QueuePendingSpawn("DoorReturnSpawn");
-			GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
+			TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Domitory/dormitory.tscn");
 		}
 	}
 
@@ -125,7 +125,7 @@ public partial class InnovationHub : Node2D
 
 		_isTransitioning = true;
 		state.SetReturnContext("res://scenes/InnovationHub/innovation_hub.tscn", "InnovationHubWorkstationReturnSpawn");
-		GetTree().ChangeSceneToFile("res://scenes/Minigames/BugSquash/bug_squash.tscn");
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Minigames/BugSquash/bug_squash.tscn");
 	}
 
 	private void ApplyPendingSpawnIfAny()

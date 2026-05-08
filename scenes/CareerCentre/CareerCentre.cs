@@ -76,7 +76,7 @@ public partial class CareerCentre : Node2D
 		{
 			_isTransitioning = true;
 			GlobalVars.Instance.QueuePendingSpawn("DoorReturnSpawn");
-			GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
+			TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Domitory/dormitory.tscn");
 		}
 	}
 
@@ -91,7 +91,7 @@ public partial class CareerCentre : Node2D
 
 		_isTransitioning = true;
 		state.SetReturnContext("res://scenes/CareerCentre/career_centre.tscn", "CareerCentreBoothReturnSpawn");
-		GetTree().ChangeSceneToFile("res://scenes/Minigames/InterviewRhythm/interview_rhythm.tscn");
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Minigames/InterviewRhythm/interview_rhythm.tscn");
 	}
 
 	private void ApplyPendingSpawnIfAny()

@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 GVars="*uid://dimm304b8put7"
 SaveManager="*uid://ct0vjqv0fhqvq"
-TransitionManager="*uid://cr3d812sbvshy"
+TransitionManager="*res://scripts/ui/TransitionManager.cs"
 
 [dotnet]
 

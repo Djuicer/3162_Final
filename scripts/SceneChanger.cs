@@ -31,7 +31,7 @@ public partial class SceneChanger : Node
 
 		if (targetScene != null)
 		{
-			GetTree().ChangeSceneToPacked(targetScene);
+			TransitionManager.Instance?.ChangeSceneToPackedWithFade(targetScene);
 		}
 		else
 		{

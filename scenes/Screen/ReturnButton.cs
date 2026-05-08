@@ -36,6 +36,6 @@ public partial class ReturnButton : TextureButton
 	
 	private void OnPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Domitory/dormitory.tscn");
 	}
 }

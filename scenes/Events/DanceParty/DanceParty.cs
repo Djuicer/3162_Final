@@ -140,7 +140,7 @@ public partial class DanceParty : Node2D
 		}
 		state.PartyEventCompleted = true;
 
-		GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Domitory/dormitory.tscn");
 	}
 
 	private void AddChoice(string text, System.Action onPressed)

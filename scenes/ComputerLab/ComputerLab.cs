@@ -76,7 +76,7 @@ public partial class ComputerLab : Node2D
 		{
 			_isTransitioning = true;
 			GlobalVars.Instance.QueuePendingSpawn("DoorReturnSpawn");
-			GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
+			TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Domitory/dormitory.tscn");
 		}
 	}
 
@@ -91,7 +91,7 @@ public partial class ComputerLab : Node2D
 
 		_isTransitioning = true;
 		state.SetReturnContext("res://scenes/ComputerLab/computer_lab.tscn", "ComputerLabPCReturnSpawn");
-		GetTree().ChangeSceneToFile("res://scenes/Minigames/FocusCatch/focus_catch.tscn");
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Minigames/FocusCatch/focus_catch.tscn");
 	}
 
 	private void ApplyPendingSpawnIfAny()

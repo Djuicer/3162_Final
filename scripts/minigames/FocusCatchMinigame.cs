@@ -226,6 +226,6 @@ public partial class FocusCatchMinigame : Control
         if (!string.IsNullOrEmpty(state.ReturnSpawnId))
             state.QueuePendingSpawn(state.ReturnSpawnId);
 
-        GetTree().ChangeSceneToFile(returnScene);
+        TransitionManager.Instance?.ChangeSceneToFileWithFade(returnScene);
     }
 }
