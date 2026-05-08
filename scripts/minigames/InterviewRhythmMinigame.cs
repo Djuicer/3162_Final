@@ -146,25 +146,42 @@ public partial class InterviewRhythmMinigame : Control
 			profile.IncreaseCareerReadiness(20);
 			attributes.IncreaseConfidence(10);
 			attributes.DecreaseEnergy(10);
-			_resultLabel.Text = "Excellent interview rhythm! Score 7-10\nCareer Readiness +20, Confidence +10, Energy -10";
+			SetResultText(
+				"Confident Interview!",
+				"Your timing was sharp and your answers felt well-practiced.",
+				"+20 Career Readiness\n+10 Confidence\n-10 Energy"
+			);
 		}
 		else if (_score >= 4)
 		{
 			profile.IncreaseCareerReadiness(10);
 			attributes.IncreaseConfidence(3);
 			attributes.DecreaseEnergy(10);
-			_resultLabel.Text = "Good interview timing! Score 4-6\nCareer Readiness +10, Confidence +3, Energy -10";
+			SetResultText(
+				"Decent Practice",
+				"You found your rhythm in parts and built interview skill.",
+				"+10 Career Readiness\n+3 Confidence\n-10 Energy"
+			);
 		}
 		else
 		{
 			profile.IncreaseCareerReadiness(5);
 			attributes.DecreaseConfidence(10);
 			attributes.DecreaseEnergy(10);
-			_resultLabel.Text = "Rough interview attempt. Score 0-3\nCareer Readiness +5, Confidence -10, Energy -10";
+			SetResultText(
+				"Nervous Attempt",
+				"The pressure showed, but this practice still improves your baseline.",
+				"+5 Career Readiness\n-10 Confidence\n-10 Energy"
+			);
 		}
 
 		_instructionLabel.Text = "Interview finished.";
 		_continueButton.Visible = true;
+	}
+
+	private void SetResultText(string title, string feedback, string rewardSummary)
+	{
+		_resultLabel.Text = $"{title}\nFinal Score: {_score}\n{feedback}\nRewards:\n{rewardSummary}";
 	}
 
 	private void BuildIntroOverlay(string title, string instructions)
