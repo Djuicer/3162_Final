@@ -207,23 +207,40 @@ public partial class FocusCatchMinigame : Control
             attributes.IncreaseKnowledge(15);
             attributes.IncreaseFocus(5);
             attributes.DecreaseEnergy(10);
-            _resultLabel.Text = "Great focus! Score 15+\nKnowledge +15, Focus +5, Energy -10";
+            SetResultText(
+                "Excellent Focus!",
+                "You avoided distractions and made strong study progress.",
+                "+15 Knowledge\n+5 Focus\n-10 Energy"
+            );
         }
         else if (_score >= 8)
         {
             attributes.IncreaseKnowledge(10);
             attributes.DecreaseEnergy(10);
-            _resultLabel.Text = "Good session! Score 8-14\nKnowledge +10, Energy -10";
+            SetResultText(
+                "Good Study Session",
+                "You stayed on track and made steady study progress.",
+                "+10 Knowledge\n-10 Energy"
+            );
         }
         else
         {
             attributes.IncreaseKnowledge(3);
             attributes.DecreaseEnergy(15);
             attributes.DecreaseConfidence(5);
-            _resultLabel.Text = "Needs work! Score below 8\nKnowledge +3, Energy -15, Confidence -5";
+            SetResultText(
+                "Rough Session",
+                "Distractions got in the way, but you still learned a little.",
+                "+3 Knowledge\n-15 Energy\n-5 Confidence"
+            );
         }
 
         _continueButton.Visible = true;
+    }
+
+    private void SetResultText(string title, string feedback, string rewardSummary)
+    {
+        _resultLabel.Text = $"{title}\nFinal Score: {_score}\n{feedback}\nRewards:\n{rewardSummary}";
     }
 
     private void BuildIntroOverlay(string title, string instructions)
