@@ -360,6 +360,9 @@ public partial class Dormitory : Node2D
 	private void SleepAtBed()
 	{
 		var state = GlobalVars.Instance;
+		if (state == null)
+			return;
+
 		state.Attributes.IncreaseEnergy(30);
 		state.Attributes.IncreaseFocus(10);
 		state.Profile.CurrentDay += 1;
@@ -372,7 +375,7 @@ public partial class Dormitory : Node2D
 		if (state.Profile.CurrentDay > state.Profile.FinalDay)
 		{
 			GD.Print("Final results coming soon.");
-						if (endingScene != null)
+			if (endingScene != null)
 			{
 				TransitionManager.Instance?.ChangeSceneToPackedWithFade(endingScene);
 			}
@@ -380,7 +383,10 @@ public partial class Dormitory : Node2D
 			{
 				GD.PrintErr("Ending scene is missing.");
 			}
+			return;
 		}
+
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/UI/DayTransition/day_transition.tscn");
 	}
 
 
