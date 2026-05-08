@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://biavn6k6em8ns"]
 
-[ext_resource type="Script" path="res://scripts/minigames/InterviewRhythmMinigame.cs" id="1"]
+[ext_resource type="Script" uid="uid://bqunptdp623hx" path="res://scripts/minigames/InterviewRhythmMinigame.cs" id="1"]
 
-[node name="InterviewRhythm" type="Control"]
+[node name="InterviewRhythm" type="Control" unique_id=1909388978]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1316186057]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -25,7 +25,7 @@ offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=556141505]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,52 +38,49 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+[node name="TitleLabel" type="Label" parent="Panel/VBox" unique_id=540872753]
 layout_mode = 2
 text = "Interview Rhythm"
 horizontal_alignment = 1
 
-[node name="AttemptLabel" type="Label" parent="Panel/VBox"]
+[node name="AttemptLabel" type="Label" parent="Panel/VBox" unique_id=138381989]
 layout_mode = 2
 text = "Attempt: 1 / 10"
 
-[node name="ScoreLabel" type="Label" parent="Panel/VBox"]
+[node name="ScoreLabel" type="Label" parent="Panel/VBox" unique_id=220578161]
 layout_mode = 2
 text = "Score: 0"
 
-[node name="InstructionLabel" type="Label" parent="Panel/VBox"]
+[node name="InstructionLabel" type="Label" parent="Panel/VBox" unique_id=1829434212]
 layout_mode = 2
-autowrap_mode = 2
 text = "Press Space when the marker is in the target zone"
+autowrap_mode = 2
 
-[node name="ResultLabel" type="Label" parent="Panel/VBox"]
+[node name="ResultLabel" type="Label" parent="Panel/VBox" unique_id=1291489648]
 layout_mode = 2
 autowrap_mode = 2
-text = ""
 
-[node name="ContinueButton" type="Button" parent="Panel/VBox"]
+[node name="ContinueButton" type="Button" parent="Panel/VBox" unique_id=1637708218]
 layout_mode = 2
 text = "Continue"
 
-[node name="TimingBar" type="ColorRect" parent="."]
+[node name="TimingBar" type="ColorRect" parent="." unique_id=1675398592]
 layout_mode = 0
-offset_left = 220.0
-offset_top = 420.0
-offset_right = 1060.0
-offset_bottom = 470.0
+offset_left = 154.0
+offset_top = 535.0
+offset_right = 994.0
+offset_bottom = 585.0
 color = Color(0.15, 0.15, 0.2, 1)
 
-[node name="TargetZone" type="ColorRect" parent="TimingBar"]
+[node name="TargetZone" type="ColorRect" parent="TimingBar" unique_id=1667368521]
 layout_mode = 0
 offset_left = 340.0
-offset_top = 0.0
 offset_right = 500.0
 offset_bottom = 50.0
 color = Color(0.35, 0.75, 0.4, 1)
 
-[node name="Marker" type="ColorRect" parent="TimingBar"]
+[node name="Marker" type="ColorRect" parent="TimingBar" unique_id=1111309093]
 layout_mode = 0
-offset_left = 0.0
 offset_top = -8.0
 offset_right = 20.0
 offset_bottom = 58.0
