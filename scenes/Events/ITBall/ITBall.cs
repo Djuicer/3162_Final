@@ -119,7 +119,7 @@ public partial class ITBall : Node2D
 			_statusLabel.Text = "The developers decide you are not ready for the project yet.";
 		}
 
-		GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Domitory/dormitory.tscn");
 	}
 
 	private void AddChoice(string text, System.Action fn)

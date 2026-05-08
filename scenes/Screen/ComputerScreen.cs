@@ -51,9 +51,9 @@ public partial class ComputerScreen : Node2D
 			returnScene = "res://scenes/Domitory/dormitory.tscn";
 		if (!string.IsNullOrEmpty(state?.ReturnSpawnId))
 			state.QueuePendingSpawn(state.ReturnSpawnId);
-		GetTree().ChangeSceneToFile(returnScene);
+		TransitionManager.Instance?.ChangeSceneToFileWithFade(returnScene);
 	}
-	private void OnEmailPressed() { if (!_isTransitioning) { _isTransitioning = true; GetTree().ChangeSceneToFile("res://scenes/Computer/Email/email.tscn"); } }
+	private void OnEmailPressed() { if (!_isTransitioning) { _isTransitioning = true; TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Computer/Email/email.tscn"); } }
 
 	private void OnProcrastinatePressed()
 	{

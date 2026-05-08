@@ -256,7 +256,7 @@ public partial class Dormitory : Node2D
 			if (computerScene != null)
 			{
 				GlobalVars.Instance.SetReturnContext("res://scenes/Domitory/dormitory.tscn", "ComputerReturnSpawn");
-				GetTree().ChangeSceneToPacked(computerScene);
+				TransitionManager.Instance?.ChangeSceneToPackedWithFade(computerScene);
 			}
 			else
 				GD.PrintErr("Computer scene is missing.");
@@ -334,7 +334,7 @@ public partial class Dormitory : Node2D
 		};
 		GlobalVars.Instance.QueuePendingSpawn(targetSpawn);
 		CloseTravelMenu();
-		GetTree().ChangeSceneToFile(scenePath);
+		TransitionManager.Instance?.ChangeSceneToFileWithFade(scenePath);
 	}
 
 	private void ApplyPendingSpawnIfAny()
@@ -374,7 +374,7 @@ public partial class Dormitory : Node2D
 			GD.Print("Final results coming soon.");
 						if (endingScene != null)
 			{
-				GetTree().ChangeSceneToPacked(endingScene);
+				TransitionManager.Instance?.ChangeSceneToPackedWithFade(endingScene);
 			}
 			else
 			{

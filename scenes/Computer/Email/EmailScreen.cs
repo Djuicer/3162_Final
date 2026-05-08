@@ -30,7 +30,7 @@ public partial class EmailScreen : Control
 		_attendPartyButton.Pressed += OnAttendPartyPressed;
 		_viewEventDetailsButton.Pressed += OnViewEventDetailsPressed;
 		_attendItBallButton.Pressed += OnAttendITBallPressed;
-		backButton.Pressed += () => GetTree().ChangeSceneToFile("res://scenes/Screen/screen.tscn");
+		backButton.Pressed += () => TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Screen/screen.tscn");
 
 		BuildInbox();
 	}
@@ -139,7 +139,7 @@ public partial class EmailScreen : Control
 		state.PartyGoodChoices = 0;
 		_attendPartyButton.Visible = false;
 		state.ReturnScenePath = "res://scenes/Computer/Email/email.tscn";
-		GetTree().ChangeSceneToFile("res://scenes/Events/DanceParty/dance_party.tscn");
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Events/DanceParty/dance_party.tscn");
 	}
 
 	private void OnViewEventDetailsPressed()
@@ -169,6 +169,6 @@ public partial class EmailScreen : Control
 		state.Attributes.DecreaseEnergy(10);
 		state.ITBallAttended = true;
 		state.ITBallGoodChoices = 0;
-		GetTree().ChangeSceneToFile("res://scenes/Events/ITBall/it_ball.tscn");
+		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Events/ITBall/it_ball.tscn");
 	}
 }

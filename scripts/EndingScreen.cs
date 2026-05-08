@@ -133,7 +133,7 @@ public partial class EndingScreen : Control
 
         state.ResetGame();
         var restartScene = string.IsNullOrWhiteSpace(state.IntroScenePath) ? DefaultRestartScenePath : state.IntroScenePath;
-        GetTree().ChangeSceneToFile(restartScene);
+        TransitionManager.Instance?.ChangeSceneToFileWithFade(restartScene);
     }
 
     private void OnQuitPressed()
