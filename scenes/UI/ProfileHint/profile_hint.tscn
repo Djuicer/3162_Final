@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[node name="ProfileHint" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -46.0
+offset_right = 140.0
+offset_bottom = -14.0
+mouse_filter = 2
+
+[node name="HintFrame" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="ArtBackground" type="NinePatchRect" parent="HintFrame"]
+modulate = Color(1, 1, 1, 0.08)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="HintFrame"]
+layout_mode = 2
+text = "Tab: Profile"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
