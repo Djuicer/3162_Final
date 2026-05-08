@@ -3,21 +3,33 @@ using System;
 
 public partial class EndingScreen : Control
 {
+    private const string DefaultRestartScenePath = "res://scenes/Domitory/dormitory.tscn";
+
     private Label _endingTitleLabel;
     private Label _endingDescriptionLabel;
     private Label _statsLabel;
 
     public override void _Ready()
     {
-        _endingTitleLabel = GetNode<Label>("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/EndingTitle");
-        _endingDescriptionLabel = GetNode<Label>("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/EndingDescription");
-        _statsLabel = GetNode<Label>("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/FinalStats");
+        _endingTitleLabel = GetNodeOrNull<Label>("CenterContainer/EndingPanel/MarginContainer/ContentContainer/EndingTitle");
+        _endingDescriptionLabel = GetNodeOrNull<Label>("CenterContainer/EndingPanel/MarginContainer/ContentContainer/EndingDescription");
+        _statsLabel = GetNodeOrNull<Label>("CenterContainer/EndingPanel/MarginContainer/ContentContainer/FinalStats");
 
-        var restartButton = GetNode<Button>("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonRow/PlayAgainButton");
-        restartButton.Pressed += OnPlayAgainPressed;
+        var restartButton = GetNodeOrNull<Button>("CenterContainer/EndingPanel/MarginContainer/ContentContainer/ButtonRow/PlayAgainButton");
+        var quitButton = GetNodeOrNull<Button>("CenterContainer/EndingPanel/MarginContainer/ContentContainer/ButtonRow/QuitButton");
 
-        var quitButton = GetNode<Button>("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonRow/QuitButton");
-        quitButton.Pressed += OnQuitPressed;
+        if (_endingTitleLabel == null || _endingDescriptionLabel == null || _statsLabel == null)
+            GD.PrintErr("[EndingScreen] One or more ending labels are missing after UI refactor.");
+
+        if (restartButton == null)
+            GD.PrintErr("[EndingScreen] Play Again button is missing.");
+        else
+            restartButton.Pressed += OnPlayAgainPressed;
+
+        if (quitButton == null)
+            GD.PrintErr("[EndingScreen] Quit button is missing.");
+        else
+            quitButton.Pressed += OnQuitPressed;
 
         PopulateEnding();
     }
@@ -25,38 +37,46 @@ public partial class EndingScreen : Control
     private void PopulateEnding()
     {
         var state = GlobalVars.Instance;
+        if (state == null)
+        {
+            GD.PrintErr("[EndingScreen] GlobalVars.Instance is null.");
+            return;
+        }
+
         var profile = state.Profile;
         var attributes = state.Attributes;
-
         var ending = GetEnding(state);
 
-        GD.Print(
-            $"[EndingCalc] Day={profile.CurrentDay}, CareerReadiness={profile.CareerReadiness}, " +
-            $"Knowledge={attributes.Knowledge}, Confidence={attributes.Confidence}, Networking={attributes.Networking}, " +
-            $"Portfolio={attributes.Portfolio}, Focus={attributes.Focus}, Energy={attributes.Energy}, " +
-            $"PartyNetworkingUnlocked={state.PartyNetworkingUnlocked}, ITBallAttended={state.ITBallAttended}, " +
-            $"JoinedDeveloperGroup={state.JoinedDeveloperGroup}, SelectedEnding={ending.title}, Reason={ending.reason}");
+        GD.Print($"[EndingScreen] Ending selected: {ending.title} ({ending.reason})");
 
-        _endingTitleLabel.Text = ending.title;
-        _endingDescriptionLabel.Text = ending.description;
-        _statsLabel.Text =
-            $"Final Day: {profile.CurrentDay}\n" +
-            $"Final CareerReadiness: {profile.CareerReadiness}/100\n" +
-            $"Final Knowledge: {attributes.Knowledge}/100\n" +
-            $"Final Confidence: {attributes.Confidence}/100\n" +
-            $"Final Networking: {attributes.Networking}/100\n" +
-            $"Final Portfolio: {attributes.Portfolio}/100\n" +
-            $"Final Focus: {attributes.Focus}/100\n" +
-            $"Final Energy: {attributes.Energy}/100\n" +
-            $"Party Networking: {(state.PartyNetworkingUnlocked ? "Yes" : "No")}\n" +
-            $"IT Ball Attended: {(state.ITBallAttended ? "Yes" : "No")}\n" +
-            $"Developer Group Joined: {(state.JoinedDeveloperGroup ? "Yes" : "No")}";
+        if (_endingTitleLabel != null)
+            _endingTitleLabel.Text = ending.title;
+
+        if (_endingDescriptionLabel != null)
+            _endingDescriptionLabel.Text = ending.description;
+
+        if (_statsLabel != null)
+        {
+            _statsLabel.Text =
+                $"Final Day: {profile.CurrentDay}\n" +
+                $"Career Readiness: {profile.CareerReadiness}/100\n" +
+                $"Knowledge: {attributes.Knowledge}/100\n" +
+                $"Confidence: {attributes.Confidence}/100\n" +
+                $"Networking: {attributes.Networking}/100\n" +
+                $"Portfolio: {attributes.Portfolio}/100\n" +
+                $"Focus: {attributes.Focus}/100\n" +
+                $"Energy: {attributes.Energy}/100\n" +
+                $"Party Networking Unlocked: {(state.PartyNetworkingUnlocked ? "Yes" : "No")}\n" +
+                $"Party Attended: {(state.PartyAttended ? "Yes" : "No")}\n" +
+                $"IT Ball Attended: {(state.ITBallAttended ? "Yes" : "No")}\n" +
+                $"Joined Developer Group: {(state.JoinedDeveloperGroup ? "Yes" : "No")}";
+        }
     }
 
     private static (string title, string description, string reason) GetEnding(GlobalVars state)
     {
         int careerReadiness = state.Profile.CareerReadiness;
-        int knowledge = state.Attributes.Knowledge;
+        int knowledgeOrCoding = state.Attributes.Knowledge;
         int confidence = state.Attributes.Confidence;
         int networking = state.Attributes.Networking;
         int portfolio = state.Attributes.Portfolio;
@@ -65,24 +85,24 @@ public partial class EndingScreen : Control
             && portfolio >= 70
             && networking >= 60
             && confidence >= 60
-            && knowledge >= 70;
+            && knowledgeOrCoding >= 70;
 
         if (financialFreedom)
         {
             return (
                 "Financial Freedom Ending",
-                "You joined a group of student developers and helped build an app that gained real users. Instead of only waiting for an opportunity, you created one. Your final semester became the start of your financial independence.",
-                "JoinedDeveloperGroup + high Portfolio/Networking/Confidence/Knowledge");
+                "You built strong skills and connections, joined a developer group, and turned your final semester into the start of financial independence.",
+                "Matched Financial Freedom thresholds");
         }
 
         bool goodJobBase = careerReadiness >= 70
-            && knowledge >= 60
+            && knowledgeOrCoding >= 60
             && confidence >= 50
             && networking >= 30;
 
         bool goodJobReferral = state.PartyNetworkingUnlocked
             && careerReadiness >= 60
-            && knowledge >= 55
+            && knowledgeOrCoding >= 55
             && confidence >= 45
             && networking >= 20;
 
@@ -90,24 +110,35 @@ public partial class EndingScreen : Control
         {
             return (
                 "Good Job Ending",
-                "You rebuilt your confidence, improved your skills, and used your connections wisely. By graduation, you secured a graduate IT role and took your first step into the industry.",
-                goodJobBase ? "Met base Good Job thresholds" : "Met referral-assisted Good Job thresholds");
+                "You rebuilt your confidence, improved your skills, and used your network to secure a graduate IT role.",
+                goodJobBase ? "Matched base Good Job thresholds" : "Matched referral Good Job thresholds");
         }
 
         return (
             "Financial Hardship Ending",
-            "Graduation arrived before you were ready. Without enough preparation, confidence, or support, finding stable work became difficult. The future is uncertain, but this is not the end of the story. Rebuilding step by step is still possible.",
-            "Did not meet Financial Freedom or Good Job conditions");
+            "Graduation arrived before you were fully ready. You still have a path forward, but it will take rebuilding step by step.",
+            "Did not match Financial Freedom or Good Job thresholds");
     }
 
     private void OnPlayAgainPressed()
     {
-        GlobalVars.Instance.ResetGame();
-        GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
+        GD.Print("[EndingScreen] Play Again pressed.");
+
+        var state = GlobalVars.Instance;
+        if (state == null)
+        {
+            GD.PrintErr("[EndingScreen] Cannot restart because GlobalVars.Instance is null.");
+            return;
+        }
+
+        state.ResetGame();
+        var restartScene = string.IsNullOrWhiteSpace(state.IntroScenePath) ? DefaultRestartScenePath : state.IntroScenePath;
+        GetTree().ChangeSceneToFile(restartScene);
     }
 
     private void OnQuitPressed()
     {
+        GD.Print("[EndingScreen] Quit pressed.");
         GetTree().Quit();
     }
 }
