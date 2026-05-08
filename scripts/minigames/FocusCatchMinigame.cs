@@ -19,6 +19,10 @@ public partial class FocusCatchMinigame : Control
     private int _score = 0;
     private bool _isFinished = false;
     private bool _rewardApplied = false;
+    private bool _hasStarted = false;
+
+    private Control _introOverlay;
+    private Button _startButton;
 
     private readonly RandomNumberGenerator _rng = new RandomNumberGenerator();
     private readonly List<FallingItem> _items = new List<FallingItem>();
@@ -48,12 +52,18 @@ public partial class FocusCatchMinigame : Control
             instructionLabel.Text = "Move left/right to catch NOTE and avoid PHONE.";
 
         _rng.Randomize();
+
+        BuildIntroOverlay(
+            "Focus Catch",
+            "Catch study items.\nAvoid distractions.\nMove with A / D or Left / Right."
+        );
+
         UpdateHud();
     }
 
     public override void _Process(double delta)
     {
-        if (_isFinished)
+        if (_isFinished || !_hasStarted)
             return;
 
         float dt = (float)delta;
@@ -214,6 +224,60 @@ public partial class FocusCatchMinigame : Control
         }
 
         _continueButton.Visible = true;
+    }
+
+    private void BuildIntroOverlay(string title, string instructions)
+    {
+        _introOverlay = new ColorRect
+        {
+            Name = "IntroOverlay",
+            AnchorRight = 1.0f,
+            AnchorBottom = 1.0f,
+            Color = new Color(0f, 0f, 0f, 0.8f),
+            MouseFilter = MouseFilterEnum.Stop
+        };
+
+        var panel = new Panel
+        {
+            AnchorLeft = 0.5f,
+            AnchorTop = 0.5f,
+            AnchorRight = 0.5f,
+            AnchorBottom = 0.5f,
+            OffsetLeft = -280f,
+            OffsetTop = -170f,
+            OffsetRight = 280f,
+            OffsetBottom = 170f
+        };
+
+        var vbox = new VBoxContainer
+        {
+            AnchorRight = 1.0f,
+            AnchorBottom = 1.0f,
+            OffsetLeft = 20f,
+            OffsetTop = 20f,
+            OffsetRight = -20f,
+            OffsetBottom = -20f
+        };
+
+        var titleLabel = new Label { Text = title, HorizontalAlignment = HorizontalAlignment.Center };
+        var instructionLabel = new Label { Text = instructions, AutowrapMode = TextServer.AutowrapMode.WordSmart };
+
+        _startButton = new Button { Text = "Start", SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter };
+        _startButton.Pressed += OnStartPressed;
+
+        vbox.AddChild(titleLabel);
+        vbox.AddChild(instructionLabel);
+        vbox.AddChild(_startButton);
+        panel.AddChild(vbox);
+        _introOverlay.AddChild(panel);
+        AddChild(_introOverlay);
+    }
+
+    private void OnStartPressed()
+    {
+        _hasStarted = true;
+        _startButton.Disabled = true;
+        _introOverlay.QueueFree();
     }
 
     private void OnContinuePressed()
