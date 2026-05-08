@@ -10,7 +10,7 @@ size = Vector2(120, 150)
 size = Vector2(120, 150)
 
 [sub_resource type="RectangleShape2D" id="3"]
-size = Vector2(460, 80)
+size = Vector2(1087, 80)
 
 [node name="DanceParty" type="Node2D" unique_id=504120126]
 script = ExtResource("1")
@@ -66,7 +66,7 @@ position = Vector2(576, -10)
 shape = SubResource("3")
 
 [node name="BottomWall" type="CollisionShape2D" parent="Walls" unique_id=416439459]
-position = Vector2(576, 658)
+position = Vector2(575.5, 658)
 shape = SubResource("3")
 
 [node name="LeftWall" type="CollisionShape2D" parent="Walls" unique_id=293737350]
