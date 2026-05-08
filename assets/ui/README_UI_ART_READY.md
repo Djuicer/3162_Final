@@ -1,38 +1,40 @@
 # UI Art-Ready Guide
 
-This project is set up so you can replace UI visuals in Godot without rewriting scripts.
+## Art-ready scenes/components updated
+- `res://scenes/UI/StatusOverlay.tscn`
+- `res://scenes/UI/FloatingStatPopup.tscn`
+- `res://scripts/ui/StatusOverlay.cs`
+- `res://scripts/ui/FloatingStatPopup.cs`
 
-## Shared theme
-- Theme resource: `res://assets/ui/theme/default_ui_theme.tres`
-- Apply/update shared styles for:
-  - `Button`
-  - `Label`
-  - `PanelContainer` / `Panel`
+## Where to assign future panel/background art
+- **Status panel frame**: `StatusOverlay/StatusPanel/ArtBackground` (`NinePatchRect`)
+- **Reaction panel frame**: `StatusOverlay/ReactionPanel` (`PanelContainer` style/theme)
+- **Floating popup icon slot**: `FloatingStatPopup/IconTextureRect`
 
-## Panel/frame texture slots (assign later)
-Use `NinePatchRect` nodes named `ArtBackground` to assign frame textures later.
-- `scenes/UI/StatusOverlay.tscn` → `StatusPanel/ArtBackground`
-- `scenes/Screen/screen.tscn` → `ComputerInfoPanel/ArtBackground`
-- `scenes/Computer/Email/email.tscn` → `EmailPanel/ArtBackground`
-- `scenes/Events/DanceParty/dance_party.tscn` → `UI/DialoguePanel/ArtBackground`
-- `scenes/Events/ITBall/it_ball.tscn` → `UI/DialoguePanel/ArtBackground`
-- `scenes/Ending/ending.tscn` → `CenterContainer/EndingPanel/ArtBackground`
+## Where to assign future button styles/textures
+Use shared theme (`res://assets/ui/theme/default_ui_theme.tres`) for:
+- `Button`
+- `Label`
+- `PanelContainer`
 
-> Assign UI frame texture here later (NinePatchRect texture + patch margins).
+If needed later, replace specific `Button` nodes with `TextureButton` in-scene without changing gameplay scripts.
 
-## Decorative nodes and mouse safety
-Keep decorative overlays as `MouseFilter = Ignore` so they do not block clicks:
-- Any `ArtBackground` node.
-- `StatusOverlay/FloatingTextLayer`.
-- Non-interactive tint/overlay nodes.
+## Icon placeholders
+- `FloatingStatPopup/IconTextureRect` (hidden by default)
 
-## Buttons: where to reskin
-- Preferred: style `Button` in `default_ui_theme.tres`.
-- Optional: replace specific buttons with `TextureButton` in editor if desired.
-- Important button groups:
-  - Computer screen (`EmailButton`, `BrowserButton`, `ReturnButton`)
-  - Email panel (`BackButton`, event buttons)
-  - Dorm travel menu buttons
-  - Dialogue choice buttons
-  - Minigame continue buttons
-  - Ending `PlayAgainButton`
+## Decorative nodes that should keep MouseFilter Ignore
+- `StatusOverlay/StatusPanel/ArtBackground`
+- `StatusOverlay/FloatingTextLayer`
+- `FloatingStatPopup` root + its non-interactive children
+
+These are intentionally non-clickable so gameplay/UI buttons below still receive input.
+
+## Floating stat popup replacement workflow
+1. Open `res://scenes/UI/FloatingStatPopup.tscn`.
+2. Assign icon texture to `IconTextureRect` (optional).
+3. Style `ValueLabel` via theme overrides or shared theme.
+4. Keep node names unchanged so `StatusOverlay` can spawn/configure popups.
+
+## Notes
+- Behavior is preserved: stat popups still stack, move up-right, fade out, and avoid input blocking.
+- This pass focuses on art-readiness/editor-friendliness only (no gameplay/reward/ending logic changes).
