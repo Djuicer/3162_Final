@@ -79,6 +79,7 @@ public partial class StatusOverlay : CanvasLayer
 			return;
 
 		var pop = new Label();
+		pop.MouseFilter = Control.MouseFilterEnum.Ignore;
 		pop.Text = $"{(delta > 0 ? "+" : "")}{delta} {statName}";
 		pop.Modulate = delta > 0 ? new Color(0.6f, 1f, 0.6f, 1f) : new Color(1f, 0.6f, 0.6f, 1f);
 		pop.Position = FloatingSpawnOffset + new Vector2(0, -(_floatingIndex % 6) * FloatingLineSpacing);
@@ -103,6 +104,21 @@ public partial class StatusOverlay : CanvasLayer
 		_growthRow = GetNode<Label>("StatusPanel/Margin/StatusContent/GrowthRow");
 		_careerRow = GetNode<Label>("StatusPanel/Margin/StatusContent/CareerRow");
 		_floatingTextLayer = GetNode<Control>("FloatingTextLayer");
+
+		// Overlay visuals should never consume clicks meant for scene UI beneath them.
+		_statusPanel.MouseFilter = Control.MouseFilterEnum.Ignore;
+		_floatingTextLayer.MouseFilter = Control.MouseFilterEnum.Ignore;
+		SetMouseFilterRecursive(_statusPanel, Control.MouseFilterEnum.Ignore);
+		SetMouseFilterRecursive(_floatingTextLayer, Control.MouseFilterEnum.Ignore);
+	}
+
+	private static void SetMouseFilterRecursive(Node node, Control.MouseFilterEnum mouseFilter)
+	{
+		if (node is Control control)
+			control.MouseFilter = mouseFilter;
+
+		foreach (Node child in node.GetChildren())
+			SetMouseFilterRecursive(child, mouseFilter);
 	}
 
 	private void ApplyAnchors()
