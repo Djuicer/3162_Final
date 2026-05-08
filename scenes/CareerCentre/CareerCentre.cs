@@ -14,7 +14,7 @@ public partial class CareerCentre : Node2D
 	public override void _Ready()
 	{
 		StatusOverlay.AttachTo(this, false);
-		_interviewInteractArea = GetNodeOrNull<Area2D>("InterviewInteractArea");
+		_interviewInteractArea = GetNodeOrNull<Area2D>("CareerCentreInterviewBooth/InteractionArea");
 		_exitInteractArea = GetNodeOrNull<Area2D>("ExitInteractArea");
 		_player = GetNodeOrNull<CharacterBody2D>("Player");
 		_interactPromptLabel = GetNodeOrNull<Label>("UI/InteractPromptLabel");

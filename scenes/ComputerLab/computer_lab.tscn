@@ -17,19 +17,32 @@ offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.12, 0.16, 0.22, 1)
 
-[node name="Desk" type="ColorRect" parent="." unique_id=480394737]
+[node name="ComputerLabDesk" type="ColorRect" parent="." unique_id=480394737]
 offset_left = 650.0
 offset_top = 210.0
 offset_right = 980.0
 offset_bottom = 310.0
 color = Color(0.28, 0.24, 0.2, 1)
 
-[node name="PcMonitor" type="ColorRect" parent="." unique_id=436136585]
-offset_left = 740.0
-offset_top = 150.0
-offset_right = 900.0
-offset_bottom = 225.0
+[node name="ComputerLabPC" type="Node2D" parent="." unique_id=436136585]
+position = Vector2(820, 188)
+
+[node name="Visual" type="ColorRect" parent="ComputerLabPC" unique_id=1807669735]
+offset_left = -80.0
+offset_top = -38.0
+offset_right = 80.0
+offset_bottom = 37.0
 color = Color(0.28, 0.45, 0.6, 1)
+
+[node name="PromptPosition" type="Marker2D" parent="ComputerLabPC" unique_id=1367195694]
+position = Vector2(0, -70)
+
+[node name="InteractionArea" type="Area2D" parent="ComputerLabPC" unique_id=1813455279]
+position = Vector2(818, 249)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComputerLabPC/InteractionArea" unique_id=1971881614]
+position = Vector2(-820, -198)
+shape = SubResource("1")
 
 [node name="Player" parent="." unique_id=2080562961 instance=ExtResource("2")]
 position = Vector2(210, 520)
@@ -39,12 +52,6 @@ position = Vector2(760, 360)
 
 [node name="ComputerLabEntranceSpawn" type="Marker2D" parent="." unique_id=200002]
 position = Vector2(210, 520)
-
-[node name="PcInteractArea" type="Area2D" parent="." unique_id=1813455279]
-position = Vector2(818, 249)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PcInteractArea" unique_id=1971881614]
-shape = SubResource("1")
 
 [node name="ExitInteractArea" type="Area2D" parent="." unique_id=195592013]
 position = Vector2(173, 545)

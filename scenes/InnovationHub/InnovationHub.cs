@@ -21,11 +21,11 @@ public partial class InnovationHub : Node2D
 	public override void _Ready()
 	{
 		StatusOverlay.AttachTo(this, false);
-		_workstationInteractArea = GetNodeOrNull<Area2D>("WorkstationInteractArea");
+		_workstationInteractArea = GetNodeOrNull<Area2D>("InnovationHubWorkstation/InteractionArea");
 		_exitInteractArea = GetNodeOrNull<Area2D>("ExitInteractArea");
 		_player = GetNodeOrNull<CharacterBody2D>("Player");
-		_developerStudentArea = GetNodeOrNull<Area2D>("DeveloperStudentInteractArea");
-		_developerStudentVisual = GetNodeOrNull<ColorRect>("DeveloperStudentVisual");
+		_developerStudentArea = GetNodeOrNull<Area2D>("InnovationHubDeveloperStudentNPC/InteractionArea");
+		_developerStudentVisual = GetNodeOrNull<ColorRect>("InnovationHubDeveloperStudentNPC/Visual");
 		_interactPromptLabel = GetNodeOrNull<Label>("UI/InteractPromptLabel");
 		_feedbackLabel = GetNodeOrNull<Label>("UI/FeedbackLabel");
 		_npcNameLabel = GetNodeOrNull<Label>("UI/GuidancePanel/NpcNameLabel");
