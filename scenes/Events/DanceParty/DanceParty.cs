@@ -140,6 +140,10 @@ public partial class DanceParty : Node2D
 		}
 		state.PartyEventCompleted = true;
 
+		state.ShowReaction(state.PartyGoodChoices >= 2
+			? "Maybe I'm not as alone in this as I thought."
+			: "I showed up. Next time I'll connect better.");
+
 		TransitionManager.Instance?.ChangeSceneToFileWithFade("res://scenes/Domitory/dormitory.tscn");
 	}
 

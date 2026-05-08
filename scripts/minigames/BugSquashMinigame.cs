@@ -124,6 +124,7 @@ public partial class BugSquashMinigame : Control
 				"You fixed issues quickly and kept your momentum up.",
 				"+10 Knowledge\n+8 Portfolio\n+15 Career Readiness\n-10 Energy"
 			);
+			GlobalVars.Instance.ShowReaction("That actually went well. I'm getting better.");
 		}
 		else if (_score >= 8)
 		{
@@ -136,6 +137,7 @@ public partial class BugSquashMinigame : Control
 				"You handled several bugs and made meaningful progress.",
 				"+6 Knowledge\n+5 Portfolio\n+8 Career Readiness\n-10 Energy"
 			);
+			GlobalVars.Instance.ShowReaction("That actually went well. I'm getting better.");
 		}
 		else
 		{
@@ -149,6 +151,7 @@ public partial class BugSquashMinigame : Control
 				"Some bugs slipped through, but every attempt builds experience.",
 				"+2 Knowledge\n+2 Portfolio\n+3 Career Readiness\n-15 Energy\n-5 Focus"
 			);
+			GlobalVars.Instance.ShowReaction("That was rough, but I can still recover.");
 		}
 
 		_continueButton.Visible = true;

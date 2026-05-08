@@ -151,6 +151,7 @@ public partial class InterviewRhythmMinigame : Control
 				"Your timing was sharp and your answers felt well-practiced.",
 				"+20 Career Readiness\n+10 Confidence\n-10 Energy"
 			);
+			GlobalVars.Instance.ShowReaction("That actually went well. I'm getting better.");
 		}
 		else if (_score >= 4)
 		{
@@ -162,6 +163,7 @@ public partial class InterviewRhythmMinigame : Control
 				"You found your rhythm in parts and built interview skill.",
 				"+10 Career Readiness\n+3 Confidence\n-10 Energy"
 			);
+			GlobalVars.Instance.ShowReaction("That actually went well. I'm getting better.");
 		}
 		else
 		{
@@ -173,6 +175,7 @@ public partial class InterviewRhythmMinigame : Control
 				"The pressure showed, but this practice still improves your baseline.",
 				"+5 Career Readiness\n-10 Confidence\n-10 Energy"
 			);
+			GlobalVars.Instance.ShowReaction("That was rough, but I can still recover.");
 		}
 
 		_instructionLabel.Text = "Interview finished.";

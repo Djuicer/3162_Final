@@ -70,6 +70,7 @@ public partial class ComputerScreen : Node2D
 		state.Attributes.DecreaseFocus(5);
 		RefreshUi();
 		ShowFeedback("You procrastinated for a while. You feel slightly rested, but less confident.");
+		state.ShowReaction("I rested a bit, but I don't feel great about wasting time.");
 	}
 
 	private void RefreshUi()
