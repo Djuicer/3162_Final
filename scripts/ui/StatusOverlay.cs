@@ -15,7 +15,8 @@ public partial class StatusOverlay : CanvasLayer
 	[Export] public float FloatingLineSpacing { get; set; } = 18.0f;
 
 	private PanelContainer _statusPanel;
-	private NinePatchRect _panelBackground;
+	private NinePatchRect _artBackground;
+	private static readonly PackedScene FloatingPopupScene = ResourceLoader.Load<PackedScene>("res://scenes/UI/FloatingStatPopup.tscn");
 	private Label _headerLabel;
 	private Label _dayActionsLabel;
 	private Label _wellbeingRow;
@@ -86,10 +87,12 @@ public partial class StatusOverlay : CanvasLayer
 		if (_floatingTextLayer == null || delta == 0)
 			return;
 
-		var pop = new Label();
+		if (FloatingPopupScene == null)
+			return;
+
+		var pop = FloatingPopupScene.Instantiate<FloatingStatPopup>();
 		pop.MouseFilter = Control.MouseFilterEnum.Ignore;
-		pop.Text = $"{(delta > 0 ? "+" : "")}{delta} {statName}";
-		pop.Modulate = delta > 0 ? new Color(0.6f, 1f, 0.6f, 1f) : new Color(1f, 0.6f, 0.6f, 1f);
+		pop.Configure(statName, delta, false);
 		pop.Position = FloatingSpawnOffset + new Vector2(0, -(_floatingIndex % 6) * FloatingLineSpacing);
 		_floatingIndex++;
 		_floatingTextLayer.AddChild(pop);
@@ -134,7 +137,7 @@ public partial class StatusOverlay : CanvasLayer
 	{
 		_statusPanel = GetNode<PanelContainer>("StatusPanel");
 		_statusPanel.Visible = _showStatusPanel;
-		_panelBackground = GetNode<NinePatchRect>("StatusPanel/PanelBackground");
+		_artBackground = GetNode<NinePatchRect>("StatusPanel/ArtBackground");
 		_headerLabel = GetNode<Label>("StatusPanel/Margin/StatusContent/HeaderLabel");
 		_dayActionsLabel = GetNode<Label>("StatusPanel/Margin/StatusContent/DayActionsLabel");
 		_wellbeingRow = GetNode<Label>("StatusPanel/Margin/StatusContent/WellbeingRow");
@@ -179,6 +182,6 @@ public partial class StatusOverlay : CanvasLayer
 
 	private void ApplyBackgroundPlaceholderHelp()
 	{
-		_panelBackground.TooltipText = "Assign a NinePatchRect texture here for custom panel art (UI frame).";
+		_artBackground.TooltipText = "Assign a NinePatchRect texture here for custom panel art (UI frame).";
 	}
 }
