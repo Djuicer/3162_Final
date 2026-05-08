@@ -29,8 +29,7 @@ public partial class DialogueBoxUI : CanvasLayer
 		_continueHintLabel = GetNode<Label>("Root/DialoguePanel/MarginContainer/Content/ContinueHintLabel");
 		_choiceContainer = GetNode<Control>("Root/ChoiceContainer");
 		_choiceList = GetNode<VBoxContainer>("Root/ChoiceContainer/MarginContainer/ChoiceList");
-		_dialoguePanel.GuiInput += OnDialoguePanelGuiInput;
-
+		
 		_root.Visible = false;
 		_choiceContainer.Visible = false;
 	}
@@ -39,7 +38,7 @@ public partial class DialogueBoxUI : CanvasLayer
 	{
 		if (!_root.Visible)
 			return;
-		if (@event.IsActionPressed("interact") || @event.IsActionPressed("ui_accept"))
+		if (@event is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Space })
 		{
 			TryAdvance();
 			GetViewport().SetInputAsHandled();
@@ -102,6 +101,8 @@ public partial class DialogueBoxUI : CanvasLayer
 	{
 		_isTyping = true;
 		_skipRequested = false;
+		_continueHintLabel.Text = "Press Space to skip";
+		_continueHintLabel.Visible = true;
 		_dialogueTextLabel.Text = text;
 		_dialogueTextLabel.VisibleCharacters = 0;
 		double interval = 1.0 / Math.Max(1.0f, CharactersPerSecond);
@@ -117,22 +118,12 @@ public partial class DialogueBoxUI : CanvasLayer
 		}
 		_isTyping = false;
 		_skipRequested = false;
-	}
-
-	private void OnDialoguePanelGuiInput(InputEvent @event)
-	{
-		if (!_root.Visible || _choiceContainer.Visible)
-			return;
-		if (@event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left })
-		{
-			TryAdvance();
-			GetViewport().SetInputAsHandled();
-		}
+		_continueHintLabel.Visible = false;
 	}
 
 	private async Task WaitForContinueAsync()
 	{
-		_continueHintLabel.Text = "Click dialogue / Press E, Enter, or Space";
+		_continueHintLabel.Text = "Press Space to continue";
 		_continueHintLabel.Visible = true;
 		_awaitingContinue = true;
 		_continueTcs = new TaskCompletionSource<bool>();
