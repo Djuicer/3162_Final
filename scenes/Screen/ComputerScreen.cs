@@ -21,13 +21,13 @@ public partial class ComputerScreen : Node2D
 
 	private void GetNodes()
 	{
-		_procrastinateButton = GetNodeOrNull<TextureButton>("Button/BrowserButton");
-		_emailButton = GetNodeOrNull<TextureButton>("Button/EmailButton");
-		_returnButton = GetNodeOrNull<TextureButton>("Button/ReturnButton");
+		_procrastinateButton = GetNodeOrNull<TextureButton>("DesktopButtons/BrowserButton");
+		_emailButton = GetNodeOrNull<TextureButton>("DesktopButtons/EmailButton");
+		_returnButton = GetNodeOrNull<TextureButton>("DesktopButtons/ReturnButton");
 
-		_profileLabel = GetNodeOrNull<Label>("InfoPanel/Margin/VBox/ProfileLabel");
-		_notesLabel = GetNodeOrNull<Label>("InfoPanel/Margin/VBox/NotesLabel");
-		_feedbackLabel = GetNodeOrNull<Label>("InfoPanel/Margin/VBox/FeedbackLabel");
+		_profileLabel = GetNodeOrNull<Label>("ComputerInfoPanel/MarginContainer/ContentContainer/ProfileLabel");
+		_notesLabel = GetNodeOrNull<Label>("ComputerInfoPanel/MarginContainer/ContentContainer/NotesLabel");
+		_feedbackLabel = GetNodeOrNull<Label>("ComputerInfoPanel/MarginContainer/ContentContainer/FeedbackLabel");
 	}
 
 	private void ConnectButtons()

@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://cte6xapt3p3sr"]
 
 [ext_resource type="Script" uid="uid://crdajwjchu6m1" path="res://scripts/ui/StatusOverlay.cs" id="1"]
+[ext_resource type="Theme" path="res://assets/ui/theme/default_ui_theme.tres" id="2_theme"]
 
 [node name="StatusOverlay" type="CanvasLayer" unique_id=210997434]
+theme = ExtResource("2_theme")
 script = ExtResource("1")
 
 [node name="StatusPanel" type="PanelContainer" parent="." unique_id=1138631854]
@@ -19,7 +21,7 @@ grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PanelBackground" type="NinePatchRect" parent="StatusPanel" unique_id=586302465]
+[node name="ArtBackground" type="NinePatchRect" parent="StatusPanel" unique_id=586302465]
 modulate = Color(1, 1, 1, 0.08)
 layout_mode = 2
 

@@ -17,14 +17,14 @@ public partial class EmailScreen : Control
 	public override void _Ready()
 	{
 		StatusOverlay.AttachTo(this, false);
-		_emailList = GetNode<ItemList>("Panel/Margin/VBox/Content/HBox/EmailList");
-		_subjectLabel = GetNode<Label>("Panel/Margin/VBox/Content/HBox/Detail/Subject");
-		_bodyLabel = GetNode<Label>("Panel/Margin/VBox/Content/HBox/Detail/Body");
-		_statusLabel = GetNode<Label>("Panel/Margin/VBox/Status");
-		_attendPartyButton = GetNode<Button>("Panel/Margin/VBox/Actions/AttendPartyButton");
-		_viewEventDetailsButton = GetNode<Button>("Panel/Margin/VBox/Actions/ViewEventDetailsButton");
-		_attendItBallButton = GetNode<Button>("Panel/Margin/VBox/Actions/AttendITBallButton");
-		var backButton = GetNode<Button>("Panel/Margin/VBox/Actions/BackButton");
+		_emailList = GetNode<ItemList>("EmailPanel/MarginContainer/ContentContainer/BodyPanel/BodyRow/EmailList");
+		_subjectLabel = GetNode<Label>("EmailPanel/MarginContainer/ContentContainer/BodyPanel/BodyRow/DetailContainer/SubjectLabel");
+		_bodyLabel = GetNode<Label>("EmailPanel/MarginContainer/ContentContainer/BodyPanel/BodyRow/DetailContainer/BodyLabel");
+		_statusLabel = GetNode<Label>("EmailPanel/MarginContainer/ContentContainer/StatusLabel");
+		_attendPartyButton = GetNode<Button>("EmailPanel/MarginContainer/ContentContainer/ButtonContainer/AttendPartyButton");
+		_viewEventDetailsButton = GetNode<Button>("EmailPanel/MarginContainer/ContentContainer/ButtonContainer/ViewEventDetailsButton");
+		_attendItBallButton = GetNode<Button>("EmailPanel/MarginContainer/ContentContainer/ButtonContainer/AttendITBallButton");
+		var backButton = GetNode<Button>("EmailPanel/MarginContainer/ContentContainer/ButtonContainer/BackButton");
 
 		_emailList.ItemSelected += OnEmailSelected;
 		_attendPartyButton.Pressed += OnAttendPartyPressed;

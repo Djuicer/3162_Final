@@ -88,40 +88,50 @@ offset_right = 420.0
 offset_bottom = 632.0
 text = "Press E to talk"
 
-[node name="Panel" type="Panel" parent="UI"]
+[node name="DialoguePanel" type="PanelContainer" parent="UI"]
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 1136.0
 offset_bottom = 280.0
 
-[node name="VBox" type="VBoxContainer" parent="UI/Panel"]
+[node name="ContentContainer" type="VBoxContainer" parent="UI/DialoguePanel"]
 offset_left = 12.0
 offset_top = 12.0
 offset_right = 1108.0
 offset_bottom = 252.0
 
-[node name="InstructionLabel" type="Label" parent="UI/Panel/VBox"]
+[node name="InstructionLabel" type="Label" parent="UI/DialoguePanel/ContentContainer"]
 layout_mode = 2
 text = "Talk to developers and make a strong impression."
 
-[node name="StatusLabel" type="Label" parent="UI/Panel/VBox"]
+[node name="StatusLabel" type="Label" parent="UI/DialoguePanel/ContentContainer"]
 layout_mode = 2
 autowrap_mode = 3
 text = "Status"
 
-[node name="NpcNameLabel" type="Label" parent="UI/Panel/VBox"]
+[node name="NpcNameLabel" type="Label" parent="UI/DialoguePanel/ContentContainer"]
 layout_mode = 2
 
-[node name="DialogueLabel" type="Label" parent="UI/Panel/VBox"]
+[node name="DialogueLabel" type="Label" parent="UI/DialoguePanel/ContentContainer"]
 layout_mode = 2
 autowrap_mode = 3
 
-[node name="Choices" type="VBoxContainer" parent="UI/Panel/VBox"]
+[node name="Choices" type="VBoxContainer" parent="UI/DialoguePanel/ContentContainer"]
 layout_mode = 2
 
-[node name="ActionRow" type="HBoxContainer" parent="UI/Panel/VBox"]
+[node name="ActionRow" type="HBoxContainer" parent="UI/DialoguePanel/ContentContainer"]
 layout_mode = 2
 
-[node name="FinishEventButton" type="Button" parent="UI/Panel/VBox/ActionRow"]
+[node name="FinishEventButton" type="Button" parent="UI/DialoguePanel/ContentContainer/ActionRow"]
 layout_mode = 2
 text = "Finish Event"
+
+[node name="ArtBackground" type="NinePatchRect" parent="UI/DialoguePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
