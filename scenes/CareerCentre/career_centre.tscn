@@ -34,6 +34,13 @@ offset_right = 910.0
 offset_bottom = 225.0
 color = Color(0.33, 0.55, 0.72, 1)
 
+[node name="InteractionArea" type="Area2D" parent="CareerCentreInterviewBooth" unique_id=2064621241]
+position = Vector2(818, 265)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CareerCentreInterviewBooth/InteractionArea" unique_id=838949460]
+position = Vector2(-738, -176)
+shape = SubResource("1")
+
 [node name="JobBoard" type="ColorRect" parent="." unique_id=1267079774]
 offset_left = 150.0
 offset_top = 120.0
@@ -49,12 +56,6 @@ position = Vector2(760, 360)
 
 [node name="CareerCentreEntranceSpawn" type="Marker2D" parent="." unique_id=400002]
 position = Vector2(210, 520)
-
-[node name="InteractionArea" type="Area2D" parent="CareerCentreInterviewBooth" unique_id=2064621241]
-position = Vector2(818, 265)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CareerCentreInterviewBooth/InteractionArea" unique_id=838949460]
-shape = SubResource("1")
 
 [node name="ExitInteractArea" type="Area2D" parent="." unique_id=640550449]
 position = Vector2(173, 545)
