@@ -111,7 +111,15 @@ public partial class BugSquashMinigame : Control
 			attributes.IncreasePortfolio(8);
 			profile.IncreaseCareerReadiness(15);
 			attributes.DecreaseEnergy(10);
-			_resultLabel.Text = "Great run! Score 15+\nKnowledge +10, Portfolio +8, Career Readiness +15, Energy -10";
+			_resultLabel.Text =
+				"Clean Debugging!\n" +
+				"Final Score: " + _score + "\n" +
+				"You squashed issues quickly and kept your workflow sharp.\n" +
+				"Rewards:\n" +
+				"+10 Knowledge\n" +
+				"+8 Portfolio\n" +
+				"+15 Career Readiness\n" +
+				"-10 Energy";
 		}
 		else if (_score >= 8)
 		{
@@ -119,7 +127,15 @@ public partial class BugSquashMinigame : Control
 			attributes.IncreasePortfolio(5);
 			profile.IncreaseCareerReadiness(8);
 			attributes.DecreaseEnergy(10);
-			_resultLabel.Text = "Solid run! Score 8-14\nKnowledge +6, Portfolio +5, Career Readiness +8, Energy -10";
+			_resultLabel.Text =
+				"Good Progress\n" +
+				"Final Score: " + _score + "\n" +
+				"You made solid debugging progress with room to optimize.\n" +
+				"Rewards:\n" +
+				"+6 Knowledge\n" +
+				"+5 Portfolio\n" +
+				"+8 Career Readiness\n" +
+				"-10 Energy";
 		}
 		else
 		{
@@ -128,7 +144,16 @@ public partial class BugSquashMinigame : Control
 			profile.IncreaseCareerReadiness(3);
 			attributes.DecreaseEnergy(15);
 			attributes.DecreaseFocus(5);
-			_resultLabel.Text = "Keep practicing! Score below 8\nKnowledge +2, Portfolio +2, Career Readiness +3, Energy -15, Focus -5";
+			_resultLabel.Text =
+				"Buggy Session\n" +
+				"Final Score: " + _score + "\n" +
+				"You hit a few blockers, but each pass still built experience.\n" +
+				"Rewards:\n" +
+				"+2 Knowledge\n" +
+				"+2 Portfolio\n" +
+				"+3 Career Readiness\n" +
+				"-15 Energy\n" +
+				"-5 Focus";
 		}
 
 		_continueButton.Visible = true;
