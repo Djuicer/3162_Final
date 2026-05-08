@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=2 format=3]
+[gd_resource type="Theme" format=3 uid="uid://lx3wjxf7xitb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_profile_panel"]
 bg_color = Color(0.05, 0.08, 0.12, 0.82)
@@ -11,8 +11,8 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 6
 
 [resource]
 Label/colors/font_color = Color(0.91, 0.95, 1, 1)

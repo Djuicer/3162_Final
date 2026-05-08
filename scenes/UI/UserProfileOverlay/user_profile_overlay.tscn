@@ -1,14 +1,13 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://cy21hqgn13q6s"]
 
-[ext_resource type="Script" path="res://scripts/ui/UserProfileOverlay.cs" id="1_script"]
-[ext_resource type="Theme" path="res://assets/ui/theme/user_profile_theme.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/ui/PNG/Yellow/Default/slide_vertical_grey_section_wide.png" id="3_panel_texture"]
+[ext_resource type="Script" uid="uid://csqjd861nhy6o" path="res://scripts/ui/UserProfileOverlay.cs" id="1_script"]
+[ext_resource type="Theme" uid="uid://lx3wjxf7xitb" path="res://assets/ui/theme/user_profile_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://c8j6v6tbeev6l" path="res://assets/ui/PNG/Yellow/Default/slide_vertical_grey_section_wide.png" id="3_panel_texture"]
 
-[node name="UserProfileOverlay" type="CanvasLayer"]
+[node name="UserProfileOverlay" type="CanvasLayer" unique_id=7011291]
 script = ExtResource("1_script")
 
-[node name="ProfilePanel" type="PanelContainer" parent="."]
-visible = false
+[node name="ProfilePanel" type="PanelContainer" parent="." unique_id=1901092459]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -20,145 +19,143 @@ offset_right = 260.0
 offset_bottom = 190.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("2_theme")
-mouse_filter = 2
 
-[node name="ProfileFrame" type="NinePatchRect" parent="ProfilePanel"]
+[node name="ProfileFrame" type="NinePatchRect" parent="ProfilePanel" unique_id=1801598650]
+modulate = Color(0.18, 0.22, 0.28, 0.85)
 layout_mode = 2
-mouse_filter = 2
 texture = ExtResource("3_panel_texture")
 region_rect = Rect2(0, 0, 256, 256)
 patch_margin_left = 8
 patch_margin_top = 8
 patch_margin_right = 8
 patch_margin_bottom = 8
-modulate = Color(0.18, 0.22, 0.28, 0.85)
 
-[node name="MarginContainer" type="MarginContainer" parent="ProfilePanel"]
+[node name="MarginContainer" type="MarginContainer" parent="ProfilePanel" unique_id=787381606]
 layout_mode = 2
 theme_override_constants/margin_left = 18
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 18
 
-[node name="ProfileContent" type="VBoxContainer" parent="ProfilePanel/MarginContainer"]
+[node name="ProfileContent" type="VBoxContainer" parent="ProfilePanel/MarginContainer" unique_id=1308670963]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="HeaderLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent"]
+[node name="HeaderLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent" unique_id=1995780445]
 layout_mode = 2
 theme_type_variation = &"ProfileHeader"
 text = "User Profile"
 
-[node name="AttributesContainer" type="VBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent"]
+[node name="AttributesContainer" type="VBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent" unique_id=1770298780]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="EnergyRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="EnergyRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer" unique_id=981022911]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="EnergyIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/EnergyRow"]
+[node name="EnergyIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/EnergyRow" unique_id=1223192118]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 stretch_mode = 5
 
-[node name="EnergyLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/EnergyRow"]
+[node name="EnergyLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/EnergyRow" unique_id=1915689810]
 layout_mode = 2
 theme_type_variation = &"ProfileAttribute"
 text = "Energy: 0"
 
-[node name="FocusRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="FocusRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer" unique_id=366427039]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="FocusIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/FocusRow"]
+[node name="FocusIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/FocusRow" unique_id=244857258]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 stretch_mode = 5
 
-[node name="FocusLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/FocusRow"]
+[node name="FocusLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/FocusRow" unique_id=1601853134]
 layout_mode = 2
 theme_type_variation = &"ProfileAttribute"
 text = "Focus: 0"
 
-[node name="KnowledgeRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="KnowledgeRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer" unique_id=1725328283]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="KnowledgeIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/KnowledgeRow"]
+[node name="KnowledgeIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/KnowledgeRow" unique_id=486562611]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 stretch_mode = 5
 
-[node name="KnowledgeLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/KnowledgeRow"]
+[node name="KnowledgeLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/KnowledgeRow" unique_id=905486604]
 layout_mode = 2
 theme_type_variation = &"ProfileAttribute"
 text = "Knowledge: 0"
 
-[node name="ConfidenceRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="ConfidenceRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer" unique_id=261306709]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="ConfidenceIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/ConfidenceRow"]
+[node name="ConfidenceIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/ConfidenceRow" unique_id=1972279039]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 stretch_mode = 5
 
-[node name="ConfidenceLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/ConfidenceRow"]
+[node name="ConfidenceLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/ConfidenceRow" unique_id=1246564785]
 layout_mode = 2
 theme_type_variation = &"ProfileAttribute"
 text = "Confidence: 0"
 
-[node name="CareerReadinessRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="CareerReadinessRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer" unique_id=952635790]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="CareerReadinessIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/CareerReadinessRow"]
+[node name="CareerReadinessIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/CareerReadinessRow" unique_id=1368164872]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 stretch_mode = 5
 
-[node name="CareerReadinessLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/CareerReadinessRow"]
+[node name="CareerReadinessLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/CareerReadinessRow" unique_id=513508238]
 layout_mode = 2
 theme_type_variation = &"ProfileAttribute"
 text = "Career Readiness: 0"
 
-[node name="NetworkingRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="NetworkingRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer" unique_id=1205640591]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="NetworkingIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/NetworkingRow"]
+[node name="NetworkingIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/NetworkingRow" unique_id=1872746158]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 stretch_mode = 5
 
-[node name="NetworkingLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/NetworkingRow"]
+[node name="NetworkingLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/NetworkingRow" unique_id=1741003064]
 layout_mode = 2
 theme_type_variation = &"ProfileAttribute"
 text = "Networking: 0"
 
-[node name="PortfolioRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer"]
+[node name="PortfolioRow" type="HBoxContainer" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer" unique_id=2111386666]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="PortfolioIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/PortfolioRow"]
+[node name="PortfolioIcon" type="TextureRect" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/PortfolioRow" unique_id=769926650]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 stretch_mode = 5
 
-[node name="PortfolioLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/PortfolioRow"]
+[node name="PortfolioLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent/AttributesContainer/PortfolioRow" unique_id=1945664287]
 layout_mode = 2
 theme_type_variation = &"ProfileAttribute"
 text = "Portfolio: 0"
 
-[node name="HintLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent"]
+[node name="HintLabel" type="Label" parent="ProfilePanel/MarginContainer/ProfileContent" unique_id=49624162]
 layout_mode = 2
 theme_type_variation = &"ProfileHint"
 text = "Press Tab (or Esc) to close"
 
-[node name="CloseHintLabel" type="Label" parent="."]
-visible = false
+[node name="CloseHintLabel" type="Label" parent="." unique_id=62892328]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

@@ -229,18 +229,18 @@ layout_mode = 2
 text = "WASD / Arrow Keys: Move
 E: Interact"
 
-[node name="StatsLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+[node name="StatsLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer" unique_id=170093912]
 layout_mode = 2
 text = "Day 1 / 7
 Actions Left 3 / 3
 Energy 80 / 100"
 
-[node name="HintLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+[node name="HintLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer" unique_id=1244472773]
 layout_mode = 2
 text = "Hint: Use your computer."
 autowrap_mode = 3
 
-[node name="EmailNotificationLabel" type="Label" parent="OpeningUI"]
+[node name="EmailNotificationLabel" type="Label" parent="OpeningUI" unique_id=1046904343]
 visible = false
 offset_left = 320.0
 offset_top = 24.0
