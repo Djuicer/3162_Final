@@ -229,6 +229,28 @@ layout_mode = 2
 text = "WASD / Arrow Keys: Move
 E: Interact"
 
+[node name="StatsLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Day 1 / 7
+Actions Left 3 / 3
+Energy 80 / 100"
+
+[node name="HintLabel" type="Label" parent="OpeningUI/GuidancePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Hint: Use your computer."
+autowrap_mode = 3
+
+[node name="EmailNotificationLabel" type="Label" parent="OpeningUI"]
+visible = false
+offset_left = 320.0
+offset_top = 24.0
+offset_right = 864.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(1, 0.984314, 0.741176, 1)
+theme_override_font_sizes/font_size = 20
+text = "New Email Received!"
+horizontal_alignment = 1
+
 [node name="TutorialPanel" type="Panel" parent="OpeningUI" unique_id=399798307]
 visible = false
 offset_left = 275.0
