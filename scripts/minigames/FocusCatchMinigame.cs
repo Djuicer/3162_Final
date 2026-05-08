@@ -197,20 +197,40 @@ public partial class FocusCatchMinigame : Control
             attributes.IncreaseKnowledge(15);
             attributes.IncreaseFocus(5);
             attributes.DecreaseEnergy(10);
-            _resultLabel.Text = "Great focus! Score 15+\nKnowledge +15, Focus +5, Energy -10";
+            _resultLabel.Text =
+                "Excellent Focus!\n" +
+                "Final Score: " + _score + "\n" +
+                "You avoided distractions and made strong study progress.\n" +
+                "Rewards:\n" +
+                "+15 Knowledge\n" +
+                "+5 Focus\n" +
+                "-10 Energy";
         }
         else if (_score >= 8)
         {
             attributes.IncreaseKnowledge(10);
             attributes.DecreaseEnergy(10);
-            _resultLabel.Text = "Good session! Score 8-14\nKnowledge +10, Energy -10";
+            _resultLabel.Text =
+                "Good Study Session\n" +
+                "Final Score: " + _score + "\n" +
+                "You stayed on task and made steady progress.\n" +
+                "Rewards:\n" +
+                "+10 Knowledge\n" +
+                "-10 Energy";
         }
         else
         {
             attributes.IncreaseKnowledge(3);
             attributes.DecreaseEnergy(15);
             attributes.DecreaseConfidence(5);
-            _resultLabel.Text = "Needs work! Score below 8\nKnowledge +3, Energy -15, Confidence -5";
+            _resultLabel.Text =
+                "Rough Session\n" +
+                "Final Score: " + _score + "\n" +
+                "Distractions got in the way, but you still learned a little.\n" +
+                "Rewards:\n" +
+                "+3 Knowledge\n" +
+                "-15 Energy\n" +
+                "-5 Confidence";
         }
 
         _continueButton.Visible = true;

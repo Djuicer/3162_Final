@@ -137,21 +137,42 @@ public partial class InterviewRhythmMinigame : Control
 			profile.IncreaseCareerReadiness(20);
 			attributes.IncreaseConfidence(10);
 			attributes.DecreaseEnergy(10);
-			_resultLabel.Text = "Excellent interview rhythm! Score 7-10\nCareer Readiness +20, Confidence +10, Energy -10";
+			_resultLabel.Text =
+				"Confident Interview!\n" +
+				"Final Score: " + _score + "\n" +
+				"You answered with strong timing and professional confidence.\n" +
+				"Rewards:\n" +
+				"+20 Career Readiness\n" +
+				"+10 Confidence\n" +
+				"-10 Energy";
 		}
 		else if (_score >= 4)
 		{
 			profile.IncreaseCareerReadiness(10);
 			attributes.IncreaseConfidence(3);
 			attributes.DecreaseEnergy(10);
-			_resultLabel.Text = "Good interview timing! Score 4-6\nCareer Readiness +10, Confidence +3, Energy -10";
+			_resultLabel.Text =
+				"Decent Practice\n" +
+				"Final Score: " + _score + "\n" +
+				"You kept a decent rhythm and are building consistency.\n" +
+				"Rewards:\n" +
+				"+10 Career Readiness\n" +
+				"+3 Confidence\n" +
+				"-10 Energy";
 		}
 		else
 		{
 			profile.IncreaseCareerReadiness(5);
 			attributes.DecreaseConfidence(10);
 			attributes.DecreaseEnergy(10);
-			_resultLabel.Text = "Rough interview attempt. Score 0-3\nCareer Readiness +5, Confidence -10, Energy -10";
+			_resultLabel.Text =
+				"Nervous Attempt\n" +
+				"Final Score: " + _score + "\n" +
+				"Nerves showed, but this round still gave useful interview reps.\n" +
+				"Rewards:\n" +
+				"+5 Career Readiness\n" +
+				"-10 Confidence\n" +
+				"-10 Energy";
 		}
 
 		_instructionLabel.Text = "Interview finished.";
