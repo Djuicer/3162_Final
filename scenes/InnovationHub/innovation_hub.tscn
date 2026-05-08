@@ -13,7 +13,7 @@ size = Vector2(150, 160)
 size = Vector2(220, 120)
 
 [sub_resource type="RectangleShape2D" id="3"]
-size = Vector2(460, 80)
+size = Vector2(1085, 80)
 
 [node name="InnovationHub" type="Node2D" unique_id=418755066]
 script = ExtResource("1")
@@ -87,7 +87,7 @@ position = Vector2(576, -10)
 shape = SubResource("3")
 
 [node name="BottomWall" type="CollisionShape2D" parent="Walls" unique_id=893099733]
-position = Vector2(576, 658)
+position = Vector2(575.5, 658)
 shape = SubResource("3")
 
 [node name="LeftWall" type="CollisionShape2D" parent="Walls" unique_id=283547079]
