@@ -22,11 +22,11 @@ public partial class ITBall : Node2D
 		_appDevArea = GetNode<Area2D>("ITBallAppDeveloperNPC/InteractionArea");
 		_leadArea = GetNode<Area2D>("ITBallProjectLeadNPC/InteractionArea");
 		_promptLabel = GetNode<Label>("UI/InteractPromptLabel");
-		_npcNameLabel = GetNode<Label>("UI/Panel/VBox/NpcNameLabel");
-		_dialogueLabel = GetNode<Label>("UI/Panel/VBox/DialogueLabel");
-		_statusLabel = GetNode<Label>("UI/Panel/VBox/StatusLabel");
-		_choices = GetNode<VBoxContainer>("UI/Panel/VBox/Choices");
-		_finishButton = GetNode<Button>("UI/Panel/VBox/ActionRow/FinishEventButton");
+		_npcNameLabel = GetNode<Label>("UI/DialoguePanel/ContentContainer/NpcNameLabel");
+		_dialogueLabel = GetNode<Label>("UI/DialoguePanel/ContentContainer/DialogueLabel");
+		_statusLabel = GetNode<Label>("UI/DialoguePanel/ContentContainer/StatusLabel");
+		_choices = GetNode<VBoxContainer>("UI/DialoguePanel/ContentContainer/Choices");
+		_finishButton = GetNode<Button>("UI/DialoguePanel/ContentContainer/ActionRow/FinishEventButton");
 
 		_appDevArea.BodyEntered += _ => _nearNpc = NpcType.AppDeveloper;
 		_appDevArea.BodyExited += _ => { if (_nearNpc == NpcType.AppDeveloper) _nearNpc = NpcType.None; };

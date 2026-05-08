@@ -25,12 +25,12 @@ public partial class DanceParty : Node2D
 		_classmateArea = GetNode<Area2D>("DancePartyClassmateNPC/InteractionArea");
 		_alumniArea = GetNode<Area2D>("DancePartyRecruiterNPC/InteractionArea");
 		_interactPromptLabel = GetNode<Label>("UI/InteractPromptLabel");
-		_instructionLabel = GetNode<Label>("UI/Panel/VBox/InstructionLabel");
-		_statusLabel = GetNode<Label>("UI/Panel/VBox/StatusLabel");
-		_npcNameLabel = GetNode<Label>("UI/Panel/VBox/NpcNameLabel");
-		_dialogueLabel = GetNode<Label>("UI/Panel/VBox/DialogueLabel");
-		_finishPartyButton = GetNode<Button>("UI/Panel/VBox/ActionRow/FinishPartyButton");
-		_choiceButtons = GetNode<VBoxContainer>("UI/Panel/VBox/Choices");
+		_instructionLabel = GetNode<Label>("UI/DialoguePanel/ContentContainer/InstructionLabel");
+		_statusLabel = GetNode<Label>("UI/DialoguePanel/ContentContainer/StatusLabel");
+		_npcNameLabel = GetNode<Label>("UI/DialoguePanel/ContentContainer/NpcNameLabel");
+		_dialogueLabel = GetNode<Label>("UI/DialoguePanel/ContentContainer/DialogueLabel");
+		_finishPartyButton = GetNode<Button>("UI/DialoguePanel/ContentContainer/ActionRow/FinishPartyButton");
+		_choiceButtons = GetNode<VBoxContainer>("UI/DialoguePanel/ContentContainer/Choices");
 
 		_classmateArea.BodyEntered += _ => OnNpcAreaEntered(PartyNpc.Classmate);
 		_classmateArea.BodyExited += _ => OnNpcAreaExited(PartyNpc.Classmate);
