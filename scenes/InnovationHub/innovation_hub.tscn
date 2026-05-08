@@ -23,14 +23,14 @@ offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.13, 0.14, 0.18, 1)
 
-[node name="ProjectTable" type="ColorRect" parent="." unique_id=1730300965]
+[node name="InnovationHubProjectTable" type="ColorRect" parent="." unique_id=1730300965]
 offset_left = 620.0
 offset_top = 220.0
 offset_right = 1020.0
 offset_bottom = 340.0
 color = Color(0.26, 0.2, 0.18, 1)
 
-[node name="Laptop" type="ColorRect" parent="." unique_id=1172909836]
+[node name="InnovationHubWorkstation" type="ColorRect" parent="." unique_id=1172909836]
 offset_left = 760.0
 offset_top = 170.0
 offset_right = 900.0
@@ -44,7 +44,10 @@ offset_right = 430.0
 offset_bottom = 260.0
 color = Color(0.9, 0.9, 0.9, 1)
 
-[node name="DeveloperStudentVisual" type="ColorRect" parent="." unique_id=966170897]
+[node name="InnovationHubDeveloperStudentNPC" type="Node2D" parent="."]
+position = Vector2(293, 337)
+
+[node name="Visual" type="ColorRect" parent="InnovationHubDeveloperStudentNPC" unique_id=966170897]
 offset_left = 260.0
 offset_top = 280.0
 offset_right = 330.0
@@ -60,16 +63,16 @@ position = Vector2(760, 360)
 [node name="InnovationHubEntranceSpawn" type="Marker2D" parent="." unique_id=300002]
 position = Vector2(210, 520)
 
-[node name="WorkstationInteractArea" type="Area2D" parent="." unique_id=1793654611]
-position = Vector2(818, 265)
+[node name="InteractionArea" type="Area2D" parent="InnovationHubWorkstation" unique_id=1793654611]
+position = Vector2(58, 65)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorkstationInteractArea" unique_id=2004289248]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InnovationHubWorkstation/InteractionArea" unique_id=2004289248]
 shape = SubResource("1")
 
-[node name="DeveloperStudentInteractArea" type="Area2D" parent="." unique_id=1390813036]
-position = Vector2(293, 337)
+[node name="InteractionArea" type="Area2D" parent="InnovationHubDeveloperStudentNPC" unique_id=1390813036]
+position = Vector2(0, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeveloperStudentInteractArea" unique_id=2038053139]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InnovationHubDeveloperStudentNPC/InteractionArea" unique_id=2038053139]
 shape = SubResource("4")
 
 [node name="ExitInteractArea" type="Area2D" parent="." unique_id=1648590189]

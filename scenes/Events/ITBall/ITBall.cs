@@ -19,8 +19,8 @@ public partial class ITBall : Node2D
 	public override void _Ready()
 	{
 		StatusOverlay.AttachTo(this, false);
-		_appDevArea = GetNode<Area2D>("AppDeveloperArea");
-		_leadArea = GetNode<Area2D>("ProjectLeadArea");
+		_appDevArea = GetNode<Area2D>("ITBallAppDeveloperNPC/InteractionArea");
+		_leadArea = GetNode<Area2D>("ITBallProjectLeadNPC/InteractionArea");
 		_promptLabel = GetNode<Label>("UI/InteractPromptLabel");
 		_npcNameLabel = GetNode<Label>("UI/Panel/VBox/NpcNameLabel");
 		_dialogueLabel = GetNode<Label>("UI/Panel/VBox/DialogueLabel");
