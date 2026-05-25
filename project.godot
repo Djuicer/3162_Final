@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GVars="*uid://dimm304b8put7"
 SaveManager="*uid://ct0vjqv0fhqvq"
 TransitionManager="*res://scripts/ui/TransitionManager.cs"
+AudioControllerScene="*uid://cc0rbadwws631"
 
 [dotnet]
 

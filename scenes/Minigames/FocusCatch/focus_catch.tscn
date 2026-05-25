@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://0cdwnd6uiiwo"]
 
 [ext_resource type="Script" uid="uid://fl5h8txmqunt" path="res://scripts/minigames/FocusCatchMinigame.cs" id="1_focus"]
+[ext_resource type="Texture2D" uid="uid://djj6uqemjj706" path="res://assets/pictures/CharactorBackgroud.jpg" id="2_r0kmc"]
 
 [node name="FocusCatch" type="Control" unique_id=18008148]
 layout_mode = 3
@@ -10,6 +11,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_focus")
+
+[node name="CharactorBackgroud" type="Sprite2D" parent="." unique_id=1562196905]
+position = Vector2(576, 324)
+scale = Vector2(0.6939758, 0.6990291)
+texture = ExtResource("2_r0kmc")
 
 [node name="PlayArea" type="ColorRect" parent="." unique_id=890661436]
 layout_mode = 0

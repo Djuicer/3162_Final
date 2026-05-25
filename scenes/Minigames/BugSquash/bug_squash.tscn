@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://2nv1vybwt1yn"]
 
 [ext_resource type="Script" uid="uid://b1ehe28yql6lm" path="res://scripts/minigames/BugSquashMinigame.cs" id="1"]
+[ext_resource type="Texture2D" uid="uid://ctokrpf0fs7ro" path="res://assets/pictures/bug.png" id="2_2w1ad"]
+[ext_resource type="Texture2D" uid="uid://djj6uqemjj706" path="res://assets/pictures/CharactorBackgroud.jpg" id="2_m6osb"]
+[ext_resource type="Texture2D" uid="uid://cpmyfqny5yo5j" path="res://assets/pictures/bug_background.png" id="3_dvk2x"]
 
 [node name="BugSquash" type="Control" unique_id=1622573045]
 layout_mode = 3
@@ -10,6 +13,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+
+[node name="CharactorBackgroud" type="Sprite2D" parent="." unique_id=469078717]
+position = Vector2(574.99994, 324)
+scale = Vector2(0.6939759, 0.69902915)
+texture = ExtResource("2_m6osb")
+
+[node name="BugBackground" type="Sprite2D" parent="." unique_id=401331013]
+position = Vector2(575.50006, 374)
+scale = Vector2(0.36580417, 0.2692913)
+texture = ExtResource("3_dvk2x")
 
 [node name="Panel" type="Panel" parent="." unique_id=164506614]
 layout_mode = 1
@@ -84,5 +97,19 @@ layout_mode = 0
 offset_left = 15.0
 offset_top = 15.0
 offset_right = 95.0
-offset_bottom = 65.0
+offset_bottom = 82.14285
+scale = Vector2(0.7, 0.7)
 text = "BUG"
+
+[node name="PopParticles" type="GPUParticles2D" parent="PlayArea/BugButton" unique_id=1684632999]
+position = Vector2(39, 26)
+lifetime = 0.3
+speed_scale = 50.0
+
+[node name="TextureRect" type="TextureRect" parent="PlayArea/BugButton" unique_id=187662127]
+layout_mode = 0
+offset_left = 15.714275
+offset_right = 62.85713
+offset_bottom = 67.14285
+texture = ExtResource("2_2w1ad")
+expand_mode = 1

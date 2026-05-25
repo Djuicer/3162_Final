@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cc0rbadwws631"]
+
+[ext_resource type="AudioStream" uid="uid://d2lvm5tniui6b" path="res://assets/sound/UISounds/button_hover.wav" id="1_62d1j"]
+[ext_resource type="Script" uid="uid://benuwpprondsd" path="res://assets/sound/audio_controller_scene.gd" id="1_mkwse"]
+[ext_resource type="AudioStream" uid="uid://c53t1wbmt0bmi" path="res://assets/sound/MusicSounds/MainMenuMusic.wav" id="2_mkwse"]
+[ext_resource type="AudioStream" uid="uid://df8qnnm22yeyd" path="res://assets/sound/UISounds/UI_button_press.wav" id="3_wi2by"]
+[ext_resource type="AudioStream" uid="uid://osgt5p7t41bq" path="res://assets/sound/GameSounds/Footstep.wav" id="5_vi1yi"]
+[ext_resource type="AudioStream" uid="uid://0216qagov055" path="res://assets/sound/MusicSounds/GameMusic.wav" id="6_42fh4"]
+
+[node name="AudioController" type="Node2D" unique_id=247081291]
+script = ExtResource("1_mkwse")
+
+[node name="ButtonHover" type="AudioStreamPlayer2D" parent="." unique_id=1807151914]
+stream = ExtResource("1_62d1j")
+
+[node name="MenuMusic" type="AudioStreamPlayer2D" parent="." unique_id=638528264]
+stream = ExtResource("2_mkwse")
+volume_db = -5.821
+
+[node name="ButtonSelect" type="AudioStreamPlayer2D" parent="." unique_id=301560040]
+stream = ExtResource("3_wi2by")
+pitch_scale = 1.63
+
+[node name="Footstep" type="AudioStreamPlayer2D" parent="." unique_id=158593929]
+stream = ExtResource("5_vi1yi")
+pitch_scale = 1.63
+
+[node name="GameMusic" type="AudioStreamPlayer2D" parent="." unique_id=1840533541]
+stream = ExtResource("6_42fh4")
+pitch_scale = 1.63
