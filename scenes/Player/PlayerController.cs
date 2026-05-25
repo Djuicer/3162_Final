@@ -6,10 +6,13 @@ public partial class PlayerController : CharacterBody2D
 
 	private AnimatedSprite2D animatedSprite;
 	private Vector2 lastDirection = Vector2.Down;
+	private Node _audioController;
+	private bool _wasMoving;
 
 	public override void _Ready()
 	{
 		animatedSprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+		_audioController = GetNodeOrNull<Node>("/root/AudioControllerScene");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -17,6 +20,13 @@ public partial class PlayerController : CharacterBody2D
 		Vector2 inputDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		Velocity = inputDirection * MoveSpeed;
 		MoveAndSlide();
+
+		bool isMoving = inputDirection != Vector2.Zero;
+		if (_audioController != null && isMoving != _wasMoving)
+		{
+			_audioController.Call(isMoving ? "start_footsteps" : "stop_footsteps");
+		}
+		_wasMoving = isMoving;
 
 		if (animatedSprite == null)
 			return;

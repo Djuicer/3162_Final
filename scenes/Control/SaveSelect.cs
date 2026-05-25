@@ -95,6 +95,12 @@ public partial class SaveSelect : Control
 		global.CurrentSlot = slot;
 		var saveMgr = GetNode<SaveManager>("/root/SaveManager");
 		var data = saveMgr.LoadGame(slot);
+		var audio = GetNodeOrNull<Node>("/root/AudioControllerScene");
+		if (audio != null)
+		{
+			audio.Call("stop_music");
+			audio.Call("play_game_music");
+		}
 		GetTree().ChangeSceneToFile("res://scenes/Domitory/dormitory.tscn");
 	}
 

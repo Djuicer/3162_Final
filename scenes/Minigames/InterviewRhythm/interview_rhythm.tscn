@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://biavn6k6em8ns"]
 
 [ext_resource type="Script" uid="uid://bqunptdp623hx" path="res://scripts/minigames/InterviewRhythmMinigame.cs" id="1"]
+[ext_resource type="Texture2D" uid="uid://djj6uqemjj706" path="res://assets/pictures/CharactorBackgroud.jpg" id="2_prfua"]
 
 [node name="InterviewRhythm" type="Control" unique_id=1909388978]
 layout_mode = 3
@@ -10,6 +11,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+
+[node name="CharactorBackgroud" type="Sprite2D" parent="." unique_id=2012168162]
+position = Vector2(576, 324.00003)
+scale = Vector2(0.6939759, 0.69902915)
+texture = ExtResource("2_prfua")
 
 [node name="Panel" type="Panel" parent="." unique_id=1316186057]
 layout_mode = 1

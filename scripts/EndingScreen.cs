@@ -82,10 +82,10 @@ public partial class EndingScreen : Control
 		int portfolio = state.Attributes.Portfolio;
 
 		bool financialFreedom = state.JoinedDeveloperGroup
-			&& portfolio >= 70
-			&& networking >= 60
-			&& confidence >= 60
-			&& knowledgeOrCoding >= 70;
+			&& portfolio >= 55
+			&& networking >= 50
+			&& confidence >= 50
+			&& knowledgeOrCoding >= 55;
 
 		if (financialFreedom)
 		{
@@ -95,16 +95,16 @@ public partial class EndingScreen : Control
 				"Matched Financial Freedom thresholds");
 		}
 
-		bool goodJobBase = careerReadiness >= 70
-			&& knowledgeOrCoding >= 60
-			&& confidence >= 50
-			&& networking >= 30;
+		bool goodJobBase = careerReadiness >= 60
+			&& knowledgeOrCoding >= 45
+			&& confidence >= 45
+			&& networking >= 25;
 
 		bool goodJobReferral = state.PartyNetworkingUnlocked
-			&& careerReadiness >= 60
-			&& knowledgeOrCoding >= 55
-			&& confidence >= 45
-			&& networking >= 20;
+			&& careerReadiness >= 52
+			&& knowledgeOrCoding >= 42
+			&& confidence >= 40
+			&& networking >= 18;
 
 		if (goodJobBase || goodJobReferral)
 		{

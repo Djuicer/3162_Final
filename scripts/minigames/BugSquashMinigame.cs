@@ -2,7 +2,7 @@ using Godot;
 
 public partial class BugSquashMinigame : Control
 {
-	private const float TotalTimeSeconds = 30.0f;
+	private const float TotalTimeSeconds = 10.0f;
 
 	private Label _timerLabel;
 	private Label _scoreLabel;
